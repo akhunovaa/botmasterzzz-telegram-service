@@ -1,6 +1,6 @@
 package com.botmasterzzz.telegram.service;
 
-import com.botmasterzzz.project.dto.UserPrincipal;
+import com.botmasterzzz.telegram.dto.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;

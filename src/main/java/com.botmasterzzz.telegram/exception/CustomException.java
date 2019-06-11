@@ -1,7 +1,7 @@
 package com.botmasterzzz.telegram.exception;
 
-import com.botmasterzzz.project.util.JacksonMapper;
-import com.botmasterzzz.project.util.JacksonViews.AuthorizationEnablerView;
+import com.botmasterzzz.telegram.util.JacksonMapper;
+import com.botmasterzzz.telegram.util.JacksonViews.AuthorizationEnablerView;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
