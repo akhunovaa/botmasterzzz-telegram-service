@@ -133,14 +133,18 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
         UserEntity userEntity = userDAO.loadUser(telegramDTO.getUserId());
         UserProjectEntity userProjectEntity = projectDAO.userProjectGet(telegramDTO.getProjectId(), telegramDTO.getUserId());
         TelegramInstanceEntity telegramInstanceEntity = telegramInstanceDAO.telegramInstanceGet(userEntity.getId(), userProjectEntity.getId());
-        id = telegramInstanceEntity.getId();
-        telegramDTO.setId(id);
-        telegramDTO.setLastError(telegramInstanceEntity.getLastError());
-        telegramDTO.setCreated(telegramInstanceEntity.getAudWhenCreate());
-        telegramDTO.setUpdated(telegramInstanceEntity.getAudWhenUpdate());
-        boolean status = null != botInstanceContainer.getBotInstance(id) && botInstanceContainer.getBotInstance(id).botStatus();
-        telegramDTO.setStatus(status);
-        logger.info("Telegram bot status read {}", telegramInstanceEntity.toString());
+        if (null != telegramInstanceEntity){
+            id = telegramInstanceEntity.getId();
+            telegramDTO.setId(id);
+            telegramDTO.setLastError(telegramInstanceEntity.getLastError());
+            telegramDTO.setCreated(telegramInstanceEntity.getAudWhenCreate());
+            telegramDTO.setUpdated(telegramInstanceEntity.getAudWhenUpdate());
+            boolean status = null != botInstanceContainer.getBotInstance(id) && botInstanceContainer.getBotInstance(id).botStatus();
+            telegramDTO.setStatus(status);
+            logger.info("Telegram bot status read {}", telegramInstanceEntity.toString());
+        }else {
+            telegramDTO.setStatus(false);
+        }
         return telegramDTO;
 
     }
