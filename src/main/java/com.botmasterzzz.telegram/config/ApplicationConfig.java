@@ -47,10 +47,10 @@ public class ApplicationConfig implements WebApplicationInitializer {
     @Bean
     public BasicDataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getProperty("app.db.worker.driver.local"));
-        dataSource.setUrl(environment.getProperty("app.db.worker.url.local"));
-        dataSource.setUsername(environment.getProperty("app.db.worker.login.local"));
-        dataSource.setPassword(environment.getProperty("app.db.worker.password.local"));
+        dataSource.setDriverClassName(environment.getProperty("app.db.worker.driver"));
+        dataSource.setUrl(environment.getProperty("app.db.worker.url"));
+        dataSource.setUsername(environment.getProperty("app.db.worker.login"));
+        dataSource.setPassword(environment.getProperty("app.db.worker.password"));
         return dataSource;
     }
 
