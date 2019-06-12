@@ -8,10 +8,12 @@ import com.botmasterzzz.telegram.config.container.BotInstanceContainer;
 import com.botmasterzzz.telegram.dao.ProjectDAO;
 import com.botmasterzzz.telegram.dao.TelegramInstanceDAO;
 import com.botmasterzzz.telegram.dao.UserDAO;
+import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
 import com.botmasterzzz.telegram.dto.TelegramDTO;
 import com.botmasterzzz.telegram.entity.TelegramInstanceEntity;
 import com.botmasterzzz.telegram.entity.UserEntity;
 import com.botmasterzzz.telegram.entity.UserProjectEntity;
+import com.botmasterzzz.telegram.service.ProjectCommandService;
 import com.botmasterzzz.telegram.service.TelegramInstanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,9 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
 
     @Autowired
     private TelegramInstanceDAO telegramInstanceDAO;
+
+    @Autowired
+    private ProjectCommandService projectCommandService;
 
     @Override
     public TelegramDTO start(TelegramDTO telegramDTO) {
@@ -73,7 +78,8 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
         String botName = telegramInstanceEntity.getProject().getName();
         botSession.setToken(token);
         DefaultBotOptions defaultBotOptions = new DefaultBotOptions();
-        Telegram telegramInstance = new Telegram(defaultBotOptions);
+        List<ProjectCommandDTO> projectDTOList = projectCommandService.getProjectCommandGetList(userEntity.getId(), userProjectEntity.getId());
+        Telegram telegramInstance = new Telegram(defaultBotOptions, projectDTOList);
         telegramInstance.setToken(token);
         telegramInstance.setUserName(botName);
         telegramInstance.setSession(botSession);
