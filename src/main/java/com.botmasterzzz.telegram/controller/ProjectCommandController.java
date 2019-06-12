@@ -17,8 +17,7 @@ public class ProjectCommandController {
 
     @RequestMapping(value = "/test",
             method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Map<String, Object> test(HttpServletRequest httpRequest) {
         logger.info("TEST controller from telegram service");
         Map<String, Object> result = new HashMap<>();
