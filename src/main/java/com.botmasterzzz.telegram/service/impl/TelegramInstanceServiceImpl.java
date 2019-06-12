@@ -18,7 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -52,6 +54,7 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
             telegramInstanceEntity.setUserEntity(userEntity);
             telegramInstanceEntity.setProject(userProjectEntity);
             telegramInstanceEntity.setLastError("Ошибки отсутствуют");
+            telegramInstanceEntity.setAudWhenCreate(new Timestamp(new Date().getTime()));
             id = telegramInstanceDAO.telegramInstanceAdd(telegramInstanceEntity);
         }
         id = telegramInstanceEntity.getId();
