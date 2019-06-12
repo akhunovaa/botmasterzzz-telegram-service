@@ -1,5 +1,8 @@
 package com.botmasterzzz.telegram.config;
 
+import com.botmasterzzz.bot.bot.DefaultBotOptions;
+import com.botmasterzzz.bot.generic.BotSession;
+import com.botmasterzzz.bot.updatesreceivers.DefaultBotSession;
 import com.google.gson.Gson;
 import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -128,6 +131,18 @@ public class ApplicationConfig implements WebApplicationInitializer {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setDefaultEncoding("utf-8");
         return multipartResolver;
+    }
+
+    @Bean
+    public DefaultBotOptions botOptions() {
+        return new DefaultBotOptions();
+    }
+
+    @Bean
+    public BotSession botSession() {
+        BotSession botSession = new DefaultBotSession();
+        botSession.setToken(environment.getProperty("token"));
+        return botSession;
     }
 
 }

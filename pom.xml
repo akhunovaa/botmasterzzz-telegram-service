@@ -41,6 +41,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <telegram-bot.version>1.0-SNAPSHOT</telegram-bot.version>
 
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <spring.version>5.0.0.RELEASE</spring.version>
@@ -378,6 +379,13 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>27.0.1-jre</version>
+        </dependency>
+
+        <!-- Telegram BOT -->
+        <dependency>
+            <groupId>com.botmasrerzzz.bot</groupId>
+            <artifactId>telegram-bot-core</artifactId>
+            <version>${telegram-bot.version}</version>
         </dependency>
 
 
