@@ -57,7 +57,7 @@ pipeline {
                     }
                     sh "docker container ls -a -f name=botmasterzzz-telegram -q | xargs --no-run-if-empty docker container stop"
                     sh 'docker container ls -a -f name=botmasterzzz-telegram -q | xargs -r docker container rm'
-                    sh 'docker run -v /home/repository:/home/repository --name botmasterzzz-telegram -d --net=botmasterzzznetwork -p 127.0.0.1:8064:8064 leon4uk/botmasterzzz-telegram:1.0.0'
+                    sh 'docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d --net=botmasterzzznetwork -p 127.0.0.1:8064:8064 leon4uk/botmasterzzz-telegram:1.0.0'
                 }
             }
         }

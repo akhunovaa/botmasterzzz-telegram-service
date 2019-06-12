@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public class ProjectCommandController {
         Map<String, Object> result = new HashMap<>();
         result.put("success", Boolean.TRUE);
         result.put("page", httpRequest.getServletPath());
+        result.put("date", new Date());
         return result;
     }
 }
