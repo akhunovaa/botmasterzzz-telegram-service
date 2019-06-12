@@ -60,6 +60,9 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
         if (status){
             logger.warn("Telegram bot already has been started. {}", telegramInstanceEntity.toString());
             telegramDTO.setStatus(true);
+            telegramDTO.setLastError("Экземпляр бота уже запущен");
+            telegramDTO.setCreated(telegramInstanceEntity.getAudWhenCreate());
+            telegramDTO.setUpdated(telegramInstanceEntity.getAudWhenUpdate());
             return telegramDTO;
         }
         BotSession botSession = new DefaultBotSession();
