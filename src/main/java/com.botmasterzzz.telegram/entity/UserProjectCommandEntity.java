@@ -45,6 +45,11 @@ public class UserProjectCommandEntity {
     private UserEntity user;
 
     @JsonIgnore
+    @JoinColumn(name = "type_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    private UserProjectCommandTypeEntity userProjectCommandTypeEntity;
+
+    @JsonIgnore
     @Column(name = "aud_when_create")
     private Timestamp audWhenCreate;
 
@@ -124,6 +129,14 @@ public class UserProjectCommandEntity {
         this.user = user;
     }
 
+    public UserProjectCommandTypeEntity getUserProjectCommandTypeEntity() {
+        return userProjectCommandTypeEntity;
+    }
+
+    public void setUserProjectCommandTypeEntity(UserProjectCommandTypeEntity userProjectCommandTypeEntity) {
+        this.userProjectCommandTypeEntity = userProjectCommandTypeEntity;
+    }
+
     public Timestamp getAudWhenCreate() {
         return audWhenCreate;
     }
@@ -152,6 +165,7 @@ public class UserProjectCommandEntity {
                 ", note='" + note + '\'' +
                 ", messengerId=" + messengerId +
                 ", user=" + user +
+                ", userProjectCommandTypeEntity=" + userProjectCommandTypeEntity +
                 ", audWhenCreate=" + audWhenCreate +
                 ", audWhenUpdate=" + audWhenUpdate +
                 '}';
