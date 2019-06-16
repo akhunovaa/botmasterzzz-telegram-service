@@ -55,7 +55,7 @@ public class Telegram extends TelegramLongPollingBot {
                                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                                 .setText(answer);
                         break;
-                    case 2:
+                    case 3:
                         answer = projectCommandDTO.getAnswer();
                         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
                         keyboard.setOneTimeKeyboard(false);
