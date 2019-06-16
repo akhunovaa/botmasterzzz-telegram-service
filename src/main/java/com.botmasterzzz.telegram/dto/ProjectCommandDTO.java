@@ -22,6 +22,9 @@ public class ProjectCommandDTO {
     @NotNull(message = "Проект не может быть пустым")
     private Long projectId;
 
+    @NotNull(message = "Тип проекта не может быть пустым")
+    private ProjectCommandTypeDTO commandType;
+
     private boolean privacy;
 
     @JsonIgnore
@@ -142,6 +145,14 @@ public class ProjectCommandDTO {
         this.notFound = notFound;
     }
 
+    public ProjectCommandTypeDTO getCommandType() {
+        return commandType;
+    }
+
+    public void setCommandType(ProjectCommandTypeDTO projectCommandTypeDTO) {
+        this.commandType = projectCommandTypeDTO;
+    }
+
     @Override
     public String toString() {
         return "ProjectCommandDTO{" +
@@ -150,12 +161,14 @@ public class ProjectCommandDTO {
                 ", commandName='" + commandName + '\'' +
                 ", answer='" + answer + '\'' +
                 ", projectId=" + projectId +
+                ", commandType=" + commandType +
                 ", privacy=" + privacy +
                 ", note='" + note + '\'' +
                 ", messengerId=" + messengerId +
                 ", userId=" + userId +
                 ", audWhenCreate=" + audWhenCreate +
                 ", audWhenUpdate=" + audWhenUpdate +
+                ", notFound=" + notFound +
                 '}';
     }
 }

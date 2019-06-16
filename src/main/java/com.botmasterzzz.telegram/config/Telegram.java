@@ -1,16 +1,21 @@
 package com.botmasterzzz.telegram.config;
 
 import com.botmasterzzz.bot.TelegramLongPollingBot;
+import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.objects.Update;
+import com.botmasterzzz.bot.api.impl.objects.replykeyboard.ReplyKeyboardMarkup;
+import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.bot.bot.DefaultBotOptions;
 import com.botmasterzzz.bot.exceptions.TelegramApiException;
 import com.botmasterzzz.bot.generic.BotSession;
 import com.botmasterzzz.telegram.config.container.BotInstanceContainer;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.botmasterzzz.telegram.dto.ProjectCommandTypeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Telegram extends TelegramLongPollingBot {
@@ -31,22 +36,52 @@ public class Telegram extends TelegramLongPollingBot {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public synchronized void onUpdateReceived(final Update update) {
         logger.info("Update received: " + update.toString());
         String message = update.getMessage().getText();
         String answer = "Команда неизвестна. Попробуйте заново.";
+        BotApiMethod method = new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(answer);
         for (ProjectCommandDTO projectCommandDTO : projectCommandDTOList) {
-            if (message.equals(projectCommandDTO.getCommand())){
-                answer = projectCommandDTO.getAnswer();
+            if (message.equals(projectCommandDTO.getCommand())) {
+                ProjectCommandTypeDTO projectCommandTypeDTO = projectCommandDTO.getCommandType();
+                long typeId = projectCommandTypeDTO.getId();
+                switch ((int) typeId) {
+                    case 1:
+                        answer = projectCommandDTO.getAnswer();
+                        method = new SendMessage()
+                                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                                .setText(answer);
+                        break;
+                    case 2:
+                        answer = projectCommandDTO.getAnswer();
+                        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+                        keyboard.setOneTimeKeyboard(false);
+                        List<KeyboardRow> keyboardRows = new ArrayList<>();
+                        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+                        keyboardRowLineOne.add(answer);
+                        keyboardRows.add(keyboardRowLineOne);
+                        keyboard.setKeyboard(keyboardRows);
+                        method = new SendMessage()
+                                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                                .setText(answer)
+                                .setReplyMarkup(keyboard);
+                        break;
+                    default:
+                        answer = projectCommandDTO.getAnswer();
+                        method = new SendMessage()
+                                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                                .setText(answer);
+                }
             }
         }
 
-        SendMessage sendMessage = new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(answer);
+
         try {
             logger.info("Send message : " + answer);
-            execute(sendMessage);
+            execute(method);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
