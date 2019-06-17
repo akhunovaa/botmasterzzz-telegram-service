@@ -46,7 +46,7 @@ public class TelegramUpdateHandlerBeanPostProcessor implements BeanPostProcessor
         BotController botController = bean.getClass().getAnnotation(BotController.class);
         BotRequestMapping botRequestMapping = method.getAnnotation(BotRequestMapping.class);
 
-        String path = (botController.value().length != 0 ? botController.value()[0] : "")
+        String type = (botController.value().length != 0 ? botController.value()[0] : "")
                 + (botRequestMapping.value().length != 0 ? botRequestMapping.value()[0] : "");
 
         BotApiMethodController controller = null;
@@ -62,7 +62,7 @@ public class TelegramUpdateHandlerBeanPostProcessor implements BeanPostProcessor
                 break;
         }
 
-        container.addBotController(path, controller);
+        container.addBotController(type, controller);
     }
 
     private BotApiMethodController createControllerUpdate2ApiMethod(Object bean, Method method) {
