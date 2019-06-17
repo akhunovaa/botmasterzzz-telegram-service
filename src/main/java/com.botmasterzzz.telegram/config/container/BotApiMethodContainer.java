@@ -17,15 +17,15 @@ public class BotApiMethodContainer {
         return Holder.INST;
     }
 
-    public void addBotController(String path, BotApiMethodController controller) {
-        if (controllerMap.containsKey(path)) {
-            LOGGER.info("path {} already added", path);
+    public void addBotController(String type, BotApiMethodController controller) {
+        if (controllerMap.containsKey(type)) {
+            LOGGER.info("path {} already added", type);
         }
-        controllerMap.put(path, controller);
+        controllerMap.put(type, controller);
     }
 
-    public BotApiMethodController getBotApiMethodController(String path) {
-        return controllerMap.get(path);
+    public BotApiMethodController getBotApiMethodController(String type) {
+        return controllerMap.get(type);
     }
 
     private BotApiMethodContainer() {

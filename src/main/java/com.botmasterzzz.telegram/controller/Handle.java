@@ -2,64 +2,57 @@ package com.botmasterzzz.telegram.controller;
 
 import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.objects.Update;
-import com.botmasterzzz.bot.exceptions.TelegramApiException;
-import com.botmasterzzz.telegram.config.Telegram;
 import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
-import com.botmasterzzz.telegram.dto.CallBackData;
-import com.google.gson.Gson;
+import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public class Handle {
-
-    private Gson gson;
-
-    private Telegram telegram;
 
     private static final Logger logger = LoggerFactory.getLogger(BotApiMethodController.class);
 
     private static BotApiMethodContainer container = BotApiMethodContainer.getInstanse();
 
+    public List<BotApiMethod> handleMessage(Update update) {
+        BotApiMethodController methodController = getHandle(update);
+        return methodController.process(update);
+    }
+
     public BotApiMethodController getHandle(Update update) {
-        String queryData;
-        CallBackData callBackData;
-        BotApiMethodController controller = null;
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            queryData = update.getMessage().getText();
-            controller = container.getControllerMap().get(queryData.split(" ")[0].trim());
-            if (null == container.getControllerMap().get(queryData))
-                controller = container.getControllerMap().get(queryData.substring(2));
-            UserContextHolder.currentContext().setCallBackData(new CallBackData());
-        } else if (update.hasCallbackQuery()) {
-            callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-            controller = container.getControllerMap().get(callBackData.getPath());
-            UserContextHolder.currentContext().setCallBackData(callBackData);
-            logger.info("Пользователь: " + update.getCallbackQuery().getFrom().getId() + " " + update.getCallbackQuery().getFrom().getFirstName() + " " + update.getCallbackQuery().getFrom().getLastName() + " " + update.getCallbackQuery().getFrom().getUserName() + " Сообщение: " + update.getCallbackQuery().getData());
+        String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getMessage().getText();
+        BotApiMethodController controller;
+        int commandMessageType = 1;
+
+        List<ProjectCommandDTO> projectCommandDTOList = UserContextHolder.currentContext().getProjectCommandDTOList();
+        for (ProjectCommandDTO projectCommandDTO : projectCommandDTOList) {
+            if(projectCommandDTO.getCommandName().equalsIgnoreCase(message) || projectCommandDTO.getCommand().equalsIgnoreCase(message)){
+                commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
+                logger.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
+                UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
+            }
+        }
+        switch (commandMessageType){
+            case 1:
+                controller = container.getControllerMap().get("text");
+                break;
+            case 2:
+                controller = container.getControllerMap().get("inner_button");
+                break;
+            case 3:
+                controller = container.getControllerMap().get("outter_button");
+                break;
+            case 4:
+                controller = container.getControllerMap().get("picture");
+                break;
+            default:
+                controller = container.getControllerMap().get("text");
         }
         return controller;
     }
 
-
-    public void handleMessage(Update update) {
-        BotApiMethodController methodController = getHandle(update);
-        try {
-            this.dispatch(methodController, update);
-        } catch (Exception e) {
-            logger.error("ERROR TelegramApiException", e);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void dispatch(BotApiMethodController controller, Update update) {
-        if (null == controller)
-            return;
-        try {
-            for (BotApiMethod botApiMethod : controller.process(update)) {
-                telegram.execute(botApiMethod);
-            }
-        } catch (TelegramApiException e) {
-            logger.error("ERROR TelegramApiException", e);
-        }
-    }
 }
