@@ -22,7 +22,7 @@ public class UserContextHolder {
         return tgContextThreadLocal.get();
     }
 
-    public static void setupContext(Update update, List<ProjectCommandDTO> projectCommandDTOList) {
+    public static void setupContext(Update update) {
         User user;
         Chat chat;
         Long chatId;
@@ -41,7 +41,6 @@ public class UserContextHolder {
             value.setUpdate(update);
             value.setUser(user);
             value.setChat(chat);
-            value.setProjectCommandDTOList(projectCommandDTOList);
             tgUserContexts.put(chatId, value);
         }
         UserContext tgContext = tgUserContexts.get(chatId);

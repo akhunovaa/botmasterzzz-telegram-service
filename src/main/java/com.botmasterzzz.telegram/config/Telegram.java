@@ -37,7 +37,8 @@ public class Telegram extends TelegramLongPollingBot {
     @SuppressWarnings("unchecked")
     public synchronized void onUpdateReceived(final Update update) {
         logger.info("Update received: " + update.toString());
-        UserContextHolder.setupContext(update, projectCommandDTOList);
+        UserContextHolder.setupContext(update);
+        UserContextHolder.currentContext().setProjectCommandDTOList(projectCommandDTOList);
         Handle handle = BeanUtil.getBean(Handle.class);
         try {
             for (BotApiMethod botApiMethod : handle.handleMessage(update)) {

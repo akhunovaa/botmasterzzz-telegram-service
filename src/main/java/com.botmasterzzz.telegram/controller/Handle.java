@@ -24,16 +24,24 @@ public class Handle {
     }
 
     public BotApiMethodController getHandle(Update update) {
-        String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getMessage().getText();
+        String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
         BotApiMethodController controller;
         int commandMessageType = 1;
-
+        UserContextHolder.currentContext().setProjectCommandDTO(null);
         List<ProjectCommandDTO> projectCommandDTOList = UserContextHolder.currentContext().getProjectCommandDTOList();
         for (ProjectCommandDTO projectCommandDTO : projectCommandDTOList) {
-            if(projectCommandDTO.getCommandName().equalsIgnoreCase(message) || projectCommandDTO.getCommand().equalsIgnoreCase(message)){
-                commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
-                logger.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
-                UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
+            if (update.hasMessage()){
+                if(projectCommandDTO.getCommand().equalsIgnoreCase(message)){
+                    commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
+                    logger.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
+                    UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
+                }
+            }else if (update.hasCallbackQuery()) {
+                if (projectCommandDTO.getCommand().equalsIgnoreCase(message)) {
+                    commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
+                    logger.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
+                    UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
+                }
             }
         }
         switch (commandMessageType){
