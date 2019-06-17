@@ -15,11 +15,8 @@ import com.botmasterzzz.telegram.config.container.BotInstanceContainer;
 import com.botmasterzzz.telegram.config.context.UserContext;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
-import com.botmasterzzz.telegram.service.ResourceStreamService;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,20 +26,16 @@ public class TelegramBotMessengerController {
 
     private static final Logger logger = LoggerFactory.getLogger(BotInstanceContainer.class);
 
-    @Autowired
-    private Gson gson;
-
-    @Autowired
-    private ResourceStreamService resourceStreamService;
-
     @BotRequestMapping(value = "text")
     public BotApiMethod textMessage(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
-        String answer = projectCommandDTO.getAnswer();
-        logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), projectCommandDTO.getAnswer(), projectCommandDTO.getCommand(), projectCommandDTO.getCommandName());
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
         if (update.hasMessage()){
             return new SendMessage()
                     .setChatId(chatId).enableHtml(true)
@@ -62,9 +55,9 @@ public class TelegramBotMessengerController {
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
-        String command = projectCommandDTO.getCommand();
-        String commandName = projectCommandDTO.getCommandName();
-        String answer = projectCommandDTO.getAnswer();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
@@ -78,20 +71,21 @@ public class TelegramBotMessengerController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
-        logger.info("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), projectCommandDTO.getAnswer(), projectCommandDTO.getCommand(), projectCommandDTO.getCommandName());
+        logger.info("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
         return new SendMessage()
                 .setChatId(chatId).enableHtml(true)
                 .setText(answer);
     }
 
     @BotRequestMapping(value = "inner_button")
-    public SendMessage innerButtonMessage(Update update) {
+    public BotApiMethod innerButtonMessage(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
-        String answer = projectCommandDTO.getAnswer();
-        String command = projectCommandDTO.getCommand();
-        String commandName = projectCommandDTO.getCommandName();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
@@ -100,27 +94,36 @@ public class TelegramBotMessengerController {
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText(commandName);
-        firstInlineButton.setCallbackData(command);
+        firstInlineButton.setCallbackData(commandName);
         inlineKeyboardButtonsFirstRow.add(firstInlineButton);
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
-        logger.info("User id {} sent inlined buttons message {} from command {} with a command name like {}", user.getId(), projectCommandDTO.getAnswer(), projectCommandDTO.getCommand(), projectCommandDTO.getCommandName());
-        return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setReplyMarkup(inlineKeyboardMarkup)
-                .setText(answer);
+        logger.info("User id {} sent inlined buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
+        if (update.hasMessage()){
+            return new SendMessage()
+                    .setChatId(chatId).enableHtml(true)
+                    .setReplyMarkup(inlineKeyboardMarkup)
+                    .setText(answer);
+        }else {
+            return new EditMessageText()
+                    .setChatId(chatId)
+                    .setReplyMarkup(inlineKeyboardMarkup)
+                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+                    .setText(answer);
+        }
     }
 
     @BotRequestMapping(value = "outter_button")
     public SendMessage outterButtonMessage(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
-        String answer = projectCommandDTO.getAnswer();
-        String command = projectCommandDTO.getCommand();
-        String commandName = projectCommandDTO.getCommandName();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
 
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
@@ -131,9 +134,9 @@ public class TelegramBotMessengerController {
         keyboardRows.add(keyboardRowLineOne);
         keyboard.setKeyboard(keyboardRows);
 
-        logger.info("User id {} sent reply keyboard buttons message {} from command {} with a command name like {}", user.getId(), projectCommandDTO.getAnswer(), projectCommandDTO.getCommand(), projectCommandDTO.getCommandName());
+        logger.info("User id {} sent reply keyboard buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
         return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setChatId(chatId).enableHtml(true)
                 .setText(answer)
                 .setReplyMarkup(keyboard);
     }
