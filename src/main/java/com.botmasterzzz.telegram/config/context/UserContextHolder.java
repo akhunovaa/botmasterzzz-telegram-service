@@ -3,8 +3,10 @@ package com.botmasterzzz.telegram.config.context;
 import com.botmasterzzz.bot.api.impl.objects.Chat;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.User;
+import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserContextHolder {
@@ -20,7 +22,7 @@ public class UserContextHolder {
         return tgContextThreadLocal.get();
     }
 
-    public static void setupContext(Update update) {
+    public static void setupContext(Update update, List<ProjectCommandDTO> projectCommandDTOList) {
         User user;
         Chat chat;
         Long chatId;
@@ -28,7 +30,7 @@ public class UserContextHolder {
             user = update.getCallbackQuery().getFrom();
             chat = update.getCallbackQuery().getMessage().getChat();
             chatId = update.getCallbackQuery().getMessage().getChatId();
-        } else {
+        }else {
             user = update.getMessage().getFrom();
             chat = update.getMessage().getChat();
             chatId = chat.getId();
@@ -39,11 +41,10 @@ public class UserContextHolder {
             value.setUpdate(update);
             value.setUser(user);
             value.setChat(chat);
+            value.setProjectCommandDTOList(projectCommandDTOList);
             tgUserContexts.put(chatId, value);
         }
-
         UserContext tgContext = tgUserContexts.get(chatId);
-
         tgContextThreadLocal.set(tgContext);
     }
 }
