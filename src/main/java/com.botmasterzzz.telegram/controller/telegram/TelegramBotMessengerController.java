@@ -1,7 +1,8 @@
 package com.botmasterzzz.telegram.controller.telegram;
 
+import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
-import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
+import com.botmasterzzz.bot.api.impl.methods.update.EditMessageText;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.User;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
@@ -20,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,19 +36,29 @@ public class TelegramBotMessengerController {
     private ResourceStreamService resourceStreamService;
 
     @BotRequestMapping(value = "text")
-    public SendMessage textMessage(Update update) {
+    public BotApiMethod textMessage(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String answer = projectCommandDTO.getAnswer();
         logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), projectCommandDTO.getAnswer(), projectCommandDTO.getCommand(), projectCommandDTO.getCommandName());
-        return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(answer);
+        if (update.hasMessage()){
+            return new SendMessage()
+                    .setChatId(chatId).enableHtml(true)
+                    .setText(answer);
+        }else {
+            return new EditMessageText()
+                    .setChatId(chatId)
+                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+                    .setText(answer);
+        }
+
     }
 
     @BotRequestMapping(value = "picture")
-    public SendPhoto pictureMessage(Update update) {
+    public BotApiMethod pictureMessage(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
@@ -68,13 +78,10 @@ public class TelegramBotMessengerController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
-        InputStream image = resourceStreamService.getImageFromUrl(answer);
         logger.info("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), projectCommandDTO.getAnswer(), projectCommandDTO.getCommand(), projectCommandDTO.getCommandName());
-        return new SendPhoto()
-                .setChatId(update.getMessage().getChatId())
-                .setCaption(commandName)
-                .setReplyMarkup(inlineKeyboardMarkup)
-                .setPhoto(commandName, image);
+        return new SendMessage()
+                .setChatId(chatId).enableHtml(true)
+                .setText(answer);
     }
 
     @BotRequestMapping(value = "inner_button")

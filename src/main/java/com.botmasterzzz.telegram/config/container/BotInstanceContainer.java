@@ -18,9 +18,9 @@ public class BotInstanceContainer {
     }
 
     public void addTelegramBotInstance(Long id, Telegram telegram) {
-        if (telegramInstanceMap.containsKey(id)) {
-            logger.info("Bot instance {} already added", id);
-        }
+//        if (telegramInstanceMap.containsKey(id)) {
+//            logger.info("Bot instance {} already added", id);
+//        }
         telegramInstanceMap.put(id, telegram);
     }
 
