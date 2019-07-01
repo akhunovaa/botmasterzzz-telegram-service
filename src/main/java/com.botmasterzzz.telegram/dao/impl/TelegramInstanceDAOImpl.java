@@ -57,6 +57,17 @@ public class TelegramInstanceDAOImpl implements TelegramInstanceDAO {
     }
 
     @Override
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public List<TelegramInstanceEntity> getFullTelegramInstanceList() {
+        List<TelegramInstanceEntity> telegramInstanceEntity;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramInstanceEntity.class);
+        telegramInstanceEntity = criteria.list();
+        session.close();
+        return telegramInstanceEntity;
+    }
+
+    @Override
     public void telegramInstanceDelete(TelegramInstanceEntity telegramInstanceEntity) {
         Session session = sessionFactory.openSession();
         Transaction updateTransaction = session.beginTransaction();
