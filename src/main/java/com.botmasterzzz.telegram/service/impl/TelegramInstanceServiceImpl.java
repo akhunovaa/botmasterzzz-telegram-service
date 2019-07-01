@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,30 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
     private static final Logger logger = LoggerFactory.getLogger(TelegramInstanceServiceImpl.class);
 
     private static BotInstanceContainer botInstanceContainer = BotInstanceContainer.getInstanse();
+
+    @PostConstruct
+    private void postConstruct() {
+        List<TelegramInstanceEntity> telegramInstanceEntityList = telegramInstanceDAO.getFullTelegramInstanceList();
+        for (TelegramInstanceEntity telegramInstanceEntity : telegramInstanceEntityList) {
+            if (telegramInstanceEntity.isStatus()){
+                BotSession botSession = new DefaultBotSession();
+                String token = telegramInstanceEntity.getProject().getToken();
+                String botName = telegramInstanceEntity.getProject().getName();
+                botSession.setToken(token);
+                DefaultBotOptions defaultBotOptions = new DefaultBotOptions();
+                List<ProjectCommandDTO> projectDTOList = projectCommandService.getProjectCommandGetList(telegramInstanceEntity.getUserEntity().getId(), telegramInstanceEntity.getProject().getId());
+                Telegram telegramInstance = new Telegram(defaultBotOptions, projectDTOList);
+                telegramInstance.setToken(token);
+                telegramInstance.setUserName(botName);
+                telegramInstance.setSession(botSession);
+                telegramInstance.start();
+                logger.info("Telegram bot after service restart has been started. {}", telegramInstanceEntity);
+                botInstanceContainer.addTelegramBotInstance(telegramInstanceEntity.getUserEntity().getId(), telegramInstance);
+                logger.info("Telegram bot after service restart has been added. {}", telegramInstanceEntity);
+            }
+
+        }
+    }
 
     @Autowired
     private ProjectDAO projectDAO;

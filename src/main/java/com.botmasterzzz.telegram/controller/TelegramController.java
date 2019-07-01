@@ -79,6 +79,33 @@ public class TelegramController {
         return result;
     }
 
+    @RequestMapping(value = "/restart",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PreAuthorize("authenticated")
+    public Map<String, Object> telegramInstanceRestart(@RequestBody @NotNull TelegramDTO telegramDTO, HttpServletRequest httpRequest) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) usernamePasswordAuthenticationToken.getPrincipal();
+        Map<String, Object> result = new HashMap<>();
+        result.put("page", httpRequest.getServletPath());
+        if (telegramDTO.getProjectId() == 0){
+            logger.error("Request to telegram instance restart without project id from login {}", userPrincipal.getLogin());
+            result.put("success", Boolean.FALSE);
+            result.put("telegram", telegramDTO);
+            result.put("message", "Project identifier cat not be empty. Please specify an identifier.");
+            return result;
+        }
+        telegramDTO.setUserId(userPrincipal.getId());
+        telegramDTO = telegramInstanceService.stop(telegramDTO);
+        logger.info("Request to telegram instance STOP {} for {}", telegramDTO.getId(), telegramDTO.getUserId());
+        telegramDTO = telegramInstanceService.start(telegramDTO);
+        logger.info("Request to telegram instance START {} for {}", telegramDTO.getId(), telegramDTO.getUserId());
+        result.put("success", Boolean.TRUE);
+        result.put("telegram", telegramDTO);
+        return result;
+    }
+
     @RequestMapping(value = "/status",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,

@@ -12,6 +12,8 @@ public interface TelegramInstanceDAO {
 
     List<TelegramInstanceEntity> getTelegramInstanceList(long userId);
 
+    List<TelegramInstanceEntity> getFullTelegramInstanceList();
+
     void telegramInstanceDelete(TelegramInstanceEntity telegramInstanceEntity);
 
     TelegramInstanceEntity telegramInstanceUpdate(TelegramInstanceEntity telegramInstanceEntity);
