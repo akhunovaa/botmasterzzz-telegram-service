@@ -50,7 +50,7 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
                 telegramInstance.setSession(botSession);
                 telegramInstance.start();
                 logger.info("Telegram bot after service restart has been started. {}", telegramInstanceEntity);
-                botInstanceContainer.addTelegramBotInstance(telegramInstanceEntity.getUserEntity().getId(), telegramInstance);
+                botInstanceContainer.addTelegramBotInstance(telegramInstanceEntity.getId(), telegramInstance);
                 logger.info("Telegram bot after service restart has been added. {}", telegramInstanceEntity);
             }
 
