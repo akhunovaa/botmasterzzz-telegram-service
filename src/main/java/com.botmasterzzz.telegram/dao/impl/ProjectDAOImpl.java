@@ -8,7 +8,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProjectDAOImpl implements ProjectDAO {
@@ -113,6 +115,20 @@ public class ProjectDAOImpl implements ProjectDAO {
         Criteria criteria = session.createCriteria(UserProjectCommandEntity.class);
         criteria.add(Restrictions.eq("user.id", userId));
         criteria.add(Restrictions.eq("project.id", projectId));
+        userProjectCommandEntityList = criteria.list();
+        session.close();
+        return userProjectCommandEntityList;
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public List<UserProjectCommandEntity> getUserProjectCommandList(long userId, long projectId, long[] ids) {
+        List<UserProjectCommandEntity> userProjectCommandEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(UserProjectCommandEntity.class);
+        criteria.add(Restrictions.eq("user.id", userId));
+        criteria.add(Restrictions.eq("project.id", projectId));
+        criteria.add(Restrictions.in("id", Arrays.stream(ids).boxed().collect(Collectors.toList())));
         userProjectCommandEntityList = criteria.list();
         session.close();
         return userProjectCommandEntityList;

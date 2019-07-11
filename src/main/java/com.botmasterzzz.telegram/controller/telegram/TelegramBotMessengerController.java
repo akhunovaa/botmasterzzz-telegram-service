@@ -86,18 +86,142 @@ public class TelegramBotMessengerController {
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        List<ProjectCommandDTO> projectCommandDTOList = UserContextHolder.currentContext().getProjectCommandDTOList();
+        ProjectCommandDTO parentProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO secondProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO thirdProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO fourthProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO fifthProjectCommandDTO = new ProjectCommandDTO();
+
+        for (ProjectCommandDTO commandDTO : projectCommandDTOList) {
+            if (null != projectCommandDTO && null != commandDTO.getParent() && commandDTO.getParent().getId() == projectCommandDTO.getId()){
+                if (null == commandDTO.getParent() && commandDTO.getCommandType().getId() == 2){
+                    parentProjectCommandDTO = commandDTO;
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                            secondProjectCommandDTO = commandDTOChild;
+                            for (ProjectCommandDTO commandDTOChildSecond : projectCommandDTOList) {
+                                if (null != commandDTOChildSecond.getParent() && commandDTOChild.getId() == commandDTOChildSecond.getParent().getId()){
+                                    thirdProjectCommandDTO = commandDTOChild;
+                                    for (ProjectCommandDTO commandDTOChildThird : projectCommandDTOList) {
+                                        if (null != commandDTOChildThird.getParent() && null != commandDTOChildThird.getParent().getParent() && commandDTOChild.getId() == commandDTOChildThird.getParent().getParent().getId()){
+                                            fourthProjectCommandDTO = commandDTOChild;
+                                            for (ProjectCommandDTO commandDTOChildFourth : projectCommandDTOList) {
+                                                if (null != commandDTOChildFourth.getParent().getParent().getParent() && commandDTOChild.getId() == commandDTOChildFourth.getParent().getParent().getParent().getId()){
+                                                    fifthProjectCommandDTO = commandDTOChild;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent() && commandDTO.getCommandType().getId() == 2){
+                    secondProjectCommandDTO = commandDTO;
+                    parentProjectCommandDTO = commandDTO.getParent();
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId() && commandDTOChild.getCommandType().getId() == 2){
+                            thirdProjectCommandDTO = commandDTOChild;
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent().getParent() && commandDTO.getCommandType().getId() == 2){
+                    secondProjectCommandDTO = commandDTO;
+                    thirdProjectCommandDTO = commandDTO.getParent();
+                    parentProjectCommandDTO = commandDTO.getParent().getParent();
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId() && commandDTOChild.getCommandType().getId() == 2){
+                            fourthProjectCommandDTO = commandDTOChild;
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent().getParent().getParent() && commandDTO.getCommandType().getId() == 2){
+                    secondProjectCommandDTO = commandDTO;
+                    thirdProjectCommandDTO = commandDTO.getParent();
+                    fourthProjectCommandDTO = commandDTO.getParent().getParent();
+                    parentProjectCommandDTO = commandDTO.getParent().getParent().getParent();
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                            fifthProjectCommandDTO = commandDTOChild;
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent().getParent().getParent().getParent() && commandDTO.getCommandType().getId() == 2){
+                    secondProjectCommandDTO = commandDTO;
+                    thirdProjectCommandDTO = commandDTO.getParent();
+                    fourthProjectCommandDTO = commandDTO.getParent().getParent();
+                    fifthProjectCommandDTO = commandDTO.getParent().getParent().getParent();
+                    parentProjectCommandDTO = commandDTO.getParent().getParent().getParent().getParent();
+                }
+            }else if (null != projectCommandDTO && null != projectCommandDTO.getParent() && commandDTO.getCommandType().getId() == 2){
+                for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                    if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                        secondProjectCommandDTO = commandDTOChild;
+                        for (ProjectCommandDTO commandDTOChildSecond : projectCommandDTOList) {
+                            if (null != commandDTOChildSecond.getParent() && commandDTOChild.getId() == commandDTOChildSecond.getParent().getId()){
+                                thirdProjectCommandDTO = commandDTOChild;
+                                for (ProjectCommandDTO commandDTOChildThird : projectCommandDTOList) {
+                                    if (null != commandDTOChildThird.getParent().getParent() && commandDTOChild.getId() == commandDTOChildThird.getParent().getParent().getId()){
+                                        fourthProjectCommandDTO = commandDTOChild;
+                                        for (ProjectCommandDTO commandDTOChildFourth : projectCommandDTOList) {
+                                            if (null != commandDTOChildFourth.getParent().getParent().getParent() && commandDTOChild.getId() == commandDTOChildFourth.getParent().getParent().getParent().getId()){
+                                                fifthProjectCommandDTO = commandDTOChild;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText(commandName);
         firstInlineButton.setCallbackData(commandName);
         inlineKeyboardButtonsFirstRow.add(firstInlineButton);
 
+        if(null != parentProjectCommandDTO.getCommand() && parentProjectCommandDTO.getId() != projectCommandDTO.getId()){
+            InlineKeyboardButton inlineButton = new InlineKeyboardButton();
+            inlineButton.setText(parentProjectCommandDTO.getCommandName());
+            inlineButton.setCallbackData(parentProjectCommandDTO.getCommandName());
+            inlineKeyboardButtonsFirstRow.add(inlineButton);
+        }
+        if(null != secondProjectCommandDTO.getCommand() && secondProjectCommandDTO.getId() != parentProjectCommandDTO.getId()){
+            InlineKeyboardButton inlineButton = new InlineKeyboardButton();
+            inlineButton.setText(secondProjectCommandDTO.getCommandName());
+            inlineButton.setCallbackData(secondProjectCommandDTO.getCommandName());
+            inlineKeyboardButtonsSecondRow.add(inlineButton);
+        }
+        if(null != thirdProjectCommandDTO.getCommand() && thirdProjectCommandDTO.getId() != secondProjectCommandDTO.getId()){
+            InlineKeyboardButton inlineButton = new InlineKeyboardButton();
+            inlineButton.setText(thirdProjectCommandDTO.getCommandName());
+            inlineButton.setCallbackData(thirdProjectCommandDTO.getCommandName());
+            inlineKeyboardButtonsSecondRow.add(inlineButton);
+        }
+        if(null != fourthProjectCommandDTO.getCommand() && fourthProjectCommandDTO.getId() != thirdProjectCommandDTO.getId()){
+            InlineKeyboardButton inlineButton = new InlineKeyboardButton();
+            inlineButton.setText(fourthProjectCommandDTO.getCommandName());
+            inlineButton.setCallbackData(fourthProjectCommandDTO.getCommandName());
+            inlineKeyboardButtonsThirdRow.add(inlineButton);
+        }
+        if(null != fifthProjectCommandDTO.getCommand() && fifthProjectCommandDTO.getId() != fourthProjectCommandDTO.getId()){
+            InlineKeyboardButton inlineButton = new InlineKeyboardButton();
+            inlineButton.setText(fifthProjectCommandDTO.getCommandName());
+            inlineButton.setCallbackData(fifthProjectCommandDTO.getCommandName());
+            inlineKeyboardButtonsThirdRow.add(inlineButton);
+        }
+
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         logger.info("User id {} sent inlined buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
@@ -124,14 +248,120 @@ public class TelegramBotMessengerController {
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        List<ProjectCommandDTO> projectCommandDTOList = UserContextHolder.currentContext().getProjectCommandDTOList();
+        ProjectCommandDTO parentProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO secondProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO thirdProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO fourthProjectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandDTO fifthProjectCommandDTO = new ProjectCommandDTO();
+
+        for (ProjectCommandDTO commandDTO : projectCommandDTOList) {
+            if (null != projectCommandDTO && null != projectCommandDTO.getParent() && commandDTO.getId() == projectCommandDTO.getParent().getId()){
+                if (null == commandDTO.getParent()){
+                    parentProjectCommandDTO = commandDTO;
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                            secondProjectCommandDTO = commandDTOChild;
+                            for (ProjectCommandDTO commandDTOChildSecond : projectCommandDTOList) {
+                                if (null != commandDTOChildSecond.getParent() && commandDTOChild.getId() == commandDTOChildSecond.getParent().getId()){
+                                    thirdProjectCommandDTO = commandDTOChild;
+                                    for (ProjectCommandDTO commandDTOChildThird : projectCommandDTOList) {
+                                        if (null != commandDTOChildThird.getParent() && null != commandDTOChildThird.getParent().getParent() && commandDTOChild.getId() == commandDTOChildThird.getParent().getParent().getId()){
+                                            fourthProjectCommandDTO = commandDTOChild;
+                                            for (ProjectCommandDTO commandDTOChildFourth : projectCommandDTOList) {
+                                                if (null != commandDTOChildThird.getParent() &&  null != commandDTOChildFourth.getParent().getParent() &&  null != commandDTOChildFourth.getParent().getParent().getParent() && commandDTOChild.getId() == commandDTOChildFourth.getParent().getParent().getParent().getId()){
+                                                    fifthProjectCommandDTO = commandDTOChild;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent()){
+                    secondProjectCommandDTO = commandDTO;
+                    parentProjectCommandDTO = commandDTO.getParent();
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                            thirdProjectCommandDTO = commandDTOChild;
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent().getParent()){
+                    secondProjectCommandDTO = commandDTO;
+                    thirdProjectCommandDTO = commandDTO.getParent();
+                    parentProjectCommandDTO = commandDTO.getParent().getParent();
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                            fourthProjectCommandDTO = commandDTOChild;
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent().getParent().getParent()){
+                    secondProjectCommandDTO = commandDTO;
+                    thirdProjectCommandDTO = commandDTO.getParent();
+                    fourthProjectCommandDTO = commandDTO.getParent().getParent();
+                    parentProjectCommandDTO = commandDTO.getParent().getParent().getParent();
+                    for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                        if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                            fifthProjectCommandDTO = commandDTOChild;
+                        }
+                    }
+                }else if (null == commandDTO.getParent().getParent().getParent().getParent().getParent()){
+                    secondProjectCommandDTO = commandDTO;
+                    thirdProjectCommandDTO = commandDTO.getParent();
+                    fourthProjectCommandDTO = commandDTO.getParent().getParent();
+                    fifthProjectCommandDTO = commandDTO.getParent().getParent().getParent();
+                    parentProjectCommandDTO = commandDTO.getParent().getParent().getParent().getParent();
+                }
+            }else if (null != projectCommandDTO && null == projectCommandDTO.getParent()){
+                for (ProjectCommandDTO commandDTOChild : projectCommandDTOList) {
+                    if (null != commandDTOChild.getParent() && commandDTOChild.getParent().getId() == projectCommandDTO.getId()){
+                        secondProjectCommandDTO = commandDTOChild;
+                        for (ProjectCommandDTO commandDTOChildSecond : projectCommandDTOList) {
+                            if (null != commandDTOChildSecond.getParent() && commandDTOChild.getId() == commandDTOChildSecond.getParent().getId()){
+                                thirdProjectCommandDTO = commandDTOChild;
+                                for (ProjectCommandDTO commandDTOChildThird : projectCommandDTOList) {
+                                    if (null != commandDTOChildThird.getParent() && null != commandDTOChildThird.getParent().getParent() && commandDTOChild.getId() == commandDTOChildThird.getParent().getParent().getId()){
+                                        fourthProjectCommandDTO = commandDTOChild;
+                                        for (ProjectCommandDTO commandDTOChildFourth : projectCommandDTOList) {
+                                            if (null != commandDTOChildFourth.getParent() && null != commandDTOChildFourth.getParent().getParent() && null != commandDTOChildFourth.getParent().getParent().getParent() && commandDTOChild.getId() == commandDTOChildFourth.getParent().getParent().getParent().getId()){
+                                                fifthProjectCommandDTO = commandDTOChild;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        KeyboardRow keyboardRowLineTwo = new KeyboardRow();
+        KeyboardRow keyboardRowLineThree = new KeyboardRow();
         keyboardRowLineOne.add(commandName);
-
+        if(null != parentProjectCommandDTO.getCommand()){
+            keyboardRowLineOne.add(parentProjectCommandDTO.getCommandName());
+        }
+        if(null != secondProjectCommandDTO.getCommand()){
+            keyboardRowLineTwo.add(secondProjectCommandDTO.getCommandName());
+        }
+        if(null != thirdProjectCommandDTO.getCommand()){
+            keyboardRowLineTwo.add(thirdProjectCommandDTO.getCommandName());
+        }
+        if(null != fourthProjectCommandDTO.getCommand()){
+            keyboardRowLineThree.add(fourthProjectCommandDTO.getCommandName());
+        }
+        if(null != fifthProjectCommandDTO.getCommand()){
+            keyboardRowLineThree.add(fifthProjectCommandDTO.getCommandName());
+        }
         keyboardRows.add(keyboardRowLineOne);
+        keyboardRows.add(keyboardRowLineTwo);
+        keyboardRows.add(keyboardRowLineThree);
         keyboard.setKeyboard(keyboardRows);
 
         logger.info("User id {} sent reply keyboard buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);

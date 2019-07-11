@@ -64,6 +64,26 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
             projectCommandDTO.setPrivacy(userProjectCommandEntity.isPrivacy());
             projectCommandDTO.setProjectId(userProjectCommandEntity.getProject().getId());
             projectCommandDTO.setUserId(userProjectCommandEntity.getUser().getId());
+            if (null != userProjectCommandEntity.getParent()){
+                ProjectCommandDTO projectCommandDTOTwo = buildDTO(userProjectCommandEntity.getParent());
+                projectCommandDTO.setParent(projectCommandDTOTwo);
+                if (null != userProjectCommandEntity.getParent().getParent()){
+                    ProjectCommandDTO projectCommandDTOThree = buildDTO(userProjectCommandEntity.getParent().getParent());
+                    projectCommandDTOTwo.setParent(projectCommandDTOThree);
+                    if (null != userProjectCommandEntity.getParent().getParent().getParent()){
+                        ProjectCommandDTO projectCommandDTOFour= buildDTO(userProjectCommandEntity.getParent().getParent().getParent());
+                        projectCommandDTOThree.setParent(projectCommandDTOFour);
+                        if (null != userProjectCommandEntity.getParent().getParent().getParent().getParent()){
+                            ProjectCommandDTO projectCommandDTOFive= buildDTO(userProjectCommandEntity.getParent().getParent().getParent().getParent());
+                            projectCommandDTOFour.setParent(projectCommandDTOFive);
+                            if (null != userProjectCommandEntity.getParent().getParent().getParent().getParent().getParent()){
+                                ProjectCommandDTO projectCommandDTOSix= buildDTO(userProjectCommandEntity.getParent().getParent().getParent().getParent().getParent());
+                                projectCommandDTOFive.setParent(projectCommandDTOSix);
+                            }
+                        }
+                    }
+                }
+            }
             if(null == userProjectCommandEntity.getUserProjectCommandTypeEntity()){
                 UserProjectCommandTypeEntity userProjectCommandTypeEntity = new UserProjectCommandTypeEntity();
                 userProjectCommandEntity.setUserProjectCommandTypeEntity(userProjectCommandTypeEntity);
@@ -82,27 +102,59 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
         List<UserProjectCommandEntity> userProjectCommandEntityList;
         userProjectCommandEntityList = projectDAO.getUserProjectCommandList(userId, projectId);
         for (UserProjectCommandEntity userProjectCommandEntity : userProjectCommandEntityList) {
-            ProjectCommandDTO projectCommandDTO = new ProjectCommandDTO();
-            ProjectCommandTypeDTO projectCommandTypeDTO = new ProjectCommandTypeDTO();
-            projectCommandDTO.setId(userProjectCommandEntity.getId());
-            projectCommandDTO.setAnswer(userProjectCommandEntity.getAnswer());
-            projectCommandDTO.setAudWhenCreate(userProjectCommandEntity.getAudWhenCreate());
-            projectCommandDTO.setAudWhenUpdate(userProjectCommandEntity.getAudWhenUpdate());
-            projectCommandDTO.setCommand(userProjectCommandEntity.getCommand());
-            projectCommandDTO.setCommandName(userProjectCommandEntity.getCommandName());
-            projectCommandDTO.setMessengerId(userProjectCommandEntity.getMessengerId());
-            projectCommandDTO.setNote(userProjectCommandEntity.getNote());
-            projectCommandDTO.setPrivacy(userProjectCommandEntity.isPrivacy());
-            projectCommandDTO.setProjectId(userProjectCommandEntity.getProject().getId());
-            projectCommandDTO.setUserId(userProjectCommandEntity.getUser().getId());
-            if(null == userProjectCommandEntity.getUserProjectCommandTypeEntity()){
-                UserProjectCommandTypeEntity userProjectCommandTypeEntity = new UserProjectCommandTypeEntity();
-                userProjectCommandEntity.setUserProjectCommandTypeEntity(userProjectCommandTypeEntity);
+            ProjectCommandDTO projectCommandDTO = buildDTO(userProjectCommandEntity);
+            if (null != userProjectCommandEntity.getParent()){
+                ProjectCommandDTO projectCommandDTOTwo = buildDTO(userProjectCommandEntity.getParent());
+                projectCommandDTO.setParent(projectCommandDTOTwo);
+                if (null != userProjectCommandEntity.getParent().getParent()){
+                    ProjectCommandDTO projectCommandDTOThree = buildDTO(userProjectCommandEntity.getParent().getParent());
+                    projectCommandDTOTwo.setParent(projectCommandDTOThree);
+                    if (null != userProjectCommandEntity.getParent().getParent().getParent()){
+                        ProjectCommandDTO projectCommandDTOFour= buildDTO(userProjectCommandEntity.getParent().getParent().getParent());
+                        projectCommandDTOThree.setParent(projectCommandDTOFour);
+                        if (null != userProjectCommandEntity.getParent().getParent().getParent().getParent()){
+                            ProjectCommandDTO projectCommandDTOFive= buildDTO(userProjectCommandEntity.getParent().getParent().getParent().getParent());
+                            projectCommandDTOFour.setParent(projectCommandDTOFive);
+                            if (null != userProjectCommandEntity.getParent().getParent().getParent().getParent().getParent()){
+                                ProjectCommandDTO projectCommandDTOSix= buildDTO(userProjectCommandEntity.getParent().getParent().getParent().getParent().getParent());
+                                projectCommandDTOFive.setParent(projectCommandDTOSix);
+                            }
+                        }
+                    }
+                }
             }
-            projectCommandTypeDTO.setId(userProjectCommandEntity.getUserProjectCommandTypeEntity().getId());
-            projectCommandTypeDTO.setName(userProjectCommandEntity.getUserProjectCommandTypeEntity().getName());
-            projectCommandTypeDTO.setDescription(userProjectCommandEntity.getUserProjectCommandTypeEntity().getDescription());
-            projectCommandDTO.setCommandType(projectCommandTypeDTO);
+            projectCommandDTOList.add(projectCommandDTO);
+        }
+        return projectCommandDTOList;
+    }
+
+    @Override
+    public List<ProjectCommandDTO> getProjectCommandGetList(long userId, long projectId, long[] ids) {
+        List<ProjectCommandDTO> projectCommandDTOList = new ArrayList<>();
+        List<UserProjectCommandEntity> userProjectCommandEntityList;
+        userProjectCommandEntityList = projectDAO.getUserProjectCommandList(userId, projectId, ids);
+        for (UserProjectCommandEntity userProjectCommandEntity : userProjectCommandEntityList) {
+            ProjectCommandDTO projectCommandDTO = buildDTO(userProjectCommandEntity);
+            if (null != userProjectCommandEntity.getParent()){
+                ProjectCommandDTO projectCommandDTOTwo = buildDTO(userProjectCommandEntity.getParent());
+                projectCommandDTO.setParent(projectCommandDTOTwo);
+                if (null != userProjectCommandEntity.getParent().getParent()){
+                    ProjectCommandDTO projectCommandDTOThree = buildDTO(userProjectCommandEntity.getParent().getParent());
+                    projectCommandDTOTwo.setParent(projectCommandDTOThree);
+                    if (null != userProjectCommandEntity.getParent().getParent().getParent()){
+                        ProjectCommandDTO projectCommandDTOFour= buildDTO(userProjectCommandEntity.getParent().getParent().getParent());
+                        projectCommandDTOThree.setParent(projectCommandDTOFour);
+                        if (null != userProjectCommandEntity.getParent().getParent().getParent().getParent()){
+                            ProjectCommandDTO projectCommandDTOFive= buildDTO(userProjectCommandEntity.getParent().getParent().getParent().getParent());
+                            projectCommandDTOFour.setParent(projectCommandDTOFive);
+                            if (null != userProjectCommandEntity.getParent().getParent().getParent().getParent().getParent()){
+                                ProjectCommandDTO projectCommandDTOSix= buildDTO(userProjectCommandEntity.getParent().getParent().getParent().getParent().getParent());
+                                projectCommandDTOFive.setParent(projectCommandDTOSix);
+                            }
+                        }
+                    }
+                }
+            }
             projectCommandDTOList.add(projectCommandDTO);
         }
         return projectCommandDTOList;
@@ -122,11 +174,6 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
             projectCommandDTO.setProjectId(userProjectCommandEntity.getProject().getId());
             projectCommandDTO.setUserId(userProjectCommandEntity.getUser().getId());
             projectDAO.projectCommandDelete(userProjectCommandEntity);
-            ProjectCommandTypeDTO projectCommandTypeDTO = new ProjectCommandTypeDTO();
-            projectCommandTypeDTO.setId(userProjectCommandEntity.getUserProjectCommandTypeEntity().getId());
-            projectCommandTypeDTO.setName(userProjectCommandEntity.getUserProjectCommandTypeEntity().getName());
-            projectCommandTypeDTO.setDescription(userProjectCommandEntity.getUserProjectCommandTypeEntity().getDescription());
-            projectCommandDTO.setCommandType(projectCommandTypeDTO);
         }
         return projectCommandDTO;
     }
@@ -151,6 +198,59 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
         }else{
             projectCommandDTO.setNotFound(true);
         }
+        return projectCommandDTO;
+    }
+
+    @Override
+    public void projectCommandsGroupSave(List<ProjectCommandDTO> projectCommandDTOList) {
+        long[] commandIds = projectCommandDTOList.stream().mapToLong(ProjectCommandDTO::getId).toArray();
+        Long projectId = projectCommandDTOList.get(0).getProjectId();
+        Long userId = projectCommandDTOList.get(0).getUserId();
+        List<UserProjectCommandEntity> userProjectCommandEntityList = projectDAO.getUserProjectCommandList(userId, projectId, commandIds);
+        for (int i = 0; i < userProjectCommandEntityList.size(); i++) {
+            UserProjectCommandEntity userProjectCommandEntity = userProjectCommandEntityList.get(i);
+            if (i > 0){
+                userProjectCommandEntity.setParent(new UserProjectCommandEntity(commandIds[i - 1]));
+                projectDAO.userProjectCommandUpdate(userProjectCommandEntity);
+            }
+        }
+    }
+
+    @Override
+    public void projectCommandsGroupUpdate(List<ProjectCommandDTO> projectCommandDTOList) {
+        long[] commandIds = projectCommandDTOList.stream().mapToLong(ProjectCommandDTO::getId).toArray();
+        Long projectId = projectCommandDTOList.get(0).getProjectId();
+        Long userId = projectCommandDTOList.get(0).getUserId();
+        List<UserProjectCommandEntity> userProjectCommandEntityList = projectDAO.getUserProjectCommandList(userId, projectId, commandIds);
+        for (int i = 0; i < userProjectCommandEntityList.size(); i++) {
+            UserProjectCommandEntity userProjectCommandEntity = userProjectCommandEntityList.get(i);
+            userProjectCommandEntity.setParent(null);
+            projectDAO.userProjectCommandUpdate(userProjectCommandEntity);
+        }
+    }
+
+    private ProjectCommandDTO buildDTO(UserProjectCommandEntity userProjectCommandEntity){
+        ProjectCommandDTO projectCommandDTO = new ProjectCommandDTO();
+        ProjectCommandTypeDTO projectCommandTypeDTO = new ProjectCommandTypeDTO();
+        projectCommandDTO.setId(userProjectCommandEntity.getId());
+        projectCommandDTO.setAnswer(userProjectCommandEntity.getAnswer());
+        projectCommandDTO.setAudWhenCreate(userProjectCommandEntity.getAudWhenCreate());
+        projectCommandDTO.setAudWhenUpdate(userProjectCommandEntity.getAudWhenUpdate());
+        projectCommandDTO.setCommand(userProjectCommandEntity.getCommand());
+        projectCommandDTO.setCommandName(userProjectCommandEntity.getCommandName());
+        projectCommandDTO.setMessengerId(userProjectCommandEntity.getMessengerId());
+        projectCommandDTO.setNote(userProjectCommandEntity.getNote());
+        projectCommandDTO.setPrivacy(userProjectCommandEntity.isPrivacy());
+        projectCommandDTO.setProjectId(userProjectCommandEntity.getProject().getId());
+        projectCommandDTO.setUserId(userProjectCommandEntity.getUser().getId());
+        if(null == userProjectCommandEntity.getUserProjectCommandTypeEntity()){
+            UserProjectCommandTypeEntity userProjectCommandTypeEntity = new UserProjectCommandTypeEntity();
+            userProjectCommandEntity.setUserProjectCommandTypeEntity(userProjectCommandTypeEntity);
+        }
+        projectCommandTypeDTO.setId(userProjectCommandEntity.getUserProjectCommandTypeEntity().getId());
+        projectCommandTypeDTO.setName(userProjectCommandEntity.getUserProjectCommandTypeEntity().getName());
+        projectCommandTypeDTO.setDescription(userProjectCommandEntity.getUserProjectCommandTypeEntity().getDescription());
+        projectCommandDTO.setCommandType(projectCommandTypeDTO);
         return projectCommandDTO;
     }
 }

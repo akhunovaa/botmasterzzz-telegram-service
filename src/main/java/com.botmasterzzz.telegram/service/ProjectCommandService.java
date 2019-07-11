@@ -12,7 +12,13 @@ public interface ProjectCommandService {
 
     List<ProjectCommandDTO> getProjectCommandGetList(long userId, long projectId);
 
+    List<ProjectCommandDTO> getProjectCommandGetList(long userId, long projectId, long[] id);
+
     ProjectCommandDTO projectCommandDelete(ProjectCommandDTO projectCommandDTO);
 
     ProjectCommandDTO projectCommandUpdate(ProjectCommandDTO projectCommandDTO);
+
+    void projectCommandsGroupSave(List<ProjectCommandDTO> projectCommandDTOList);
+
+    void projectCommandsGroupUpdate(List<ProjectCommandDTO> projectCommandDTOList);
 }

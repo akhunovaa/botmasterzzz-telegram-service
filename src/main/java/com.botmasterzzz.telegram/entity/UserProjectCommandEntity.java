@@ -29,6 +29,10 @@ public class UserProjectCommandEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private UserProjectEntity project;
 
+    @JoinColumn(name = "parent_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    private UserProjectCommandEntity parent;
+
     @Column(name = "privacy")
     private boolean privacy;
 
@@ -56,6 +60,13 @@ public class UserProjectCommandEntity {
     @JsonIgnore
     @Column(name = "aud_when_update")
     private Timestamp audWhenUpdate;
+
+    public UserProjectCommandEntity() {
+    }
+
+    public UserProjectCommandEntity(Long commandId) {
+        this.id = commandId;
+    }
 
     public Long getId() {
         return id;
@@ -153,6 +164,14 @@ public class UserProjectCommandEntity {
         this.audWhenUpdate = audWhenUpdate;
     }
 
+    public UserProjectCommandEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(UserProjectCommandEntity parent) {
+        this.parent = parent;
+    }
+
     @Override
     public String toString() {
         return "UserProjectCommandEntity{" +
@@ -161,6 +180,7 @@ public class UserProjectCommandEntity {
                 ", commandName='" + commandName + '\'' +
                 ", answer='" + answer + '\'' +
                 ", project=" + project +
+                ", parent=" + parent +
                 ", privacy=" + privacy +
                 ", note='" + note + '\'' +
                 ", messengerId=" + messengerId +

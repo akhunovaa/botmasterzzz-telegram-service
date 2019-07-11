@@ -29,6 +29,8 @@ public interface ProjectDAO {
 
     List<UserProjectCommandEntity> getUserProjectCommandList(long userId, long projectId);
 
+    List<UserProjectCommandEntity> getUserProjectCommandList(long userId, long projectId, long[] ids);
+
     void projectCommandDelete(UserProjectCommandEntity projectCommandEntity);
 
     UserProjectCommandEntity userProjectCommandUpdate(UserProjectCommandEntity projectCommandEntity);

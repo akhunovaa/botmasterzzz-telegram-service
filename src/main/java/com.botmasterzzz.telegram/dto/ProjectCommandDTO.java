@@ -27,6 +27,8 @@ public class ProjectCommandDTO {
 
     private boolean privacy;
 
+    private ProjectCommandDTO parent;
+
     @JsonIgnore
     private String note;
 
@@ -153,6 +155,14 @@ public class ProjectCommandDTO {
         this.commandType = projectCommandTypeDTO;
     }
 
+    public ProjectCommandDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(ProjectCommandDTO parent) {
+        this.parent = parent;
+    }
+
     @Override
     public String toString() {
         return "ProjectCommandDTO{" +
@@ -163,6 +173,7 @@ public class ProjectCommandDTO {
                 ", projectId=" + projectId +
                 ", commandType=" + commandType +
                 ", privacy=" + privacy +
+                ", parent=" + parent +
                 ", note='" + note + '\'' +
                 ", messengerId=" + messengerId +
                 ", userId=" + userId +
