@@ -39,4 +39,40 @@ public class GkhMessageServiceImpl implements GkhMessageService {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
+
+    @Override
+    public InlineKeyboardMarkup getCloseInlineKeyboardForGate() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton netMerchButton = new InlineKeyboardButton();
+        netMerchButton.setText("\uD83D\uDD12Закрыть");
+        netMerchButton.setCallbackData(gson.toJson(new CallBackData("gate_close")));
+        inlineKeyboardButtonsFirstRow.add(netMerchButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getOpenInlineKeyboardForGate() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("\uD83D\uDD13Открыть");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("gate_open")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
 }

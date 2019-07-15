@@ -4,9 +4,12 @@ import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
+import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,6 +21,9 @@ public class Handle {
 
     private static BotApiMethodContainer container = BotApiMethodContainer.getInstanse();
 
+    @Autowired
+    private Gson gson;
+
     public List<BotApiMethod> handleMessage(Update update) {
         BotApiMethodController methodController = getHandle(update);
         return methodController.process(update);
@@ -26,6 +32,11 @@ public class Handle {
     public BotApiMethodController getHandle(Update update) {
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
         BotApiMethodController controller;
+        if (update.hasCallbackQuery()){
+            CallBackData callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+            message = callBackData.getPath();
+            UserContextHolder.currentContext().setCallBackData(callBackData);
+        }
         int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         switch (instanceId){
             case 1:

@@ -6,4 +6,8 @@ public interface GkhMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForGate();
 
+    InlineKeyboardMarkup getCloseInlineKeyboardForGate();
+
+    InlineKeyboardMarkup getOpenInlineKeyboardForGate();
+
 }

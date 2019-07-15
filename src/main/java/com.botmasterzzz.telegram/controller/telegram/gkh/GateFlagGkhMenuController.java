@@ -30,4 +30,30 @@ public class GateFlagGkhMenuController {
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
 
+    @BotRequestMapping(value = "gkh-gate_open")
+    public SendMessage gateOpen(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getCloseInlineKeyboardForGate();
+
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>Управление въездом/выездом на территорию дома ЖКХ №1!</b>\n" +
+                        "Шлагбаум открыт. Не забудьте закрыть: \uD83D\uDD3D")
+                .setReplyMarkup(inlineKeyboardMarkup);
+    }
+
+    @BotRequestMapping(value = "gkh-gate_close")
+    public SendMessage gateClose(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getOpenInlineKeyboardForGate();
+
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>Управление въездом/выездом на территорию дома ЖКХ №1!</b>\n" +
+                        "Шлагбаум закрыт. \uD83D\uDD3D")
+                .setReplyMarkup(inlineKeyboardMarkup);
+    }
+
 }
