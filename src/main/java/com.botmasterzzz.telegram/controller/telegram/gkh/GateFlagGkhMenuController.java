@@ -3,21 +3,18 @@ package com.botmasterzzz.telegram.controller.telegram.gkh;
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
-import com.botmasterzzz.bot.api.impl.objects.replykeyboard.ReplyKeyboardMarkup;
-import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @BotController
 public class GateFlagGkhMenuController {
 
     private static final Logger logger = LoggerFactory.getLogger(GateFlagGkhMenuController.class);
 
+    @Autowired
     private GkhMessageService gkhMessageService;
 
     @BotRequestMapping(value = "gkh-\uD83D\uDEA5Шлагбаум")
