@@ -18,6 +18,7 @@ public class UserContext {
     private InlineKeyboardMarkup inlineKeyboardMarkup;
     private CallBackData callBackData;
     private List<ProjectCommandDTO> projectCommandDTOList;
+    private Long instanceId;
 
     public void setUser(User user) {
         this.user = user;
@@ -73,5 +74,13 @@ public class UserContext {
 
     public void setProjectCommandDTO(ProjectCommandDTO projectCommandDTO) {
         this.projectCommandDTO = projectCommandDTO;
+    }
+
+    public Long getInstanceId() {
+        return instanceId;
+    }
+
+    public void setInstanceId(Long instanceId) {
+        this.instanceId = instanceId;
     }
 }
