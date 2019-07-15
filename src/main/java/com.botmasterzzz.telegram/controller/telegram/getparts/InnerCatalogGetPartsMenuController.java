@@ -72,6 +72,17 @@ public class InnerCatalogGetPartsMenuController {
         return editMessageText;
     }
 
+    @BotRequestMapping(value = "getparts-return-to-catalog")
+    public EditMessageText catalog(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
+        stringBuilder.append("Выберите раздел:\n");
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForCatalog();
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
     private EditMessageText getEditMessage(String text, Update update) {
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setChatId(update.getCallbackQuery().getMessage().getChatId());
@@ -80,4 +91,5 @@ public class InnerCatalogGetPartsMenuController {
         editMessageText.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
         return editMessageText;
     }
+
 }

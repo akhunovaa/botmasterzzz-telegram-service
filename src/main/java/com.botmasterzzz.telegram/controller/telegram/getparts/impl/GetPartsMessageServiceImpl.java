@@ -67,6 +67,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsReturnRow = new ArrayList<>();
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("Механизмы управления/Тормоза");
@@ -83,9 +84,15 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         thirdButton.setCallbackData(gson.toJson(new CallBackData("podveska")));
         inlineKeyboardButtonsThirdRow.add(thirdButton);
 
+        InlineKeyboardButton returnButton = new InlineKeyboardButton();
+        returnButton.setText("⏏️Вернуться");
+        returnButton.setCallbackData(gson.toJson(new CallBackData("return-to-catalog")));
+        inlineKeyboardButtonsReturnRow.add(returnButton);
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsReturnRow);
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
@@ -97,13 +104,21 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsReturnRow = new ArrayList<>();
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("Двигатель");
         firstInlineButton.setCallbackData(gson.toJson(new CallBackData("movelex-dvigatel")));
         inlineKeyboardButtonsFirstRow.add(firstInlineButton);
 
+
+        InlineKeyboardButton returnButton = new InlineKeyboardButton();
+        returnButton.setText("⏏️Вернуться");
+        returnButton.setCallbackData(gson.toJson(new CallBackData("return-to-catalog")));
+        inlineKeyboardButtonsReturnRow.add(returnButton);
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsReturnRow);
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
@@ -115,13 +130,21 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsReturnRow = new ArrayList<>();
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("Кузов/Платформа");
         firstInlineButton.setCallbackData(gson.toJson(new CallBackData("nefaz-kuzov")));
         inlineKeyboardButtonsFirstRow.add(firstInlineButton);
 
+
+        InlineKeyboardButton returnButton = new InlineKeyboardButton();
+        returnButton.setText("⏏️Вернуться");
+        returnButton.setCallbackData(gson.toJson(new CallBackData("return-to-catalog")));
+        inlineKeyboardButtonsReturnRow.add(returnButton);
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsReturnRow);
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
@@ -133,13 +156,20 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsReturnRow = new ArrayList<>();
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("Ходовая часть/Подвеска автомобиля");
         firstInlineButton.setCallbackData(gson.toJson(new CallBackData("belzan-kuzov")));
         inlineKeyboardButtonsFirstRow.add(firstInlineButton);
 
+        InlineKeyboardButton returnButton = new InlineKeyboardButton();
+        returnButton.setText("⏏️Вернуться");
+        returnButton.setCallbackData(gson.toJson(new CallBackData("return-to-catalog")));
+        inlineKeyboardButtonsReturnRow.add(returnButton);
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsReturnRow);
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
@@ -153,6 +183,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsReturnRow = new ArrayList<>();
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("Трансмиссия/Сцепление");
@@ -169,9 +200,15 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         thirdInlineButton.setCallbackData(gson.toJson(new CallBackData("mercedes-kuzov")));
         inlineKeyboardButtonsThirdRow.add(thirdInlineButton);
 
+        InlineKeyboardButton returnButton = new InlineKeyboardButton();
+        returnButton.setText("⏏️Вернуться");
+        returnButton.setCallbackData(gson.toJson(new CallBackData("return-to-catalog")));
+        inlineKeyboardButtonsReturnRow.add(returnButton);
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsReturnRow);
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
