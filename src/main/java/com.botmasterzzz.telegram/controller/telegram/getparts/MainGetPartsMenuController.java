@@ -103,14 +103,18 @@ public class MainGetPartsMenuController {
     public SendMessage help(Update update) {
         ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("<b>г. Москва ул. Обычная д.3\n");
-        stringBuilder.append("<b>Номер телефона:</b>\n");
-        stringBuilder.append("+7(915)000-00-00\n");
-        stringBuilder.append("<b>Телеграмм:</b>\n");
-        stringBuilder.append("@getpartsrobot\n");
-        stringBuilder.append("<b>Разработан при помощи:</b>\n");
-        stringBuilder.append("https://botmasterzzz.com\n");
+        stringBuilder.append("\uD83D\uDDA5<b>Главное меню</b>\n");
+        stringBuilder.append("<b>Нажмите на эту кнопку, для того чтобы попасть на главную страницу нашего портала.\n");
+        stringBuilder.append("\uD83D\uDCC4<b>Новости</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, для того чтобы почитать наши последние новости.\n");
+        stringBuilder.append("\uD83D\uDCE8<b>Отзывы</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, чтобы почитать отзывы наших покупателей.\n");
+        stringBuilder.append("\uD83D\uDCD2<b>Контакты</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, для получения списка наших контактных данных.\n");
+        stringBuilder.append("❓<b>Помощь</b>\n");
+        stringBuilder.append("Раздел помощи.\n");
+        stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
+        stringBuilder.append("Для перехода в каталог представленных товаров.\n");
         stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
