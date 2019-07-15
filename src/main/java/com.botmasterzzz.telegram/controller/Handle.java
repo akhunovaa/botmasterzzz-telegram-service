@@ -31,6 +31,9 @@ public class Handle {
             case 1:
                 controller = container.getControllerMap().get("getparts-" + message);
                 return controller;
+            case 5:
+                controller = container.getControllerMap().get("gkh-" + message);
+                return controller;
         }
         int commandMessageType = 1;
         UserContextHolder.currentContext().setProjectCommandDTO(null);

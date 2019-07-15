@@ -1,4 +1,4 @@
-package com.botmasterzzz.telegram.controller.telegram.getparts;
+package com.botmasterzzz.telegram.controller.telegram.gkh;
 
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.objects.Update;
@@ -17,7 +17,7 @@ public class MainMenuController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainMenuController.class);
 
-    @BotRequestMapping(value = "getparts-/start")
+    @BotRequestMapping(value = "gkh-/start")
     public SendMessage start(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
@@ -45,7 +45,7 @@ public class MainMenuController {
                 .setReplyMarkup(keyboard);
     }
 
-    @BotRequestMapping(value = "getparts-\uD83D\uDDA5Главное меню")
+    @BotRequestMapping(value = "gkh-\uD83D\uDDA5Главное меню")
     public SendMessage main(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
@@ -68,7 +68,7 @@ public class MainMenuController {
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Добро пожаловать!</b>\n" +
-                        "Приветствуем Вас у себя в онлайн магазине Get Parts, " + name + "! \n" +
+                        "Приветствуем Вас у себя в онлайн ЖКХ, " + name + "! \n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
