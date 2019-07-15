@@ -18,8 +18,52 @@ public class InnerCatalogGetPartsMenuController {
     private GetPartsMessageService getPartsMessageService;
 
     @BotRequestMapping(value = "getparts-kamaz")
-    public EditMessageText kamazFirst(Update update) {
+    public EditMessageText kamaz(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("⚙️<b>Раздел</b>\n");
+        stringBuilder.append("Выберите наименование раздела:");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "getparts-movelex")
+    public EditMessageText movelex(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForMovelex();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("⚙️<b>Раздел</b>\n");
+        stringBuilder.append("Выберите наименование раздела:");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "getparts-nefaz")
+    public EditMessageText nefaz(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForNefaz();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("⚙️<b>Раздел</b>\n");
+        stringBuilder.append("Выберите наименование раздела:");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "getparts-belzan")
+    public EditMessageText belzan(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForBelzan();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("⚙️<b>Раздел</b>\n");
+        stringBuilder.append("Выберите наименование раздела:");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "getparts-mercedes")
+    public EditMessageText mercedes(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForMercedes();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("⚙️<b>Раздел</b>\n");
         stringBuilder.append("Выберите наименование раздела:");

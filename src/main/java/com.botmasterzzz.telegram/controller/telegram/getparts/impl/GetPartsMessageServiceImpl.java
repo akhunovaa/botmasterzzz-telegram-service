@@ -90,4 +90,90 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForMovelex() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText("Двигатель");
+        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("movelex-dvigatel")));
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForNefaz() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText("Кузов/Платформа");
+        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("nefaz-kuzov")));
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForBelzan() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText("Ходовая часть/Подвеска автомобиля");
+        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("belzan-kuzov")));
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForMercedes() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText("Трансмиссия/Сцепление");
+        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("mercedes-transmission")));
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        InlineKeyboardButton secondInlineButton = new InlineKeyboardButton();
+        secondInlineButton.setText("Двигатель/Система охлаждения");
+        secondInlineButton.setCallbackData(gson.toJson(new CallBackData("mercedes-dvigatel")));
+        inlineKeyboardButtonsSecondRow.add(secondInlineButton);
+
+        InlineKeyboardButton thirdInlineButton = new InlineKeyboardButton();
+        thirdInlineButton.setText("Кузов/Кабина (кузов)");
+        thirdInlineButton.setCallbackData(gson.toJson(new CallBackData("mercedes-kuzov")));
+        inlineKeyboardButtonsThirdRow.add(thirdInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
 }
