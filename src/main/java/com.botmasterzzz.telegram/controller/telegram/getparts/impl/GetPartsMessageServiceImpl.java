@@ -58,4 +58,36 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForKamaz() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText("Механизмы управления/Тормоза");
+        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("kamaz-tormoza")));
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        InlineKeyboardButton secondButton = new InlineKeyboardButton();
+        secondButton.setText("Двигатель");
+        secondButton.setCallbackData(gson.toJson(new CallBackData("dvigatel")));
+        inlineKeyboardButtonsSecondRow.add(secondButton);
+
+        InlineKeyboardButton thirdButton = new InlineKeyboardButton();
+        thirdButton.setText("Ходовая часть/Подвеска автомобиля");
+        thirdButton.setCallbackData(gson.toJson(new CallBackData("podveska")));
+        inlineKeyboardButtonsThirdRow.add(thirdButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
 }

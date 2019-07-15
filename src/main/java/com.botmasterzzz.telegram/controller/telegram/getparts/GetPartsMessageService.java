@@ -6,4 +6,6 @@ public interface GetPartsMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForCatalog();
 
+    InlineKeyboardMarkup getInlineKeyboardForKamaz();
+
 }
