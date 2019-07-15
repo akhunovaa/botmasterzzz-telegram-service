@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @BotController
-public class MainMenuController {
+public class MainGkhMenuController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MainMenuController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainGkhMenuController.class);
 
     @BotRequestMapping(value = "gkh-/start")
     public SendMessage start(Update update) {
