@@ -2,12 +2,14 @@ package com.botmasterzzz.telegram.controller.telegram.getparts;
 
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.objects.Update;
+import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.ReplyKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ import java.util.List;
 public class MainGetPartsMenuController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainGetPartsMenuController.class);
+
+    @Autowired
+    private GetPartsMessageService getPartsMessageService;
 
     @BotRequestMapping(value = "getparts-/start")
     public SendMessage start(Update update) {
@@ -140,16 +145,15 @@ public class MainGetPartsMenuController {
 
     @BotRequestMapping(value = "getparts-\uD83D\uDCC2Каталог")
     public SendMessage catalog(Update update) {
-        ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
-        stringBuilder.append("Наш каталог\n");
-        stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
+        stringBuilder.append("Наш каталог:\n");
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForCatalog();
+
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())
-                .setReplyMarkup(keyboard);
+                .setReplyMarkup(inlineKeyboardMarkup);
     }
 
     private ReplyKeyboardMarkup getMainPageKeyboard(){
