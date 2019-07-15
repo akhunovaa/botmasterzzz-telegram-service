@@ -147,7 +147,7 @@ public class MainGetPartsMenuController {
     public SendMessage catalog(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
-        stringBuilder.append("Наш каталог:\n");
+        stringBuilder.append("Выберите раздел:\n");
         InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForCatalog();
 
         return new SendMessage()
