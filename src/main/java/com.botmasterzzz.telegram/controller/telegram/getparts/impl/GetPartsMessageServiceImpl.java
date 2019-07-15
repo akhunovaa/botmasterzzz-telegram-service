@@ -25,8 +25,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsFourthRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsFifthRow = new ArrayList<>();
+
 
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("KAMAZ");
@@ -36,30 +35,26 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         InlineKeyboardButton secondButton = new InlineKeyboardButton();
         secondButton.setText("MOVELEX");
         secondButton.setCallbackData(gson.toJson(new CallBackData("movelex")));
-        inlineKeyboardButtonsSecondRow.add(secondButton);
+        inlineKeyboardButtonsFirstRow.add(secondButton);
 
         InlineKeyboardButton thirdButton = new InlineKeyboardButton();
         thirdButton.setText("НЕФАЗ");
         thirdButton.setCallbackData(gson.toJson(new CallBackData("nefaz")));
-        inlineKeyboardButtonsThirdRow.add(thirdButton);
-
+        inlineKeyboardButtonsSecondRow.add(thirdButton);
 
         InlineKeyboardButton fourthButton = new InlineKeyboardButton();
         fourthButton.setText("БЕЛЗАН");
         fourthButton.setCallbackData(gson.toJson(new CallBackData("belzan")));
-        inlineKeyboardButtonsFourthRow.add(fourthButton);
-
+        inlineKeyboardButtonsSecondRow.add(fourthButton);
 
         InlineKeyboardButton fifthButton = new InlineKeyboardButton();
         fifthButton.setText("MERCEDES");
         fifthButton.setCallbackData(gson.toJson(new CallBackData("mercedes")));
-        inlineKeyboardButtonsFifthRow.add(fifthButton);
+        inlineKeyboardButtonsThirdRow.add(fifthButton);
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFourthRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFifthRow);
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
