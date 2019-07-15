@@ -27,11 +27,11 @@ public class MainGkhMenuController {
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
-        keyboardRowLineOne.add("\uD83D\uDCC4Новости");
-        keyboardRowLineTwo.add("\uD83D\uDCE8Отзывы");
+        keyboardRowLineOne.add("\uD83D\uDD10Личный кабинет");
+        keyboardRowLineTwo.add("\uD83D\uDEA5Шлагбаум");
         keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
         keyboardRowLineThree.add("❓Помощь");
-        keyboardRowLineThree.add("\uD83D\uDCC2Каталог");
+        keyboardRowLineThree.add("\uD83D\uDCF0Новости");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
@@ -39,8 +39,8 @@ public class MainGkhMenuController {
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Добро пожаловать!</b>\n" +
-                        "Приветствуем Вас у себя в онлайн магазине Get Parts, " + name + "! \n" +
+                .setText("<b>Вас приветствует ЖКХ №1!</b>\n" +
+                        "Позвольте узнать, что Вас беспокоит, " + name + "? \n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
@@ -55,11 +55,11 @@ public class MainGkhMenuController {
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
-        keyboardRowLineOne.add("\uD83D\uDCC4Новости");
-        keyboardRowLineTwo.add("\uD83D\uDCE8Отзывы");
+        keyboardRowLineOne.add("\uD83D\uDD10Личный кабинет");
+        keyboardRowLineTwo.add("\uD83D\uDEA5Шлагбаум");
         keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
         keyboardRowLineThree.add("❓Помощь");
-        keyboardRowLineThree.add("\uD83D\uDCC2Каталог");
+        keyboardRowLineThree.add("\uD83D\uDCF0Новости");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
@@ -67,8 +67,8 @@ public class MainGkhMenuController {
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Добро пожаловать!</b>\n" +
-                        "Приветствуем Вас у себя в онлайн ЖКХ, " + name + "! \n" +
+                .setText("<b>Вас приветствует ЖКХ №1!</b>\n" +
+                        "Позвольте узнать, что Вас беспокоит, " + name + "? \n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
