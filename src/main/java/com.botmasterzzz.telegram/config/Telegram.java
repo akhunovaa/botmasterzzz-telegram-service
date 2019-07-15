@@ -25,12 +25,14 @@ public class Telegram extends TelegramLongPollingBot {
     private BotSession session;
     private DefaultBotOptions options;
     private boolean registered;
+    private Long instanceId;
     private List<ProjectCommandDTO> projectCommandDTOList;
 
-    public Telegram(DefaultBotOptions options, List<ProjectCommandDTO> projectCommandDTOList) {
+    public Telegram(DefaultBotOptions options, List<ProjectCommandDTO> projectCommandDTOList, Long instanceId) {
         super(options);
         this.options = options;
         this.projectCommandDTOList = projectCommandDTOList;
+        this.instanceId = instanceId;
     }
 
     @Override
@@ -38,7 +40,8 @@ public class Telegram extends TelegramLongPollingBot {
     public synchronized void onUpdateReceived(final Update update) {
         logger.info("Update received: " + update.toString());
         UserContextHolder.setupContext(update);
-        UserContextHolder.currentContext().setProjectCommandDTOList(projectCommandDTOList);
+        UserContextHolder.currentContext().setProjectCommandDTOList(this.projectCommandDTOList);
+        UserContextHolder.currentContext().setInstanceId(this.instanceId);
         Handle handle = BeanUtil.getBean(Handle.class);
         try {
             for (BotApiMethod botApiMethod : handle.handleMessage(update)) {

@@ -26,6 +26,12 @@ public class Handle {
     public BotApiMethodController getHandle(Update update) {
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
         BotApiMethodController controller;
+        int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
+        switch (instanceId){
+            case 1:
+                controller = container.getControllerMap().get("getparts-" + message);
+                return controller;
+        }
         int commandMessageType = 1;
         UserContextHolder.currentContext().setProjectCommandDTO(null);
         List<ProjectCommandDTO> projectCommandDTOList = UserContextHolder.currentContext().getProjectCommandDTOList();

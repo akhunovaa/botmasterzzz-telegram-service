@@ -44,7 +44,7 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
                 botSession.setToken(token);
                 DefaultBotOptions defaultBotOptions = new DefaultBotOptions();
                 List<ProjectCommandDTO> projectDTOList = projectCommandService.getProjectCommandGetList(telegramInstanceEntity.getUserEntity().getId(), telegramInstanceEntity.getProject().getId());
-                Telegram telegramInstance = new Telegram(defaultBotOptions, projectDTOList);
+                Telegram telegramInstance = new Telegram(defaultBotOptions, projectDTOList, telegramInstanceEntity.getId());
                 telegramInstance.setToken(token);
                 telegramInstance.setUserName(botName);
                 telegramInstance.setSession(botSession);
@@ -104,7 +104,7 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
         botSession.setToken(token);
         DefaultBotOptions defaultBotOptions = new DefaultBotOptions();
         List<ProjectCommandDTO> projectDTOList = projectCommandService.getProjectCommandGetList(userEntity.getId(), userProjectEntity.getId());
-        Telegram telegramInstance = new Telegram(defaultBotOptions, projectDTOList);
+        Telegram telegramInstance = new Telegram(defaultBotOptions, projectDTOList, id);
         telegramInstance.setToken(token);
         telegramInstance.setUserName(botName);
         telegramInstance.setSession(botSession);
