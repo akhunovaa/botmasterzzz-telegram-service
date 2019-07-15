@@ -9,5 +9,6 @@
     <include file="2019-06-12--01-core-tables.xml" relativeToChangelogFile="true"/>
     <include file="2019-06-12--02-trigger-functions.xml" relativeToChangelogFile="true"/>
     <include file="2019-06-12--03-table-triggers.xml" relativeToChangelogFile="true"/>
+    <include file="2019-07-15--04-drop-constraint.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
