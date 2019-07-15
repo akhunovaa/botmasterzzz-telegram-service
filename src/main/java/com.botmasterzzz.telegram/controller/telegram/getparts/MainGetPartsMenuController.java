@@ -91,7 +91,7 @@ public class MainGetPartsMenuController {
         ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("<b>г. Москва ул. Обычная д.3\n");
+        stringBuilder.append("г. Москва ул. Обычная д.3\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Номер телефона:</b>\n");
         stringBuilder.append("+7(915)000-00-00\n");
@@ -113,7 +113,7 @@ public class MainGetPartsMenuController {
         ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\uD83D\uDDA5<b>Главное меню</b>\n");
-        stringBuilder.append("<b>Нажмите на эту кнопку, для того чтобы попасть на главную страницу нашего портала.\n");
+        stringBuilder.append("Нажмите на эту кнопку, для того чтобы попасть на главную страницу нашего портала.\n");
         stringBuilder.append("\uD83D\uDCC4<b>Новости</b>\n");
         stringBuilder.append("Нажмите на эту кнопку, для того чтобы почитать наши последние новости.\n");
         stringBuilder.append("\uD83D\uDCE8<b>Отзывы</b>\n");
