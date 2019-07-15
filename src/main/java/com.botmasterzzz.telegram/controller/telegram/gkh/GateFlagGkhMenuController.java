@@ -19,7 +19,6 @@ public class GateFlagGkhMenuController {
 
     @BotRequestMapping(value = "gkh-\uD83D\uDEA5Шлагбаум")
     public SendMessage gate(Update update) {
-        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
 
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForGate();
 
@@ -32,7 +31,6 @@ public class GateFlagGkhMenuController {
 
     @BotRequestMapping(value = "gkh-gate_open")
     public SendMessage gateOpen(Update update) {
-        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
 
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getCloseInlineKeyboardForGate();
 
@@ -45,7 +43,6 @@ public class GateFlagGkhMenuController {
 
     @BotRequestMapping(value = "gkh-gate_close")
     public SendMessage gateClose(Update update) {
-        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
 
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getOpenInlineKeyboardForGate();
 
