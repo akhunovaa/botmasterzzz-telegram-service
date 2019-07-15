@@ -8,4 +8,12 @@ public interface GetPartsMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForKamaz();
 
+    InlineKeyboardMarkup getInlineKeyboardForMovelex();
+
+    InlineKeyboardMarkup getInlineKeyboardForNefaz();
+
+    InlineKeyboardMarkup getInlineKeyboardForBelzan();
+
+    InlineKeyboardMarkup getInlineKeyboardForMercedes();
+
 }
