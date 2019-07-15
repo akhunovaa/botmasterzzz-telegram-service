@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @BotController
-public class KamazGetPartsMenuController {
+public class InnerCatalogGetPartsMenuController {
 
-    private static final Logger logger = LoggerFactory.getLogger(KamazGetPartsMenuController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InnerCatalogGetPartsMenuController.class);
 
     @Autowired
     private GetPartsMessageService getPartsMessageService;
 
-    @BotRequestMapping(value = "gkh-kamaz")
+    @BotRequestMapping(value = "getparts-kamaz")
     public EditMessageText kamazFirst(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz();
         StringBuilder stringBuilder = new StringBuilder();
