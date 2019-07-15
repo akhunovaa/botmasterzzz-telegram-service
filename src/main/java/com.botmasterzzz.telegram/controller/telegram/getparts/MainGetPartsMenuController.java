@@ -108,6 +108,7 @@ public class MainGetPartsMenuController {
                 .setText(stringBuilder.toString())
                 .setReplyMarkup(keyboard);
     }
+
     @BotRequestMapping(value = "getparts-❓Помощь")
     public SendMessage help(Update update) {
         ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
@@ -124,6 +125,20 @@ public class MainGetPartsMenuController {
         stringBuilder.append("Раздел помощи.\n");
         stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
         stringBuilder.append("Для перехода в каталог представленных товаров.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString())
+                .setReplyMarkup(keyboard);
+    }
+
+    @BotRequestMapping(value = "getparts-\uD83D\uDCC2Каталог")
+    public SendMessage catalog(Update update) {
+        ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
+        stringBuilder.append("Наш каталог\n");
         stringBuilder.append("\n");
         stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
