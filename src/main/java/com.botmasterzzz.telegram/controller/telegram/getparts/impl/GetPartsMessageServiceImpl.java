@@ -26,7 +26,6 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsThirdRow = new ArrayList<>();
 
-
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText("KAMAZ");
         firstInlineButton.setCallbackData(gson.toJson(new CallBackData("kamaz")));
