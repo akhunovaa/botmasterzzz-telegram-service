@@ -36,6 +36,9 @@ public class TelegramBotUserEntity {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
+
     @JsonIgnore
     @Column(name = "aud_when_create")
     private Timestamp audWhenCreate;
@@ -108,6 +111,14 @@ public class TelegramBotUserEntity {
         this.note = note;
     }
 
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     public Timestamp getAudWhenCreate() {
         return audWhenCreate;
     }
@@ -135,6 +146,7 @@ public class TelegramBotUserEntity {
                 ", isBot=" + isBot +
                 ", languageCode='" + languageCode + '\'' +
                 ", note='" + note + '\'' +
+                ", isBlocked=" + isBlocked +
                 ", audWhenCreate=" + audWhenCreate +
                 ", audWhenUpdate=" + audWhenUpdate +
                 '}';
