@@ -76,12 +76,12 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
         InlineKeyboardButton secondButton = new InlineKeyboardButton();
         secondButton.setText("Двигатель");
-        secondButton.setCallbackData(gson.toJson(new CallBackData("dvigatel")));
+        secondButton.setCallbackData(gson.toJson(new CallBackData("kamaz-dvigatel")));
         inlineKeyboardButtonsSecondRow.add(secondButton);
 
         InlineKeyboardButton thirdButton = new InlineKeyboardButton();
         thirdButton.setText("Ходовая часть/Подвеска автомобиля");
-        thirdButton.setCallbackData(gson.toJson(new CallBackData("podveska")));
+        thirdButton.setCallbackData(gson.toJson(new CallBackData("kamaz-podveska")));
         inlineKeyboardButtonsThirdRow.add(thirdButton);
 
         InlineKeyboardButton returnButton = new InlineKeyboardButton();
