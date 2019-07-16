@@ -6,6 +6,7 @@ import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ public class Handle {
     @Autowired
     private Gson gson;
 
+    @Autowired
+    private TelegramBotStatisticService telegramBotStatisticService;
+
     public List<BotApiMethod> handleMessage(Update update) {
         BotApiMethodController methodController = getHandle(update);
         return methodController.process(update);
@@ -31,13 +35,23 @@ public class Handle {
 
     public BotApiMethodController getHandle(Update update) {
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
+        int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         BotApiMethodController controller;
         if (update.hasCallbackQuery()){
             CallBackData callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
             message = callBackData.getPath();
-            UserContextHolder.currentContext().setCallBackData(callBackData);
+            boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
+            if (!userExists){
+                telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
+            }
+            telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), (long) instanceId);
+        }else {
+            boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
+            if (!userExists){
+                telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
+            }
+            telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId);
         }
-        int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         switch (instanceId){
             case 1:
                 controller = container.getControllerMap().get("getparts-" + message);

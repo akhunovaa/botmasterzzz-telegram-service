@@ -17,6 +17,12 @@ public class TelegramBotUsageStatisticEntity {
     @Column(name = "message")
     private String message;
 
+    @Column(name = "message_id")
+    private Integer messageId;
+
+    @Column(name = "chat_id")
+    private Long chatId;
+
     @Column(name = "messenger_id")
     private int messengerId;
 
@@ -63,6 +69,14 @@ public class TelegramBotUsageStatisticEntity {
         this.messengerId = messengerId;
     }
 
+    public Long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
+    }
+
     public TelegramInstanceEntity getTelegramInstanceEntity() {
         return telegramInstanceEntity;
     }
@@ -103,11 +117,21 @@ public class TelegramBotUsageStatisticEntity {
         this.audWhenUpdate = audWhenUpdate;
     }
 
+    public Integer getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Integer messageId) {
+        this.messageId = messageId;
+    }
+
     @Override
     public String toString() {
         return "TelegramBotUsageStatisticEntity{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
+                ", messageId=" + messageId +
+                ", chatId=" + chatId +
                 ", messengerId=" + messengerId +
                 ", telegramInstanceEntity=" + telegramInstanceEntity +
                 ", telegramBotUserEntity=" + telegramBotUserEntity +

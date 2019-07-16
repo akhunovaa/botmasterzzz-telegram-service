@@ -24,7 +24,7 @@ public class TelegramBotUserEntity {
     private String username;
 
     @Column(name = "telegram_id")
-    private Integer telegramId;
+    private Long telegramId;
 
     @Column(name = "is_bot")
     private boolean isBot;
@@ -79,11 +79,11 @@ public class TelegramBotUserEntity {
         this.username = username;
     }
 
-    public Integer getTelegramId() {
+    public Long getTelegramId() {
         return telegramId;
     }
 
-    public void setTelegramId(Integer telegramId) {
+    public void setTelegramId(Long telegramId) {
         this.telegramId = telegramId;
     }
 

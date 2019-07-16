@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,6 +48,23 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
     }
 
     @Override
+    @SuppressWarnings({"deprecation"})
+    public TelegramBotUserEntity telegramUserGetTelegramId(long telegramId) {
+        TelegramBotUserEntity telegramBotUserEntity = null;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramInstanceEntity.class);
+        criteria.add(Restrictions.eq("telegramId", telegramId));
+        try{
+            telegramBotUserEntity = (TelegramBotUserEntity) criteria.list().get(0);
+        }catch (QueryException | IndexOutOfBoundsException e){
+            session.close();
+        }finally {
+            session.close();
+        }
+        return telegramBotUserEntity;
+    }
+
+    @Override
     @SuppressWarnings({"deprecation", "unchecked"})
     public List<TelegramBotUserEntity> getTelegramUserList() {
         List<TelegramBotUserEntity> telegramBotUserEntityList;
@@ -55,5 +73,17 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
         telegramBotUserEntityList = criteria.list();
         session.close();
         return telegramBotUserEntityList;
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation"})
+    public boolean exists(Class<?> clazz, long idValue) {
+        Session session = sessionFactory.openSession();
+        boolean exists =  session.createCriteria(clazz)
+                .add(Restrictions.idEq(idValue))
+                .setProjection(Projections.id())
+                .uniqueResult() != null;
+        session.close();
+        return exists;
     }
 }
