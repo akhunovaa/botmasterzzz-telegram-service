@@ -10,7 +10,10 @@ public interface TelegramUserDAO {
 
     TelegramBotUserEntity telegramUserGet(long id);
 
+    TelegramBotUserEntity telegramUserGetTelegramId(long telegramUserId);
+
     List<TelegramBotUserEntity> getTelegramUserList();
 
+    boolean exists(Class<?> clazz, long idValue);
 
 }
