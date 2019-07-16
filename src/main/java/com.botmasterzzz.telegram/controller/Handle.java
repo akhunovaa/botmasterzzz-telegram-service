@@ -48,7 +48,7 @@ public class Handle {
         }else {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
             if (!userExists){
-                telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
+                telegramBotStatisticService.telegramUserAdd(update.getMessage().getFrom());
             }
             telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId);
         }
