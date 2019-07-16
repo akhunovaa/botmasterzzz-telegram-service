@@ -27,11 +27,11 @@ public class TelegramBotUsageStatisticEntity {
     private int messengerId;
 
     @JoinColumn(name = "bot_instance_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private TelegramInstanceEntity telegramInstanceEntity;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private TelegramBotUserEntity telegramBotUserEntity;
 
     @Column(name = "note")

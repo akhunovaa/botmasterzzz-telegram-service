@@ -58,8 +58,9 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         TelegramInstanceEntity telegramInstanceEntity = new TelegramInstanceEntity();
         telegramInstanceEntity.setId(botInstance);
         telegramBotUsageStatisticEntity.setTelegramInstanceEntity(telegramInstanceEntity);
+        telegramBotUsageStatisticEntity.setTelegramInstanceEntity(telegramInstanceEntity);
 
-        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGet(message.getFrom().getId());
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(message.getFrom().getId());
         telegramBotUsageStatisticEntity.setTelegramBotUserEntity(telegramBotUserEntity);
 
         telegramStatisticDAO.telegramStatisticAdd(telegramBotUsageStatisticEntity);
