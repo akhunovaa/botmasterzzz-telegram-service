@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1_telegram_bot_users_trigger" failOnError="true" author="azat.akhunov@protonmail.com" runOnChange="true">
+        <sql>
+            DROP TRIGGER IF EXISTS telegram_bot_users_aud_trigger ON telegram_bot_users;
+            CREATE TRIGGER telegram_bot_users_aud_trigger BEFORE INSERT OR UPDATE ON telegram_bot_users FOR EACH ROW EXECUTE PROCEDURE aud_trigger();
+        </sql>
+        <rollback>
+            DROP TRIGGER telegram_bot_users_aud_trigger ON telegram_bot_users;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1_bot_usage_statistics_trigger" failOnError="true" author="azat.akhunov@protonmail.com" runOnChange="true">
+        <sql>
+            DROP TRIGGER IF EXISTS bot_usage_statistics_aud_trigger ON bot_usage_statistics;
+            CREATE TRIGGER bot_usage_statistics_aud_trigger BEFORE INSERT OR UPDATE ON bot_usage_statistics FOR EACH ROW EXECUTE PROCEDURE aud_trigger();
+        </sql>
+        <rollback>
+            DROP TRIGGER bot_usage_statistics_aud_trigger ON bot_usage_statistics;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,142 @@
+package com.botmasterzzz.telegram.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+@Entity
+@Table(name = "telegram_bot_users")
+public class TelegramBotUserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "telegram_id")
+    private Integer telegramId;
+
+    @Column(name = "is_bot")
+    private boolean isBot;
+
+    @Column(name = "language_code")
+    private String languageCode;
+
+    @JsonIgnore
+    @Column(name = "note")
+    private String note;
+
+    @JsonIgnore
+    @Column(name = "aud_when_create")
+    private Timestamp audWhenCreate;
+
+    @JsonIgnore
+    @Column(name = "aud_when_update")
+    private Timestamp audWhenUpdate;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Integer getTelegramId() {
+        return telegramId;
+    }
+
+    public void setTelegramId(Integer telegramId) {
+        this.telegramId = telegramId;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Timestamp getAudWhenCreate() {
+        return audWhenCreate;
+    }
+
+    public void setAudWhenCreate(Timestamp audWhenCreate) {
+        this.audWhenCreate = audWhenCreate;
+    }
+
+    public Timestamp getAudWhenUpdate() {
+        return audWhenUpdate;
+    }
+
+    public void setAudWhenUpdate(Timestamp audWhenUpdate) {
+        this.audWhenUpdate = audWhenUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "TelegramBotUserEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", telegramId=" + telegramId +
+                ", isBot=" + isBot +
+                ", languageCode='" + languageCode + '\'' +
+                ", note='" + note + '\'' +
+                ", audWhenCreate=" + audWhenCreate +
+                ", audWhenUpdate=" + audWhenUpdate +
+                '}';
+    }
+}

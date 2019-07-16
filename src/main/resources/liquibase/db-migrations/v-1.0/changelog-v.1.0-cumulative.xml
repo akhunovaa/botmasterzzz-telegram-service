@@ -10,5 +10,7 @@
     <include file="2019-06-12--02-trigger-functions.xml" relativeToChangelogFile="true"/>
     <include file="2019-06-12--03-table-triggers.xml" relativeToChangelogFile="true"/>
     <include file="2019-07-15--04-drop-constraint.xml" relativeToChangelogFile="true"/>
+    <include file="2019-07-16--05-statistic-tables.xml" relativeToChangelogFile="true"/>
+    <include file="2019-07-16--06-statistic-table-triggers.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
