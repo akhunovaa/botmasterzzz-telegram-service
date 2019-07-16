@@ -52,7 +52,7 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
     public TelegramBotUserEntity telegramUserGetTelegramId(long telegramId) {
         TelegramBotUserEntity telegramBotUserEntity = null;
         Session session = sessionFactory.openSession();
-        Criteria criteria = session.createCriteria(TelegramInstanceEntity.class);
+        Criteria criteria = session.createCriteria(TelegramBotUserEntity.class);
         criteria.add(Restrictions.eq("telegramId", telegramId));
         try{
             telegramBotUserEntity = (TelegramBotUserEntity) criteria.list().get(0);
@@ -80,7 +80,7 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
     public boolean exists(Class<?> clazz, long idValue) {
         Session session = sessionFactory.openSession();
         boolean exists =  session.createCriteria(clazz)
-                .add(Restrictions.idEq(idValue))
+                .add(Restrictions.eq("telegramId", idValue))
                 .setProjection(Projections.id())
                 .uniqueResult() != null;
         session.close();
