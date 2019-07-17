@@ -43,7 +43,7 @@ public class Handle {
             if (!userExists){
                 telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
             }
-            telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), (long) instanceId, update.getCallbackQuery().getFrom().getId());
+            telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), (long) instanceId, update.getCallbackQuery().getFrom().getId(), update.getCallbackQuery().getData());
         }else {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
             if (!userExists){
@@ -64,8 +64,6 @@ public class Handle {
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     message = callBackData.getPath();
                 }
-                callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-                message = callBackData.getPath();
                 controller = container.getControllerMap().get("gkh-" + message);
                 return controller;
         }
