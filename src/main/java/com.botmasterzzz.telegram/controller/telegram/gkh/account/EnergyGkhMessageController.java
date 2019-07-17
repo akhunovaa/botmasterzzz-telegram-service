@@ -20,25 +20,25 @@ public class EnergyGkhMessageController {
     private GkhMessageService gkhMessageService;
 
 
-    @BotRequestMapping(value = "gkh-\uD83D\uDCA8Газ")
+    @BotRequestMapping(value = "gkh-⚡️Электроэнергия")
     public SendMessage gas(Update update) {
 
-        //todo переписать под газ
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForAccount();
+        //todo переписать под электричество
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForGasAccount();
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Здесь вы можете передать показания счетчика газа и получить переданные показания ранее</b>")
+                .setText("<b>Здесь вы можете передать показания счетчика электроэнергии и получить переданные показания ранее</b>")
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
 
     @BotRequestMapping(value = "gkh-get_gas")
-    public EditMessageText getGas(Update update) {
+    public EditMessageText getEnergy(Update update) {
 
-        //todo doAction() - отправка сообщения в кафку для получения переданных ранее показаний счетчика газа
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getSendGasInlineKeyboardForAccount(); //
+        //todo doAction() - отправка сообщения в кафку для получения переданных ранее показаний счетчика электроэнергии
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetEnergyInlineKeyboardForAccount();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Передача показаний счетчика газа.</b>\n");
+        stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
         stringBuilder.append("Показания переданы. Получить показания?");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
@@ -48,11 +48,11 @@ public class EnergyGkhMessageController {
     @BotRequestMapping(value = "gkh-send_gas")
     public EditMessageText sendGas(Update update) {
 
-        //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика газа
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetGasInlineKeyboardForAccount(); //
+        //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика электроэнергии
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getSendEnergyInlineKeyboardForAccount();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Передача показаний счетчика газа.</b>\n");
-        stringBuilder.append("Показания получены. 123,342 м3.");
+        stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
+        stringBuilder.append("Показания получены. 123,342 квт/ч.");
         stringBuilder.append("Отправить другие показания?");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
