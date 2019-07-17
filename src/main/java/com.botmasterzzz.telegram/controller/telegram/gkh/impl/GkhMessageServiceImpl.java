@@ -75,4 +75,63 @@ public class GkhMessageServiceImpl implements GkhMessageService {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForAccount() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("Получить показания");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("get_gas")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        InlineKeyboardButton netMerchButton = new InlineKeyboardButton();
+        netMerchButton.setText("Отправить показания");
+        netMerchButton.setCallbackData(gson.toJson(new CallBackData("send_gas")));
+        inlineKeyboardButtonsFirstRow.add(netMerchButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+    @Override
+    public InlineKeyboardMarkup getGetGasInlineKeyboardForAccount() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("Получить показания");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("get_gas")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getSendGasInlineKeyboardForAccount() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("Отправить показания");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("send_gas")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
 }

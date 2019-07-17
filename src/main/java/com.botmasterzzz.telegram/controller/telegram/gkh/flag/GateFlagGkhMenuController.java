@@ -1,4 +1,4 @@
-package com.botmasterzzz.telegram.controller.telegram.gkh;
+package com.botmasterzzz.telegram.controller.telegram.gkh.flag;
 
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageText;
@@ -6,6 +6,7 @@ import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
+import com.botmasterzzz.telegram.controller.telegram.gkh.GkhMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class GateFlagGkhMenuController {
     @BotRequestMapping(value = "gkh-gate_open")
     public EditMessageText gateOpen(Update update) {
 
+        //todo doAction() - отправка сообщения в кафку для открытия шлагбаума
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getCloseInlineKeyboardForGate();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Управление въездом/выездом на территорию дома ЖКХ №1!</b>\n");
@@ -45,6 +47,7 @@ public class GateFlagGkhMenuController {
     @BotRequestMapping(value = "gkh-gate_close")
     public EditMessageText gateClose(Update update) {
 
+        //todo doAction() - отправка сообщения в кафку для закрытия шлагбаума
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getOpenInlineKeyboardForGate();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Управление въездом/выездом на территорию дома ЖКХ №1!</b>\n");
