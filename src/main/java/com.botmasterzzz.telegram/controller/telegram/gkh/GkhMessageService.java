@@ -10,4 +10,10 @@ public interface GkhMessageService {
 
     InlineKeyboardMarkup getOpenInlineKeyboardForGate();
 
+    InlineKeyboardMarkup getInlineKeyboardForAccount();
+
+    InlineKeyboardMarkup getGetGasInlineKeyboardForAccount();
+
+    InlineKeyboardMarkup getSendGasInlineKeyboardForAccount();
+
 }
