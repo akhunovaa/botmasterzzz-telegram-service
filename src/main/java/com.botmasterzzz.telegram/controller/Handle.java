@@ -53,11 +53,17 @@ public class Handle {
         }
         switch (instanceId){
             case 1:
-                callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-                message = callBackData.getPath();
+                if (update.hasCallbackQuery()){
+                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    message = callBackData.getPath();
+                }
                 controller = container.getControllerMap().get("getparts-" + message);
                 return controller;
             case 5:
+                if (update.hasCallbackQuery()){
+                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    message = callBackData.getPath();
+                }
                 callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                 message = callBackData.getPath();
                 controller = container.getControllerMap().get("gkh-" + message);
