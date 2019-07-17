@@ -22,12 +22,13 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="1_bot_usage_statistics" failOnError="false" author="azat.akhunov@protonmail.com" runOnChange="true">
+    <changeSet id="3_bot_usage_statistics" failOnError="false" author="azat.akhunov@protonmail.com" runOnChange="true">
         <createTable tableName="bot_usage_statistics" schemaName="public">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="message" type="VARCHAR"/>
+            <column name="callback_data" type="VARCHAR"/>
             <column name="message_id" type="INTEGER"/>
             <column name="chat_id" type="BIGINT"/>
             <column name="messenger_id" type="BIGINT" defaultValueNumeric="1"/>

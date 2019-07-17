@@ -17,6 +17,9 @@ public class TelegramBotUsageStatisticEntity {
     @Column(name = "message")
     private String message;
 
+    @Column(name = "callback_data")
+    private String callBackData;
+
     @Column(name = "message_id")
     private Integer messageId;
 
@@ -125,11 +128,20 @@ public class TelegramBotUsageStatisticEntity {
         this.messageId = messageId;
     }
 
+    public String getCallBackData() {
+        return callBackData;
+    }
+
+    public void setCallBackData(String callBackData) {
+        this.callBackData = callBackData;
+    }
+
     @Override
     public String toString() {
         return "TelegramBotUsageStatisticEntity{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
+                ", callBackData='" + callBackData + '\'' +
                 ", messageId=" + messageId +
                 ", chatId=" + chatId +
                 ", messengerId=" + messengerId +

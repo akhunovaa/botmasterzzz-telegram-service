@@ -68,6 +68,28 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
     }
 
     @Override
+    public void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId, String callBackData) {
+        TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity = new TelegramBotUsageStatisticEntity();
+        telegramBotUsageStatisticEntity.setMessage(message.getText());
+        telegramBotUsageStatisticEntity.setCallBackData(callBackData);
+        telegramBotUsageStatisticEntity.setChatId(message.getChatId());
+        telegramBotUsageStatisticEntity.setMessageId(message.getMessageId());
+        telegramBotUsageStatisticEntity.setMessengerId(1);
+        telegramBotUsageStatisticEntity.setNote("TelegramBotStatisticService callback added");
+
+        TelegramInstanceEntity telegramInstanceEntity = new TelegramInstanceEntity();
+        telegramInstanceEntity.setId(botInstance);
+        telegramBotUsageStatisticEntity.setTelegramInstanceEntity(telegramInstanceEntity);
+        telegramBotUsageStatisticEntity.setTelegramInstanceEntity(telegramInstanceEntity);
+
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
+        telegramBotUsageStatisticEntity.setTelegramBotUserEntity(telegramBotUserEntity);
+
+        telegramStatisticDAO.telegramStatisticAdd(telegramBotUsageStatisticEntity);
+
+    }
+
+    @Override
     public TelegramBotUsageStatisticEntity telegramStatisticGet(long id) {
         return telegramStatisticDAO.telegramStatisticGet(id);
     }
