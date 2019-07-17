@@ -15,7 +15,7 @@ public interface TelegramBotStatisticService {
 
     List<TelegramBotUserEntity> getTelegramUserList();
 
-    void telegramStatisticAdd(Message message, Long botInstance);
+    void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId);
 
     TelegramBotUsageStatisticEntity telegramStatisticGet(long id);
 

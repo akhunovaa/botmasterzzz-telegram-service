@@ -35,28 +35,31 @@ public class Handle {
 
     public BotApiMethodController getHandle(Update update) {
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
+        CallBackData callBackData;
         int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         BotApiMethodController controller;
         if (update.hasCallbackQuery()){
-            CallBackData callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-            message = callBackData.getPath();
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
             if (!userExists){
                 telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
             }
-            telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), (long) instanceId);
+            telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), (long) instanceId, update.getCallbackQuery().getFrom().getId());
         }else {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
             if (!userExists){
                 telegramBotStatisticService.telegramUserAdd(update.getMessage().getFrom());
             }
-            telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId);
+            telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId, update.getMessage().getFrom().getId());
         }
         switch (instanceId){
             case 1:
+                callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                message = callBackData.getPath();
                 controller = container.getControllerMap().get("getparts-" + message);
                 return controller;
             case 5:
+                callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                message = callBackData.getPath();
                 controller = container.getControllerMap().get("gkh-" + message);
                 return controller;
         }
