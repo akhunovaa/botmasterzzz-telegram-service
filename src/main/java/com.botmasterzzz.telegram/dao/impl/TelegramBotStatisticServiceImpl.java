@@ -47,7 +47,7 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
     }
 
     @Override
-    public void telegramStatisticAdd(Message message, Long botInstance) {
+    public void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId) {
         TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity = new TelegramBotUsageStatisticEntity();
         telegramBotUsageStatisticEntity.setMessage(message.getText());
         telegramBotUsageStatisticEntity.setChatId(message.getChatId());
@@ -60,7 +60,7 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         telegramBotUsageStatisticEntity.setTelegramInstanceEntity(telegramInstanceEntity);
         telegramBotUsageStatisticEntity.setTelegramInstanceEntity(telegramInstanceEntity);
 
-        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(message.getFrom().getId());
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
         telegramBotUsageStatisticEntity.setTelegramBotUserEntity(telegramBotUserEntity);
 
         telegramStatisticDAO.telegramStatisticAdd(telegramBotUsageStatisticEntity);
