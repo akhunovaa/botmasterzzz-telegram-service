@@ -77,7 +77,7 @@ public class GkhMessageServiceImpl implements GkhMessageService {
     }
 
     @Override
-    public InlineKeyboardMarkup getInlineKeyboardForAccount() {
+    public InlineKeyboardMarkup getInlineKeyboardForGasAccount() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
@@ -98,6 +98,30 @@ public class GkhMessageServiceImpl implements GkhMessageService {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForEnergyAccount() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("Получить показания электроэнергии");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("get_energy")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        InlineKeyboardButton netMerchButton = new InlineKeyboardButton();
+        netMerchButton.setText("Отправить показания электроэнергии");
+        netMerchButton.setCallbackData(gson.toJson(new CallBackData("send_energy")));
+        inlineKeyboardButtonsFirstRow.add(netMerchButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
     @Override
     public InlineKeyboardMarkup getGetGasInlineKeyboardForAccount() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -132,6 +156,43 @@ public class GkhMessageServiceImpl implements GkhMessageService {
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getGetEnergyInlineKeyboardForAccount() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("Получить показания по электроэнергии");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("get_energy")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getSendEnergyInlineKeyboardForAccount() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
+        registerInlineButton.setText("Отправить показания по электроэнергии");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("send_energy")));
+        inlineKeyboardButtonsFirstRow.add(registerInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+
     }
 
 }
