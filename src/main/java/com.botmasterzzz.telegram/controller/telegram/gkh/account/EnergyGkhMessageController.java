@@ -24,7 +24,7 @@ public class EnergyGkhMessageController {
     public SendMessage gas(Update update) {
 
         //todo переписать под газ
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForGate();
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForAccount();
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
