@@ -24,7 +24,7 @@ public class EnergyGkhMessageController {
     public SendMessage gas(Update update) {
 
         //todo переписать под электричество
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForGasAccount();
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForEnergyAccount();
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
@@ -32,28 +32,28 @@ public class EnergyGkhMessageController {
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
 
-    @BotRequestMapping(value = "gkh-get_gas")
+    @BotRequestMapping(value = "gkh-get_energy")
     public EditMessageText getEnergy(Update update) {
 
         //todo doAction() - отправка сообщения в кафку для получения переданных ранее показаний счетчика электроэнергии
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetEnergyInlineKeyboardForAccount();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
-        stringBuilder.append("Показания переданы. Получить показания?");
-        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
-        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
-        return editMessageText;
-    }
-
-    @BotRequestMapping(value = "gkh-send_gas")
-    public EditMessageText sendGas(Update update) {
-
-        //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика электроэнергии
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getSendEnergyInlineKeyboardForAccount();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
         stringBuilder.append("Показания получены. 123,342 квт/ч.");
         stringBuilder.append("Отправить другие показания?");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "gkh-send_energy")
+    public EditMessageText sendGas(Update update) {
+
+        //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика электроэнергии
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetEnergyInlineKeyboardForAccount();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
+        stringBuilder.append("Показания переданы. Получить показания?");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
