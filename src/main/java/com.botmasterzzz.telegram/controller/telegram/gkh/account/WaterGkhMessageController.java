@@ -33,27 +33,52 @@ public class WaterGkhMessageController {
     }
 
     @BotRequestMapping(value = "gkh-get_hot_water")
-    public EditMessageText getGas(Update update) {
+    public EditMessageText getHWater(Update update) {
 
         //todo doAction() - отправка сообщения в кафку для получения переданных ранее показаний счетчика газа
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetHotWaterInlineKeyboardForAccount(); //
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForWaterAccount(); //
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Передача показаний счетчика ГВС.</b>\n");
-        stringBuilder.append("Показания переданы. Получить показания?");
+        stringBuilder.append("<b>Получение показаний счетчика ГВС.</b>\n");
+        stringBuilder.append("Показания получены. 2,1 м3.");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
     }
 
     @BotRequestMapping(value = "gkh-send_hot_water")
-    public EditMessageText sendGas(Update update) {
+    public EditMessageText sendHWater(Update update) {
 
         //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика газа
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getSendHotWaterInlineKeyboardForAccount(); //
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForWaterAccount(); //
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Передача показаний счетчика ГВС.</b>\n");
-        stringBuilder.append("Показания получены. 12,342 м3.");
-        stringBuilder.append("Отправить другие показания?");
+        stringBuilder.append("Показания переданы.");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "gkh-get_cold_water")
+    public EditMessageText getCWater(Update update) {
+
+        //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика газа
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForWaterAccount(); //
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>Получение показаний счетчика ХВС.</b>\n");
+        stringBuilder.append("Показания получены. 19,22 м3.");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "gkh-send_cold_water")
+    public EditMessageText sendCWater(Update update) {
+
+        //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика газа
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForWaterAccount(); //
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>Передача показаний счетчика ХВС.</b>\n");
+        stringBuilder.append("Показания переданы.");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
