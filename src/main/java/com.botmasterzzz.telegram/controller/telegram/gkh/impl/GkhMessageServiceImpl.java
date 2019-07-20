@@ -240,6 +240,9 @@ public class GkhMessageServiceImpl implements GkhMessageService {
     @Override
     public InlineKeyboardMarkup getGetHotWaterInlineKeyboardForAccount() {
         return null;
+
+
+        //  🔐Личный кабинет
     }
 
     @Override
