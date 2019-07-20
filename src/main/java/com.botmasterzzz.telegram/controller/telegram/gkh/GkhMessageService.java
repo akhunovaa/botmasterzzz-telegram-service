@@ -18,6 +18,16 @@ public interface GkhMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForEnergyAccount();
 
+    InlineKeyboardMarkup getInlineKeyboardForWaterAccount();
+
+    InlineKeyboardMarkup getGetHotWaterInlineKeyboardForAccount();
+
+    InlineKeyboardMarkup getSendHotWaterInlineKeyboardForAccount();
+
+    InlineKeyboardMarkup getGetColdWaterInlineKeyboardForAccount();
+
+    InlineKeyboardMarkup getSendColdWaterInlineKeyboardForAccount();
+
     InlineKeyboardMarkup getGetEnergyInlineKeyboardForAccount();
 
     InlineKeyboardMarkup getSendEnergyInlineKeyboardForAccount();
