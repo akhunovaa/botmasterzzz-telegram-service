@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @BotController
 public class GasGkhMessageController {
 
-    private static final Logger logger = LoggerFactory.getLogger(EnergyGkhMessageController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GasGkhMessageController.class);
 
     @Autowired
     private GkhMessageService gkhMessageService;
@@ -36,10 +36,11 @@ public class GasGkhMessageController {
     public EditMessageText getGas(Update update) {
 
         //todo doAction() - отправка сообщения в кафку для получения переданных ранее показаний счетчика газа
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetGasInlineKeyboardForAccount(); //
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getSendGasInlineKeyboardForAccount(); //
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Передача показаний счетчика газа.</b>\n");
-        stringBuilder.append("Показания переданы. Получить показания?");
+        stringBuilder.append("Показания получены. 123,342 м3.");
+        stringBuilder.append("Отправить другие показания?");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
@@ -49,11 +50,10 @@ public class GasGkhMessageController {
     public EditMessageText sendGas(Update update) {
 
         //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика газа
-        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getSendGasInlineKeyboardForAccount(); //
+        InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetGasInlineKeyboardForAccount(); //
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Передача показаний счетчика газа.</b>\n");
-        stringBuilder.append("Показания получены. 123,342 м3.");
-        stringBuilder.append("Отправить другие показания?");
+        stringBuilder.append("Показания переданы. Получить показания?");
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
