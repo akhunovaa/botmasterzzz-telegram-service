@@ -32,5 +32,13 @@ public interface GkhMessageService {
 
     InlineKeyboardMarkup getSendEnergyInlineKeyboardForAccount();
 
+    InlineKeyboardMarkup getInlineKeyboardForSalesTickets();
+
+    InlineKeyboardMarkup getInlineKeyboardForLostTickets();
+
+    InlineKeyboardMarkup getInlineKeyboardForMastersTickets();
+
+    InlineKeyboardMarkup getInlineKeyboardForOtherTickets();
+
 
 }
