@@ -240,9 +240,6 @@ public class GkhMessageServiceImpl implements GkhMessageService {
     @Override
     public InlineKeyboardMarkup getGetHotWaterInlineKeyboardForAccount() {
         return null;
-
-
-        //  🔐Личный кабинет
     }
 
     @Override
@@ -257,6 +254,43 @@ public class GkhMessageServiceImpl implements GkhMessageService {
 
     @Override
     public InlineKeyboardMarkup getSendColdWaterInlineKeyboardForAccount() {
+        return null;
+    }
+
+    @Override
+    public InlineKeyboardMarkup getInlineKeyboardForSalesTickets() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsRow1 = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsRow2 = new ArrayList<>();
+
+        InlineKeyboardButton b1 = new InlineKeyboardButton();
+        b1.setText("Дать объявление - сниму/продам/сдам");
+        b1.setCallbackData(gson.toJson(new CallBackData("send_energy")));
+        inlineKeyboardButtonsRow1.add(b1);
+
+        InlineKeyboardButton b2 = new InlineKeyboardButton();
+        b1.setText("Просмотреть объявления - сниму/продам/сдам");
+        b1.setCallbackData(gson.toJson(new CallBackData("send_energy")));
+        inlineKeyboardButtonsRow1.add(b1);
+
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsRow1);
+
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    public InlineKeyboardMarkup getInlineKeyboardForLostTickets() {
+        return null;
+    }
+
+    public InlineKeyboardMarkup getInlineKeyboardForMastersTickets() {
+        return null;
+    }
+
+    public InlineKeyboardMarkup getInlineKeyboardForOtherTickets() {
         return null;
     }
 }
