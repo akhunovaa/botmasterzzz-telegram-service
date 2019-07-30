@@ -73,5 +73,32 @@ public class MainGkhMenuController {
                 .setReplyMarkup(keyboard);
     }
 
+    @BotRequestMapping(value = "gkh-❓Помощь")
+    public SendMessage help(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\uD83D\uDDA5<b>Главное меню</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, для того чтобы попасть на главную страницу нашего портала.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("\uD83D\uDD10<b>Личный кабинет</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, для того чтобы попасть в личный кабинет для передачи показаний счетчиков.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("\uD83D\uDEA5<b>Шлагбаум</b>\n");
+        stringBuilder.append("Для управления шлагбаумом необходимо перейти по данной кнопке.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("\uD83D\uDCD2<b>Контакты</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, для получения списка наших контактных данных.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("❓<b>Помощь</b>\n");
+        stringBuilder.append("Раздел помощи.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("\uD83D\uDCF0<b>Новости</b>\n");
+        stringBuilder.append("Здесь вы можете узнать последние новости и быть в курсе последних событий.\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString());
+    }
+
 
 }
