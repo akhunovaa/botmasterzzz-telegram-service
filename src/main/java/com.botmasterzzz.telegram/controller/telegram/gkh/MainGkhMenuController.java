@@ -121,5 +121,26 @@ public class MainGkhMenuController {
                 .setText(stringBuilder.toString());
     }
 
+    @BotRequestMapping(value = "gkh-\uD83D\uDCF0Новости")
+    public SendMessage news(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>15 июля 2019г. Запуск бота!</b>\n");
+        stringBuilder.append("<b>Запуск бота!</b>\n");
+        stringBuilder.append("Наш портал запущен. Добро пожаловать! \n");
+        stringBuilder.append("\n");
+        stringBuilder.append("<b>25 июля 2019г. Шлагбаум бота!</b>\n");
+        stringBuilder.append("<b>Шлагбаум бота!</b>\n");
+        stringBuilder.append("Введена возможность управления шлагбаумом через бота! \n");
+        stringBuilder.append("\n");
+        stringBuilder.append("<b>30 июля 2019г. Показания счетчиков!</b>\n");
+        stringBuilder.append("<b>Показания счетчиков!</b>\n");
+        stringBuilder.append("Добавили возможность передачи показаний для счетчиков ГВС/ХВС, электроэнергии и показаний по газу! \n");
+        stringBuilder.append("\n");
+        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString());
+    }
+
 
 }
