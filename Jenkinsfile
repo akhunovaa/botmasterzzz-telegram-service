@@ -55,10 +55,9 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
                         sh "docker login -u leon4uk -p ${dockerHubPwd}"
                     }
-                    sh 'ssh root@5.189.146.63'
-                    sh "docker container ls -a -f name=botmasterzzz-telegram -q | xargs --no-run-if-empty docker container stop"
-                    sh 'docker container ls -a -f name=botmasterzzz-telegram -q | xargs -r docker container rm'
-                    sh 'docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d --net=botmasterzzznetwork -p 0.0.0.0:8064:8064 leon4uk/botmasterzzz-telegram:1.0.0'
+                    sh "ssh root@5.189.146.63 docker container ls -a -f name=botmasterzzz-telegram -q | xargs --no-run-if-empty docker container stop"
+                    sh 'ssh root@5.189.146.63 docker container ls -a -f name=botmasterzzz-telegram -q | xargs -r docker container rm'
+                    sh 'ssh root@5.189.146.63 docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d --net=botmasterzzznetwork -p 0.0.0.0:8064:8064 leon4uk/botmasterzzz-telegram:1.0.0'
                 }
             }
         }
