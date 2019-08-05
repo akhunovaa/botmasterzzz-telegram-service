@@ -50,13 +50,15 @@ pipeline {
             }
 
             stage('Connect to helper node') {
-                steps {
-                    echo 'Connect to helper node'
-                    sshagent (credentials: ['second_node']) {
-                        sh 'ssh -o StrictHostKeyChecking=no -l root 5.189.146.63 uname -a'
+                steps{
+                    sshagent(credentials : ['second_node']) {
+                        sh 'ssh -o StrictHostKeyChecking=no root@5.189.146.63 uptime'
+                        sh 'ssh -v root@5.189.146.63'
                     }
                 }
             }
+
+
 
             stage('Deploy') {
                 steps {
