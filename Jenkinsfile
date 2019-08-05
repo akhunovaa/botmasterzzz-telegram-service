@@ -52,8 +52,8 @@ pipeline {
             stage('Connect to helper node') {
                 steps {
                     echo 'Connect to helper node'
-                    withCredentials([string(credentialsId: 'second_node', variable: 'second_node')]) {
-                        sh "ssh -i ${second_node} root@5.189.146.63"
+                    sshagent (credentials: ['second_node']) {
+                        sh 'ssh -o StrictHostKeyChecking=no -l root 5.189.146.63 uname -a'
                     }
                 }
             }
