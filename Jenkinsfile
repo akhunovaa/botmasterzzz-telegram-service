@@ -54,7 +54,7 @@ pipeline {
                     echo '## Deploy remote ##'
                     sh "ssh root@5.189.146.63 docker container ls -a -f name=botmasterzzz-telegram -q | xargs --no-run-if-empty docker container stop"
                     sh 'ssh root@5.189.146.63 docker container ls -a -f name=botmasterzzz-telegram -q | xargs -r docker container rm'
-                    sh 'ssh root@5.189.146.63 docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d -p 0.0.0.0:8064:8064 --restart always leon4uk/botmasterzzz-telegram:1.0.0'
+                    sh 'ssh root@5.189.146.63 docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d -p 0.0.0.0:8064:8064 -p 127.0.0.1:8899:8899 --restart always leon4uk/botmasterzzz-telegram:1.0.0'
 
                 }
             }
