@@ -34,6 +34,7 @@ pipeline {
             stage('Build Docker Image') {
                 steps {
                     echo 'Build Docker Image'
+                    sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@5.189.146.63"
                     sh 'docker build --no-cache -t leon4uk/botmasterzzz-telegram:1.0.0 .'
                 }
             }
@@ -44,6 +45,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
                         sh "docker login -u leon4uk -p ${dockerHubPwd}"
                     }
+                    sh "ssh -i /var/jenkins_home/.ssh/id_rsa root@5.189.146.63"
                     sh 'docker push leon4uk/botmasterzzz-telegram:1.0.0'
                     sh 'docker rmi leon4uk/botmasterzzz-telegram:1.0.0'
                 }
