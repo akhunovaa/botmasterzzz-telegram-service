@@ -95,7 +95,7 @@ public class MainGetPartsMenuController {
     public SendMessage contacts(Update update) {
         ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Адрес:</b>\n");
+        stringBuilder.append("\uD83C\uDFE2<b>Адрес:</b>\n");
         stringBuilder.append("г. Москва пос. Битца ул. Нагорная С1\n");
         stringBuilder.append("\n");
         stringBuilder.append("☎️<b>Номер телефона:</b>\n");
