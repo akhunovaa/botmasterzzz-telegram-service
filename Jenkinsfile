@@ -54,7 +54,7 @@ pipeline {
                 echo '## Deploy remote ##'
                 script {
                     sshagent(credentials : ['second']) {
-                        sh 'ssh -tt -o StrictHostKeyChecking=no root@5.189.146.63'
+                        sh 'ssh -tt -o StrictHostKeyChecking=no root@5.189.146.63 pwd'
                         sh "docker container ls -a -f name=botmasterzzz-telegram -q | xargs --no-run-if-empty docker container stop"
                         sh 'docker container ls -a -f name=botmasterzzz-telegram -q | xargs -r docker container rm'
                         sh 'docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d -p 0.0.0.0:8064:8064 --network=host --restart always leon4uk/botmasterzzz-telegram:1.0.0'
