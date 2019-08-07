@@ -98,7 +98,7 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>Адрес:</b>\n");
         stringBuilder.append("г. Москва пос. Битца ул. Нагорная С1\n");
         stringBuilder.append("\n");
-        stringBuilder.append("<b>Номер телефона:</b>\n");
+        stringBuilder.append("☎️<b>Номер телефона:</b>\n");
         stringBuilder.append("+7(903)177-59-46\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Телеграмм:</b>\n");
