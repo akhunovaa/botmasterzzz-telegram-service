@@ -42,7 +42,7 @@ pipeline {
                 steps {
                     echo 'Push Docker image'
                     withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
-                        sh "docker login -u leon4uk -p ${dockerHubPwd} --password-stdin"
+                        sh "docker login -u leon4uk -p ${dockerHubPwd}"
                     }
                     sh 'docker push leon4uk/botmasterzzz-telegram:1.0.0'
                     sh 'docker rmi leon4uk/botmasterzzz-telegram:1.0.0'
