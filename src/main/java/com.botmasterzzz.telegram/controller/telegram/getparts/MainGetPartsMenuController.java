@@ -101,7 +101,7 @@ public class MainGetPartsMenuController {
         stringBuilder.append("☎️<b>Номер телефона:</b>\n");
         stringBuilder.append("+7(903)177-59-46\n");
         stringBuilder.append("\n");
-        stringBuilder.append("<b>Телеграмм:</b>\n");
+        stringBuilder.append("\uD83D\uDC8E<b>Телеграмм:</b>\n");
         stringBuilder.append("@getpartsrobot\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Разработан при помощи:</b>\n");
