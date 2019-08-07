@@ -96,10 +96,10 @@ public class MainGetPartsMenuController {
         ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("г. Москва ул. Обычная д.3\n");
+        stringBuilder.append("г. Москва пос. Битца ул. Нагорная С1\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Номер телефона:</b>\n");
-        stringBuilder.append("+7(915)000-00-00\n");
+        stringBuilder.append("+7(903)177-59-46\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Телеграмм:</b>\n");
         stringBuilder.append("@getpartsrobot\n");
