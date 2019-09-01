@@ -35,6 +35,8 @@ public class ProjectDTO {
     @Size(max = 1000)
     private String secret;
 
+    private int userCount;
+
     private boolean isPrivate;
 
     public long getId() {
@@ -109,6 +111,14 @@ public class ProjectDTO {
         this.isPrivate = isPrivate;
     }
 
+    public int getUserCount() {
+        return userCount;
+    }
+
+    public void setUserCount(int userCount) {
+        this.userCount = userCount;
+    }
+
     @Override
     public String toString() {
         return "ProjectDTO{" +
@@ -120,6 +130,7 @@ public class ProjectDTO {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", token='" + token + '\'' +
                 ", secret='" + secret + '\'' +
+                ", userCount=" + userCount +
                 ", isPrivate=" + isPrivate +
                 '}';
     }
