@@ -1,6 +1,7 @@
 package com.botmasterzzz.telegram.service.impl;
 
 import com.botmasterzzz.bot.bot.DefaultBotOptions;
+import com.botmasterzzz.bot.exceptions.TelegramApiException;
 import com.botmasterzzz.bot.generic.BotSession;
 import com.botmasterzzz.bot.updatesreceivers.DefaultBotSession;
 import com.botmasterzzz.telegram.config.Telegram;
@@ -108,6 +109,16 @@ public class TelegramInstanceServiceImpl implements TelegramInstanceService {
         telegramInstance.setToken(token);
         telegramInstance.setUserName(botName);
         telegramInstance.setSession(botSession);
+        try {
+            telegramInstance.getMe();
+        } catch (TelegramApiException e) {
+            logger.error("Telegram token not valid {}", e);
+            telegramDTO.setStatus(false);
+            telegramDTO.setLastError("Ошибка TOKEN'a для запускаемого бота. Пожалуйста повторите попытку установив верный токен.");
+            telegramDTO.setCreated(telegramInstanceEntity.getAudWhenCreate());
+            telegramDTO.setUpdated(telegramInstanceEntity.getAudWhenUpdate());
+            return telegramDTO;
+        }
         telegramInstance.start();
         logger.info("Telegram bot has been started. {}", telegramInstanceEntity);
         botInstanceContainer.addTelegramBotInstance(id, telegramInstance);
