@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "bot_instance")
@@ -34,8 +35,16 @@ public class TelegramInstanceEntity {
 
     @JsonIgnore
     @JoinColumn(name = "project_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private UserProjectEntity project;
+
+    @JsonIgnore
+    @OneToMany(
+            mappedBy = "telegramInstanceEntity",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<TelegramBotUsageStatisticEntity> telegramBotUsageStatisticEntityList;
 
     @Column(name = "status")
     private boolean status;
@@ -137,6 +146,14 @@ public class TelegramInstanceEntity {
 
     public void setAudWhenUpdate(Timestamp audWhenUpdate) {
         this.audWhenUpdate = audWhenUpdate;
+    }
+
+    public List<TelegramBotUsageStatisticEntity> getTelegramBotUsageStatisticEntityList() {
+        return telegramBotUsageStatisticEntityList;
+    }
+
+    public void setTelegramBotUsageStatisticEntityList(List<TelegramBotUsageStatisticEntity> telegramBotUsageStatisticEntityList) {
+        this.telegramBotUsageStatisticEntityList = telegramBotUsageStatisticEntityList;
     }
 
     @Override
