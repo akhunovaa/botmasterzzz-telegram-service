@@ -214,7 +214,6 @@ public class MainGetPartsMenuController {
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFour);
         keyboard.setKeyboard(keyboardRows);
         return keyboard;
