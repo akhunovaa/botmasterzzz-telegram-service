@@ -1,13 +1,23 @@
 package com.botmasterzzz.telegram.controller.telegram.getparts;
 
+import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageText;
+import com.botmasterzzz.bot.api.impl.objects.InputFile;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
+import com.botmasterzzz.telegram.config.context.UserContextHolder;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @BotController
 public class InnerCatalogGetPartsMenuController {
@@ -70,6 +80,39 @@ public class InnerCatalogGetPartsMenuController {
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
+    }
+
+    @BotRequestMapping(value = "getparts-photo-part")
+    public SendPhoto photo(Update update) {
+        long partId = UserContextHolder.currentContext().getPartId();
+        String fileName = "/home/repository/get_parts/images/" + partId + "/1-image.jpg";
+        InputStream in = null;
+        SendPhoto sendPhoto = new SendPhoto();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("⚙️<b>Фото №1</b>\n");
+        JSch jsch=new JSch();
+        Session session;
+        ChannelExec channel= null;
+        try {
+            session = jsch.getSession("root", "botmasterzzz.com", 22);
+            channel = (ChannelExec) session.openChannel("exec");
+            channel.connect();
+            channel.setCommand(fileName);
+            in = channel.getInputStream();
+        } catch (JSchException | IOException e) {
+            if (channel != null) {
+                channel.disconnect();
+            }
+            e.printStackTrace();
+        }finally {
+            if (channel != null) {
+                channel.disconnect();
+            }
+        }
+        sendPhoto.setPhoto(new InputFile(in, "image-one"));
+        sendPhoto.setCaption(stringBuilder.toString());
+        sendPhoto.setChatId(update.getMessage().getChatId());
+        return sendPhoto;
     }
 
     @BotRequestMapping(value = "getparts-return-to-catalog")

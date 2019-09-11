@@ -7,6 +7,8 @@ public interface GetPartsMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForCatalog();
 
+    InlineKeyboardMarkup getPartsPhotoButton();
+
     InlineKeyboardMarkup getInlineKeyboardForKamaz();
 
     InlineKeyboardMarkup getInlineKeyboardForMovelex();

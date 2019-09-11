@@ -171,9 +171,12 @@ public class MainGetPartsMenuController {
 
     @BotRequestMapping(value = "getparts-SECRET-FIND")
     public SendMessage searchInfo(Update update) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(update.getMessage().getChatId()).enableHtml(true);
         StringBuilder stringBuilder = new StringBuilder();
         String message = update.getMessage().getText();
         GetPartsEntity getPartsEntity = getPartsMessageService.searchPart(message);
+        InlineKeyboardMarkup inlineKeyboardMarkup;
         if (null != getPartsEntity){
             stringBuilder.append("\uD83D\uDCC2<b>Поиск по каталогу</b>\n");
             stringBuilder.append("Наименование: ").append(getPartsEntity.getName()).append("\n");
@@ -187,13 +190,17 @@ public class MainGetPartsMenuController {
             stringBuilder.append("Длина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getLength()).append("\n");
             stringBuilder.append("Вес: ").append(getPartsEntity.getGetPartsDetailsEntity().getWeight()).append("\n");
             stringBuilder.append("Ширина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getWidth()).append("\n");
+            UserContextHolder.currentContext().setPartId(getPartsEntity.getId());
+            inlineKeyboardMarkup = getPartsMessageService.getPartsPhotoButton();
+            sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         }else {
             stringBuilder.append("Ничего не найдено. Поробуйте снова!");
         }
+        sendMessage.setText(stringBuilder.toString());
         UserContextHolder.currentContext().setRemain(false);
-        return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(stringBuilder.toString());
+        return sendMessage;
+
+
     }
 
     private ReplyKeyboardMarkup getMainPageKeyboard(){

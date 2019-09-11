@@ -220,6 +220,20 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     }
 
     @Override
+    public InlineKeyboardMarkup getPartsPhotoButton() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText("Фотография");
+        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("photo-part")));
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+        return inlineKeyboardMarkup;
+    }
+
+    @Override
     public GetPartsEntity searchPart(String text) {
         GetPartsEntity getPartsEntity = getPartsDAO.getPartsSearchEntityGet(text);
         return getPartsEntity;
