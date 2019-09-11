@@ -8,16 +8,15 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
+import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
+import java.util.Properties;
 
 @BotController
 public class InnerCatalogGetPartsMenuController {
@@ -94,9 +93,12 @@ public class InnerCatalogGetPartsMenuController {
         Session session;
         ChannelExec channel= null;
         try {
+            byte[] key = Base64.getDecoder().decode("AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCO+d0kiI+0ZPkZ4J088CEuxn6CNCYVoYOq1vXOLHQRlqkn3LvOHPhag2XArBVwHLM8CxVIx+JmktKlhqreBVio=");
+            HostKey hostKey = new HostKey("botmasterzzz.com", key);
+            jsch.getHostKeyRepository().add(hostKey, null);
             session = jsch.getSession("root", "botmasterzzz.com", 22);
             channel = (ChannelExec) session.openChannel("exec");
-            channel.connect();
+            channel.connect(5000);
             channel.setCommand(fileName);
             in = channel.getInputStream();
         } catch (JSchException | IOException e) {
