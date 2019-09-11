@@ -57,7 +57,8 @@ public class Handle {
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     message = callBackData.getPath();
                 }
-                controller = container.getControllerMap().get("getparts-" + message);
+                boolean remain = UserContextHolder.currentContext().isRemain();
+                controller = !remain ? container.getControllerMap().get("getparts-" + message) : container.getControllerMap().get("getparts-SECRET-FIND") ;
                 return controller;
             case 5:
                 if (update.hasCallbackQuery()){

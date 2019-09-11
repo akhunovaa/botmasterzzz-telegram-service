@@ -3,7 +3,9 @@ package com.botmasterzzz.telegram.controller.telegram.getparts.impl;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.InlineKeyboardButton;
 import com.botmasterzzz.telegram.controller.telegram.getparts.GetPartsMessageService;
+import com.botmasterzzz.telegram.dao.GetPartsDAO;
 import com.botmasterzzz.telegram.dto.CallBackData;
+import com.botmasterzzz.telegram.entity.GetPartsEntity;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
     @Autowired
     private Gson gson;
+
+    @Autowired
+    private GetPartsDAO getPartsDAO;
 
     @Override
     public InlineKeyboardMarkup getInlineKeyboardForCatalog() {
@@ -212,5 +217,11 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
+    }
+
+    @Override
+    public GetPartsEntity searchPart(String text) {
+        GetPartsEntity getPartsEntity = getPartsDAO.getPartsSearchEntityGet(text);
+        return getPartsEntity;
     }
 }
