@@ -20,6 +20,7 @@ public class UserContext {
     private List<ProjectCommandDTO> projectCommandDTOList;
     private Long instanceId;
     private boolean remain;
+    private long partId;
 
     public void setUser(User user) {
         this.user = user;
@@ -91,5 +92,13 @@ public class UserContext {
 
     public void setRemain(boolean remain) {
         this.remain = remain;
+    }
+
+    public long getPartId() {
+        return partId;
+    }
+
+    public void setPartId(long partId) {
+        this.partId = partId;
     }
 }
