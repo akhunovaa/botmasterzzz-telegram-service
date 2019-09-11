@@ -19,6 +19,7 @@ public class UserContext {
     private CallBackData callBackData;
     private List<ProjectCommandDTO> projectCommandDTOList;
     private Long instanceId;
+    private boolean remain;
 
     public void setUser(User user) {
         this.user = user;
@@ -82,5 +83,13 @@ public class UserContext {
 
     public void setInstanceId(Long instanceId) {
         this.instanceId = instanceId;
+    }
+
+    public boolean isRemain() {
+        return remain;
+    }
+
+    public void setRemain(boolean remain) {
+        this.remain = remain;
     }
 }

@@ -7,6 +7,8 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.ReplyKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
+import com.botmasterzzz.telegram.config.context.UserContextHolder;
+import com.botmasterzzz.telegram.entity.GetPartsEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,6 +158,44 @@ public class MainGetPartsMenuController {
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
 
+    @BotRequestMapping(value = "getparts-ПОИСК")
+    public SendMessage search(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\uD83D\uDCC2<b>Поиск по каталогу</b>\n");
+        stringBuilder.append("Введите запрос на поиск:\n");
+        UserContextHolder.currentContext().setRemain(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString());
+    }
+
+    @BotRequestMapping(value = "getparts-SECRET-FIND")
+    public SendMessage searchInfo(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String message = update.getMessage().getText();
+        GetPartsEntity getPartsEntity = getPartsMessageService.searchPart(message);
+        if (null != getPartsEntity){
+            stringBuilder.append("\uD83D\uDCC2<b>Поиск по каталогу</b>\n");
+            stringBuilder.append("Наименование: ").append(getPartsEntity.getName()).append("\n");
+            stringBuilder.append("Брэнд: ").append(getPartsEntity.getBrandName()).append("\n");
+            stringBuilder.append("Артикул: ").append(getPartsEntity.getArticle()).append("\n");
+            stringBuilder.append("Категория: ").append(getPartsEntity.getGetPartsDetailsEntity().getCatName()).append("\n");
+            stringBuilder.append("Описание: ").append(getPartsEntity.getGetPartsDetailsEntity().getDescription()).append("\n");
+            stringBuilder.append("Цвет: ").append(getPartsEntity.getGetPartsDetailsEntity().getColour()).append("\n");
+            stringBuilder.append("Материал: ").append(getPartsEntity.getGetPartsDetailsEntity().getMaterial()).append("\n");
+            stringBuilder.append("Высота в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getHeight()).append("\n");
+            stringBuilder.append("Длина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getLength()).append("\n");
+            stringBuilder.append("Вес: ").append(getPartsEntity.getGetPartsDetailsEntity().getWeight()).append("\n");
+            stringBuilder.append("Ширина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getWidth()).append("\n");
+        }else {
+            stringBuilder.append("Ничего не найдено. Поробуйте снова!");
+        }
+        UserContextHolder.currentContext().setRemain(false);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString());
+    }
+
     private ReplyKeyboardMarkup getMainPageKeyboard(){
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
@@ -163,15 +203,19 @@ public class MainGetPartsMenuController {
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
+        KeyboardRow keyboardRowLineFour = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
         keyboardRowLineOne.add("\uD83D\uDCC4Новости");
         keyboardRowLineTwo.add("\uD83D\uDCE8Отзывы");
         keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
         keyboardRowLineThree.add("❓Помощь");
         keyboardRowLineThree.add("\uD83D\uDCC2Каталог");
+        keyboardRowLineFour.add("ПОИСК");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
+        keyboardRows.add(keyboardRowLineThree);
+        keyboardRows.add(keyboardRowLineFour);
         keyboard.setKeyboard(keyboardRows);
         return keyboard;
     }
