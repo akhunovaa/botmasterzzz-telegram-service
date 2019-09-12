@@ -1,7 +1,6 @@
 package com.botmasterzzz.telegram.controller;
 
 import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
-import com.botmasterzzz.bot.api.impl.methods.PartialBotApiMethod;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,7 @@ public abstract class BotApiMethodController {
 
     public abstract boolean successUpdatePredicate(Update update);
 
-    public List<PartialBotApiMethod> process(Update update) {
+    public List<BotApiMethod> process(Update update) {
         try {
             return processUpdate.accept(update);
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -42,21 +41,21 @@ public abstract class BotApiMethodController {
         return List.class.equals(method.getReturnType());
     }
 
-    private List<PartialBotApiMethod> processSingle(Update update)
+    private List<BotApiMethod> processSingle(Update update)
             throws InvocationTargetException, IllegalAccessException {
-        PartialBotApiMethod botApiMethod = (PartialBotApiMethod) method.invoke(bean, update);
+        BotApiMethod botApiMethod = (BotApiMethod) method.invoke(bean, update);
         return botApiMethod != null ? Collections.singletonList(botApiMethod) : new ArrayList<>(0);
     }
 
-    public List<PartialBotApiMethod> processList(Update update)
+    public List<BotApiMethod> processList(Update update)
             throws InvocationTargetException, IllegalAccessException {
-        List<PartialBotApiMethod> botApiMethods = (List<PartialBotApiMethod>) method.invoke(bean, update);
+        List<BotApiMethod> botApiMethods = (List<BotApiMethod>) method.invoke(bean, update);
         return botApiMethods != null ? botApiMethods : new ArrayList<>(0);
     }
 
     private interface Process {
 
-        List<PartialBotApiMethod> accept(Update update)
+        List<BotApiMethod> accept(Update update)
                 throws InvocationTargetException, IllegalAccessException;
     }
 }
