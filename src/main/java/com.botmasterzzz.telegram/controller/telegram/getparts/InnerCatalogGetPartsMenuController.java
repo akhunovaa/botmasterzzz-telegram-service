@@ -64,6 +64,7 @@ public class InnerCatalogGetPartsMenuController {
         EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
         editMessageText.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageText;
+
     }
 
     @BotRequestMapping(value = "getparts-mercedes")
