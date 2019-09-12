@@ -8,15 +8,11 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
-import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
-import java.util.Properties;
+import java.io.File;
 
 @BotController
 public class InnerCatalogGetPartsMenuController {
@@ -85,33 +81,11 @@ public class InnerCatalogGetPartsMenuController {
     public SendPhoto photo(Update update) {
         long partId = UserContextHolder.currentContext().getPartId();
         String fileName = "/home/repository/get_parts/images/" + partId + "/1-image.jpg";
-        InputStream in = null;
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("⚙️<b>Фото №1</b>\n");
-        JSch jsch=new JSch();
-        Session session;
-        ChannelExec channel= null;
-        try {
-            byte[] key = Base64.getDecoder().decode("AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCO+d0kiI+0ZPkZ4J088CEuxn6CNCYVoYOq1vXOLHQRlqkn3LvOHPhag2XArBVwHLM8CxVIx+JmktKlhqreBVio=");
-            HostKey hostKey = new HostKey("botmasterzzz.com", key);
-            jsch.getHostKeyRepository().add(hostKey, null);
-            session = jsch.getSession("root", "botmasterzzz.com", 22);
-            channel = (ChannelExec) session.openChannel("exec");
-            channel.connect(5000);
-            channel.setCommand(fileName);
-            in = channel.getInputStream();
-        } catch (JSchException | IOException e) {
-            if (channel != null) {
-                channel.disconnect();
-            }
-            e.printStackTrace();
-        }finally {
-            if (channel != null) {
-                channel.disconnect();
-            }
-        }
-        sendPhoto.setPhoto(new InputFile(in, "image-one"));
+        File file = new File(fileName);
+        sendPhoto.setPhoto(new InputFile(file, "image-one"));
         sendPhoto.setCaption(stringBuilder.toString());
         sendPhoto.setChatId(update.getMessage().getChatId());
         return sendPhoto;
