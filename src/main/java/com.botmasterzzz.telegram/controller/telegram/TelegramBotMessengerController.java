@@ -2,7 +2,9 @@ package com.botmasterzzz.telegram.controller.telegram;
 
 import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
+import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageText;
+import com.botmasterzzz.bot.api.impl.objects.InputFile;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.User;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
@@ -15,9 +17,12 @@ import com.botmasterzzz.telegram.config.container.BotInstanceContainer;
 import com.botmasterzzz.telegram.config.context.UserContext;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.botmasterzzz.telegram.util.HelperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +55,7 @@ public class TelegramBotMessengerController {
     }
 
     @BotRequestMapping(value = "picture")
-    public BotApiMethod pictureMessage(Update update) {
+    public SendPhoto pictureMessage(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
@@ -70,11 +75,19 @@ public class TelegramBotMessengerController {
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
-
+        SendPhoto sendPhoto = new SendPhoto();
+        String filePath;
+        try {
+            filePath = HelperUtil.saveImage(answer, "temporary");
+            File file1 = new File(filePath);
+            sendPhoto.setPhoto(new InputFile(file1, "image-one"));
+        } catch (IOException e) {
+            logger.error("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
+        }
+        sendPhoto.setChatId(chatId);
+        sendPhoto.disableNotification();
         logger.info("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
-        return new SendMessage()
-                .setChatId(chatId).enableHtml(true)
-                .setText(answer);
+        return sendPhoto;
     }
 
     @BotRequestMapping(value = "inner_button")
