@@ -91,6 +91,7 @@ public class InnerCatalogGetPartsMenuController {
         sendPhoto.setPhoto(new InputFile(file1, "image-one"));
         sendPhoto.setCaption(stringBuilder.toString());
         sendPhoto.setChatId(update.getCallbackQuery().getMessage().getChatId());
+        sendPhoto.disableNotification();
         return sendPhoto;
     }
 
