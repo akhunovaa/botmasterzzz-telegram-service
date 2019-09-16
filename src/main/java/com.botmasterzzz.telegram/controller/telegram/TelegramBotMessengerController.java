@@ -63,18 +63,9 @@ public class TelegramBotMessengerController {
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
-
-        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText(commandName);
         firstInlineButton.setCallbackData(command);
-        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
-
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
-        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         SendPhoto sendPhoto = new SendPhoto();
         String filePath;
         try {
