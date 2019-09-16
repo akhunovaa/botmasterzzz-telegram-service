@@ -8,6 +8,7 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
+import com.botmasterzzz.telegram.dto.CallBackData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,12 +82,13 @@ public class InnerCatalogGetPartsMenuController {
     @BotRequestMapping(value = "getparts-photo-part")
     public SendPhoto photo(Update update) {
         long partId = UserContextHolder.currentContext().getPartId();
-        String fileName = "/home/repository/get_parts/images/" + partId + "/1-image.jpg";
+        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
+        String fileName = "/home/repository/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("⚙️<b>Фото №1</b>\n");
-        File file = new File(fileName);
-        sendPhoto.setPhoto(new InputFile(file, "image-one"));
+        stringBuilder.append("⚙ Фото №1\n");
+        File file1 = new File(fileName);
+        sendPhoto.setPhoto(new InputFile(file1, "image-one"));
         sendPhoto.setCaption(stringBuilder.toString());
         sendPhoto.setChatId(update.getCallbackQuery().getMessage().getChatId());
         return sendPhoto;

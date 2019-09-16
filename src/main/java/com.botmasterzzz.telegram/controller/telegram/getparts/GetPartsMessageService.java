@@ -7,7 +7,7 @@ public interface GetPartsMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForCatalog();
 
-    InlineKeyboardMarkup getPartsPhotoButton();
+    InlineKeyboardMarkup getPartsPhotoButton(long partId);
 
     InlineKeyboardMarkup getInlineKeyboardForKamaz();
 
