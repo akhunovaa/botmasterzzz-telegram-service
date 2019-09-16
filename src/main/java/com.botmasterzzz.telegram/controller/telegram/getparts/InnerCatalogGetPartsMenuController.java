@@ -86,7 +86,7 @@ public class InnerCatalogGetPartsMenuController {
         String fileName = "/home/repository/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("⚙ Фото №1\n");
+        stringBuilder.append("⚙ Фото #" + callBackData.getFileSelected() + "\n");
         File file1 = new File(fileName);
         sendPhoto.setPhoto(new InputFile(file1, "image-one"));
         sendPhoto.setCaption(stringBuilder.toString());
