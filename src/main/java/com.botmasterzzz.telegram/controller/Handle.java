@@ -39,6 +39,7 @@ public class Handle {
         int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         BotApiMethodController controller;
         if (update.hasCallbackQuery()){
+            UserContextHolder.currentContext().setCallBackData(gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class));
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
             if (!userExists){
                 telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());

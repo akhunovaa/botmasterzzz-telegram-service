@@ -10,11 +10,14 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class GetPartsMessageServiceImpl implements GetPartsMessageService {
+
+    private static final String FILE_PATH = "/home/repository/get_parts/images/";
 
     @Autowired
     private Gson gson;
@@ -220,14 +223,36 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     }
 
     @Override
-    public InlineKeyboardMarkup getPartsPhotoButton() {
+    public InlineKeyboardMarkup getPartsPhotoButton(long partId) {
+        String path = FILE_PATH + partId;
+        File file = new File(path);
+        String[] files = file.list();
+        int fileCount = null != files ? files.length : 0;
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
-        firstInlineButton.setText("Фотография");
-        firstInlineButton.setCallbackData(gson.toJson(new CallBackData("photo-part")));
-        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+        CallBackData callBackData = new CallBackData("photo-part");
+        if (fileCount > 0){
+            InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+            firstInlineButton.setText("Фотография #1");
+            callBackData.setFileSelected(1);
+            firstInlineButton.setCallbackData(gson.toJson(callBackData));
+            inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+            if (fileCount > 1){
+                InlineKeyboardButton secondInlineButton = new InlineKeyboardButton();
+                secondInlineButton.setText("Фотография #2");
+                callBackData.setFileSelected(2);
+                secondInlineButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsFirstRow.add(secondInlineButton);
+            }
+            if (fileCount > 2){
+                InlineKeyboardButton thirdInlineButton = new InlineKeyboardButton();
+                thirdInlineButton.setText("Фотография #3");
+                callBackData.setFileSelected(3);
+                thirdInlineButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsFirstRow.add(thirdInlineButton);
+            }
+        }
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;

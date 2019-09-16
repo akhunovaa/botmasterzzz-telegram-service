@@ -191,7 +191,7 @@ public class MainGetPartsMenuController {
             stringBuilder.append("Вес: ").append(getPartsEntity.getGetPartsDetailsEntity().getWeight()).append("\n");
             stringBuilder.append("Ширина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getWidth()).append("\n");
             UserContextHolder.currentContext().setPartId(getPartsEntity.getId());
-            inlineKeyboardMarkup = getPartsMessageService.getPartsPhotoButton();
+            inlineKeyboardMarkup = getPartsMessageService.getPartsPhotoButton(getPartsEntity.getId());
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         }else {
             stringBuilder.append("Ничего не найдено. Поробуйте снова!");
