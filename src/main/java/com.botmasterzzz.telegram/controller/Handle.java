@@ -1,6 +1,6 @@
 package com.botmasterzzz.telegram.controller;
 
-import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
+import com.botmasterzzz.bot.api.impl.methods.PartialBotApiMethod;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
@@ -28,7 +28,7 @@ public class Handle {
     @Autowired
     private TelegramBotStatisticService telegramBotStatisticService;
 
-    public List<BotApiMethod> handleMessage(Update update) {
+    public PartialBotApiMethod handleMessage(Update update) {
         BotApiMethodController methodController = getHandle(update);
         return methodController.process(update);
     }

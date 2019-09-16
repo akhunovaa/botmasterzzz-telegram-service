@@ -2,6 +2,8 @@ package com.botmasterzzz.telegram.config;
 
 import com.botmasterzzz.bot.TelegramLongPollingBot;
 import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
+import com.botmasterzzz.bot.api.impl.methods.PartialBotApiMethod;
+import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.bot.DefaultBotOptions;
 import com.botmasterzzz.bot.exceptions.TelegramApiException;
@@ -43,9 +45,12 @@ public class Telegram extends TelegramLongPollingBot {
         UserContextHolder.currentContext().setProjectCommandDTOList(this.projectCommandDTOList);
         UserContextHolder.currentContext().setInstanceId(this.instanceId);
         Handle handle = BeanUtil.getBean(Handle.class);
+        PartialBotApiMethod partialBotApiMethod = handle.handleMessage(update);
         try {
-            for (BotApiMethod botApiMethod : handle.handleMessage(update)) {
-                execute(botApiMethod);
+            if (partialBotApiMethod instanceof SendPhoto){
+                executePhoto((SendPhoto) partialBotApiMethod);
+            }else {
+                execute((BotApiMethod)partialBotApiMethod);
             }
         } catch (TelegramApiException e) {
             logger.error("ERROR TelegramApiException", e);
