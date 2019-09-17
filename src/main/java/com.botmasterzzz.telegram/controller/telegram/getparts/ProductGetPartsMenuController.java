@@ -19,7 +19,7 @@ public class ProductGetPartsMenuController {
 
     @BotRequestMapping(value = "getparts-kamaz-tormoza")
     public EditMessageText kamazTormoza(Update update) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz();
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz(0);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\uD83D\uDD27<b>Наименование</b>\n");
         stringBuilder.append("Барабан тормозной КАМАЗ (ОАО КАМАЗ)");

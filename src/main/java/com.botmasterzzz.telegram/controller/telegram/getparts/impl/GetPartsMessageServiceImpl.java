@@ -47,8 +47,8 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     }
 
     @Override
-    public InlineKeyboardMarkup getInlineKeyboardForKamaz() {
-        List<GetPartsDetailsEntity> getPartsDetailsEntityList =  getPartsDAO.getPartsDetailsCatList();
+    public InlineKeyboardMarkup getInlineKeyboardForKamaz(int offset) {
+        List<GetPartsDetailsEntity> getPartsDetailsEntityList = UserContextHolder.currentContext().getGetPartsDetailsEntityList();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
@@ -61,40 +61,56 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsReturnRow = new ArrayList<>();
         if (!getPartsDetailsEntityList.isEmpty()){
             CallBackData callBackData = new CallBackData("cat-kamaz");
-            InlineKeyboardButton firstButton = new InlineKeyboardButton();
-            String catName = getPartsDetailsEntityList.get(0).getCatName();
-            firstButton.setText(catName);
-            callBackData.setCategoryName(catName);
-            firstButton.setCallbackData(gson.toJson(callBackData));
-            inlineKeyboardButtonsFirstRow.add(firstButton);
+            String catName;
+            if (offset < getPartsDetailsEntityList.size()) {
+                InlineKeyboardButton firstButton = new InlineKeyboardButton();
+                catName = String.valueOf(null == getPartsDetailsEntityList.get(offset) ? "Другое" : getPartsDetailsEntityList.get(offset));
+                firstButton.setText(catName);
+                callBackData.setCategoryId(offset);
+                firstButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsFirstRow.add(firstButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+            }
+            if (offset + 1 < getPartsDetailsEntityList.size()){
+                InlineKeyboardButton secondButton = new InlineKeyboardButton();
+                catName = String.valueOf(null == getPartsDetailsEntityList.get(offset + 1) ? "Другое" : getPartsDetailsEntityList.get(offset + 1));
+                secondButton.setText(catName);
+                callBackData.setCategoryId(offset + 1);
+                secondButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsSecondRow.add(secondButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+            }
 
-            InlineKeyboardButton secondButton = new InlineKeyboardButton();
-            catName = getPartsDetailsEntityList.get(1).getCatName();
-            secondButton.setText(catName);
-            callBackData.setCategoryName(catName);
-            secondButton.setCallbackData(gson.toJson(callBackData));
-            inlineKeyboardButtonsSecondRow.add(secondButton);
+            if (offset + 2 < getPartsDetailsEntityList.size()){
+                InlineKeyboardButton thirdButton = new InlineKeyboardButton();
+                catName = String.valueOf(null == getPartsDetailsEntityList.get(offset + 2) ? "Другое" : getPartsDetailsEntityList.get(offset + 2));
+                thirdButton.setText(catName);
+                callBackData.setCategoryId(offset + 2);
+                thirdButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsThirdRow.add(thirdButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
+            }
 
-            InlineKeyboardButton thirdButton = new InlineKeyboardButton();
-            catName = getPartsDetailsEntityList.get(2).getCatName();
-            thirdButton.setText(catName);
-            callBackData.setCategoryName(catName);
-            thirdButton.setCallbackData(gson.toJson(callBackData));
-            inlineKeyboardButtonsThirdRow.add(thirdButton);
+            if (offset + 3 < getPartsDetailsEntityList.size()){
+                InlineKeyboardButton fourthButton = new InlineKeyboardButton();
+                catName = String.valueOf(null == getPartsDetailsEntityList.get(offset + 3) ? "Другое" : getPartsDetailsEntityList.get(offset + 3));
+                fourthButton.setText(catName);
+                callBackData.setCategoryId(offset + 3);
+                fourthButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsFourthRow.add(fourthButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsFourthRow);
+            }
 
-            InlineKeyboardButton fourthButton = new InlineKeyboardButton();
-            catName = getPartsDetailsEntityList.get(3).getCatName();
-            fourthButton.setText(catName);
-            callBackData.setCategoryName(catName);
-            fourthButton.setCallbackData(gson.toJson(callBackData));
-            inlineKeyboardButtonsFourthRow.add(fourthButton);
+            if (offset + 4 < getPartsDetailsEntityList.size()){
+                InlineKeyboardButton fifthButton = new InlineKeyboardButton();
+                catName = String.valueOf(null == getPartsDetailsEntityList.get(offset + 4) ? "Другое" : getPartsDetailsEntityList.get(offset + 4));
+                fifthButton.setText(catName);
+                callBackData.setCategoryId(offset + 4);
+                fifthButton.setCallbackData(gson.toJson(callBackData));
+                inlineKeyboardButtonsFifthRow.add(fifthButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsFifthRow);
+            }
 
-            InlineKeyboardButton fifthButton = new InlineKeyboardButton();
-            catName = getPartsDetailsEntityList.get(4).getCatName();
-            fifthButton.setText(catName);
-            callBackData.setCategoryName(catName);
-            fifthButton.setCallbackData(gson.toJson(callBackData));
-            inlineKeyboardButtonsFifthRow.add(fifthButton);
         }
 
         InlineKeyboardButton rowLeftInlineButton = new InlineKeyboardButton();
@@ -103,11 +119,10 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         rowLeftInlineButton.setText("<");
         rowRightInlineButton.setText(">");
 
-
-        callBackDataForArrows.setOffset(0);
+        callBackDataForArrows.setOffset(offset - 4 <= 0 ? 0 : offset - 4);
         rowLeftInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
 
-        callBackDataForArrows.setOffset(5);
+        callBackDataForArrows.setOffset(offset + 4 > getPartsDetailsEntityList.size() ? getPartsDetailsEntityList.size() - 4 : offset + 4);
         rowRightInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
 
         inlineKeyboardButtonsSixthRow.add(rowLeftInlineButton);
@@ -118,11 +133,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         returnButton.setCallbackData(gson.toJson(new CallBackData("return-to-catalog")));
         inlineKeyboardButtonsReturnRow.add(returnButton);
 
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsThirdRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFourthRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFifthRow);
+
         inlineKeyboardButtons.add(inlineKeyboardButtonsSixthRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsReturnRow);
 
@@ -195,5 +206,11 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     public List<GetPartsEntity> getPartsList() {
         List<GetPartsEntity> getPartsEntityList = getPartsDAO.getGetPartsEntityList();
         return getPartsEntityList;
+    }
+
+    @Override
+    public List<GetPartsDetailsEntity> getPartsDetailsCatList() {
+        List<GetPartsDetailsEntity> getPartsDetailsEntityList = getPartsDAO.getPartsDetailsCatList();
+        return getPartsDetailsEntityList;
     }
 }
