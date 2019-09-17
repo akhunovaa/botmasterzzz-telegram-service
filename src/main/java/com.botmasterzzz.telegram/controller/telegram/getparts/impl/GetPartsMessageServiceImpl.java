@@ -233,20 +233,20 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsSecondRowRow = new ArrayList<>();
         CallBackData callBackData = new CallBackData("photo-part");
-        if (fileCount > 0){
+        if (fileCount > 0) {
             InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
             firstInlineButton.setText("Фотография #1");
             callBackData.setFileSelected(1);
             firstInlineButton.setCallbackData(gson.toJson(callBackData));
             inlineKeyboardButtonsFirstRow.add(firstInlineButton);
-            if (fileCount > 1){
+            if (fileCount > 1) {
                 InlineKeyboardButton secondInlineButton = new InlineKeyboardButton();
                 secondInlineButton.setText("Фотография #2");
                 callBackData.setFileSelected(2);
                 secondInlineButton.setCallbackData(gson.toJson(callBackData));
                 inlineKeyboardButtonsFirstRow.add(secondInlineButton);
             }
-            if (fileCount > 2){
+            if (fileCount > 2) {
                 InlineKeyboardButton thirdInlineButton = new InlineKeyboardButton();
                 thirdInlineButton.setText("Фотография #3");
                 callBackData.setFileSelected(3);
@@ -256,15 +256,19 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         }
         InlineKeyboardButton rowLeftInlineButton = new InlineKeyboardButton();
         InlineKeyboardButton rowRightInlineButton = new InlineKeyboardButton();
-        rowRightInlineButton.setText(">");
+        CallBackData callBackDataForArrows = new CallBackData("part-nav-arrow");
         rowLeftInlineButton.setText("<");
-        callBackData.setOffset(offset > 0 ? offset - 1 : 0);
-        callBackData.setPath("part-nav-arrow");
-        rowLeftInlineButton.setCallbackData(gson.toJson(callBackData));
-        callBackData.setOffset(offset >= limit ? limit : offset + 1);
-        rowRightInlineButton.setCallbackData(gson.toJson(callBackData));
-        inlineKeyboardButtonsSecondRowRow.add(rowRightInlineButton);
+        rowRightInlineButton.setText(">");
+
+
+        callBackDataForArrows.setOffset(offset > 0 ? offset - 1 : 0);
+        rowLeftInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
+
+        callBackDataForArrows.setOffset(offset >= limit ? limit : offset + 1);
+        rowRightInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
+
         inlineKeyboardButtonsSecondRowRow.add(rowLeftInlineButton);
+        inlineKeyboardButtonsSecondRowRow.add(rowRightInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRowRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
