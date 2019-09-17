@@ -270,7 +270,9 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         inlineKeyboardButtonsSecondRowRow.add(rowLeftInlineButton);
         inlineKeyboardButtonsSecondRowRow.add(rowRightInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
-        inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRowRow);
+        if(limit > 0) {
+            inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRowRow);
+        }
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
