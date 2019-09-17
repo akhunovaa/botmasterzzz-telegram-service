@@ -179,17 +179,17 @@ public class MainGetPartsMenuController {
         InlineKeyboardMarkup inlineKeyboardMarkup;
         if (null != getPartsEntity){
             stringBuilder.append("\uD83D\uDCC2<b>Поиск по каталогу</b>\n");
-            stringBuilder.append("Наименование: ").append(getPartsEntity.getName()).append("\n");
-            stringBuilder.append("Брэнд: ").append(getPartsEntity.getBrandName()).append("\n");
-            stringBuilder.append("Артикул: ").append(getPartsEntity.getArticle()).append("\n");
-            stringBuilder.append("Категория: ").append(getPartsEntity.getGetPartsDetailsEntity().getCatName()).append("\n");
-            stringBuilder.append("Описание: ").append(getPartsEntity.getGetPartsDetailsEntity().getDescription()).append("\n");
-            stringBuilder.append("Цвет: ").append(getPartsEntity.getGetPartsDetailsEntity().getColour()).append("\n");
-            stringBuilder.append("Материал: ").append(getPartsEntity.getGetPartsDetailsEntity().getMaterial()).append("\n");
-            stringBuilder.append("Высота в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getHeight()).append("\n");
-            stringBuilder.append("Длина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getLength()).append("\n");
-            stringBuilder.append("Вес: ").append(getPartsEntity.getGetPartsDetailsEntity().getWeight()).append("\n");
-            stringBuilder.append("Ширина в метрах: ").append(getPartsEntity.getGetPartsDetailsEntity().getWidth()).append("\n");
+            stringBuilder.append("<b>Наименование:</b> ").append(getPartsEntity.getName()).append("\n");
+            stringBuilder.append("<b>Брэнд:</b> ").append(getPartsEntity.getBrandName()).append("\n");
+            stringBuilder.append("<b>Артикул:</b> ").append(getPartsEntity.getArticle()).append("\n");
+            stringBuilder.append("<b>Категория:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getCatName()).append("\n");
+            stringBuilder.append("<b>Описание:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getDescription()).append("\n");
+            stringBuilder.append("<b>Цвет:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getColour()).append("\n");
+            stringBuilder.append("<b>Материал:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getMaterial()).append("\n");
+            stringBuilder.append("<b>Высота:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getHeight()).append("\n");
+            stringBuilder.append("<b>Длина:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getLength()).append("\n");
+            stringBuilder.append("<b>Вес:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getWeight()).append("\n");
+            stringBuilder.append("<b>Ширина:</b> ").append(getPartsEntity.getGetPartsDetailsEntity().getWidth()).append("\n");
             UserContextHolder.currentContext().setPartId(getPartsEntity.getId());
             inlineKeyboardMarkup = getPartsMessageService.getPartsPhotoButton(getPartsEntity.getId());
             sendMessage.setReplyMarkup(inlineKeyboardMarkup);
