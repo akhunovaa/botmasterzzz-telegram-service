@@ -20,7 +20,7 @@ public interface GetPartsDAO {
 
     boolean getPartsEntityExists(String name);
 
-    GetPartsEntity getPartsSearchEntityGet(String text);
+    List<GetPartsEntity> getPartsSearchEntityGet(String text);
 }
 
 
