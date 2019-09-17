@@ -24,7 +24,6 @@ public class HelperUtil {
 
     public static String saveImage(String imageUrl, String destinationFile) throws IOException {
         String filePath = System.getProperty("java.io.tmpdir") + "/" + destinationFile;
-        File file = new File(filePath);
         ImageIO.write(ImageIO.read(new URL(imageUrl)), "jpg", new File(filePath));
         return filePath;
     }

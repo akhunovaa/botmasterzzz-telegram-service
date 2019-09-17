@@ -69,7 +69,7 @@ public class TelegramBotMessengerController {
         SendPhoto sendPhoto = new SendPhoto();
         String filePath;
         try {
-            filePath = HelperUtil.saveImage(answer, "temporary" + chatId + command);
+            filePath = HelperUtil.saveImage(answer, "temporary" + chatId);
             File file1 = new File(filePath);
             sendPhoto.setPhoto(new InputFile(file1, "image-one"));
         } catch (IOException e) {
