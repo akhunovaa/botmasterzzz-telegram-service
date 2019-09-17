@@ -27,4 +27,20 @@ public class HelperUtil {
         ImageIO.write(ImageIO.read(new URL(imageUrl)), "jpg", new File(filePath));
         return filePath;
     }
+
+    public static String stringBeautyFormat(String text){
+        if (null == text){
+            return "неизвестно";
+        }
+        return text;
+    }
+
+    public static String stringBeautyMeausreFormat(String text){
+        if (null == text){
+            return "неизвестно";
+        }
+        double value = Double.valueOf(text) * 1000;
+        return value + " мм.";
+    }
+
 }
