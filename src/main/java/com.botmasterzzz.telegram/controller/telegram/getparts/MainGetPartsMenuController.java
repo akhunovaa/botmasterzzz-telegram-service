@@ -142,6 +142,9 @@ public class MainGetPartsMenuController {
         stringBuilder.append("\uD83D\uDCC2<b>Каталог</b>\n");
         stringBuilder.append("Для перехода в каталог представленных товаров.\n");
         stringBuilder.append("\n");
+        stringBuilder.append("<b>Поиск</b>\n");
+        stringBuilder.append("Для поиска введите наименование автозапчасти. Поиск ведется по акртикулу, наименованию и по наименованию категории.\n");
+        stringBuilder.append("\n");
         stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
