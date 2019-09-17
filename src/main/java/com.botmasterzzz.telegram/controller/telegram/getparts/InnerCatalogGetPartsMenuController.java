@@ -130,7 +130,7 @@ public class InnerCatalogGetPartsMenuController {
             stringBuilder.append("<b>Длина:</b> ").append(HelperUtil.stringBeautyMeausreFormat(getPartsEntityList.get(offset).getGetPartsDetailsEntity().getLength())).append("\n");
             stringBuilder.append("<b>Вес:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(offset).getGetPartsDetailsEntity().getWeight())).append("\n");
             stringBuilder.append("<b>Ширина:</b> ").append(HelperUtil.stringBeautyMeausreFormat(getPartsEntityList.get(offset).getGetPartsDetailsEntity().getWidth())).append("\n");
-            UserContextHolder.currentContext().setPartId(getPartsEntityList.get(0).getId());
+            UserContextHolder.currentContext().setPartId(getPartsEntityList.get(offset).getId());
             UserContextHolder.currentContext().setGetPartsEntityList(getPartsEntityList);
             editMessageText = getEditMessage(stringBuilder.toString(), update);
             editMessageText.setReplyMarkup(inlineKeyboardMarkup);
