@@ -62,6 +62,9 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>15 июля 2019г. Запуск бота!</b>\n");
         stringBuilder.append("<b>Запуск бота!</b>\n");
         stringBuilder.append("Наш портал запущен. Добро пожаловать! \n");
+        stringBuilder.append("<b>17 сентября 2019г. Разаработан онлайн каталог и поиск.</b>\n");
+        stringBuilder.append("<b>Онлайн каталог</b>\n");
+        stringBuilder.append("Разработан онлайн каталог и поиск по автозапчастям. Для вашего удобства так же включена возможность просмотра фотографии с автозапчастям.");
         stringBuilder.append("\n");
         stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
