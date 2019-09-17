@@ -213,4 +213,16 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<GetPartsDetailsEntity> getPartsDetailsEntityList = getPartsDAO.getPartsDetailsCatList();
         return getPartsDetailsEntityList;
     }
+
+    @Override
+    public List<GetPartsEntity> getPartsListCatName(String catName) {
+        List<GetPartsEntity> getPartsEntityList = getPartsDAO.getGetPartsEntityList();
+        List<GetPartsEntity> getPartsEntityNewList = new ArrayList<>();
+        for (GetPartsEntity getPartsEntity : getPartsEntityList) {
+            if (null!= getPartsEntity.getGetPartsDetailsEntity().getCatName() && getPartsEntity.getGetPartsDetailsEntity().getCatName().equals(catName)){
+                getPartsEntityNewList.add(getPartsEntity);
+            }
+        }
+        return getPartsEntityNewList;
+    }
 }
