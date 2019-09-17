@@ -1,5 +1,6 @@
 package com.botmasterzzz.telegram.dao.impl;
 import com.botmasterzzz.telegram.dao.GetPartsDAO;
+import com.botmasterzzz.telegram.entity.GetPartsDetailsEntity;
 import com.botmasterzzz.telegram.entity.GetPartsEntity;
 import org.hibernate.*;
 import org.hibernate.criterion.MatchMode;
@@ -113,5 +114,22 @@ public class GetPartsDAOImpl implements GetPartsDAO {
         boolean exists = criteria.uniqueResult() != null;
         session.close();
         return exists;
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public List<GetPartsDetailsEntity> getPartsDetailsCatList() {
+        List<GetPartsDetailsEntity>  getPartsDetailsEntityList = null;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(GetPartsDetailsEntity.class);
+        criteria.setProjection(Projections.distinct(Projections.property("catName")));
+        try{
+            getPartsDetailsEntityList = criteria.list();
+        }catch (QueryException e){
+            session.close();
+        }finally {
+            session.close();
+        }
+        return getPartsDetailsEntityList;
     }
 }

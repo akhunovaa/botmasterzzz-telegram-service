@@ -13,14 +13,8 @@ public interface GetPartsMessageService {
 
     InlineKeyboardMarkup getInlineKeyboardForKamaz();
 
-    InlineKeyboardMarkup getInlineKeyboardForMovelex();
-
-    InlineKeyboardMarkup getInlineKeyboardForNefaz();
-
-    InlineKeyboardMarkup getInlineKeyboardForBelzan();
-
-    InlineKeyboardMarkup getInlineKeyboardForMercedes();
-
     List<GetPartsEntity> searchPart(String text);
+
+    List<GetPartsEntity> getPartsList();
 
 }

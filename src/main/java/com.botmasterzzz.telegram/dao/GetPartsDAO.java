@@ -1,5 +1,6 @@
 package com.botmasterzzz.telegram.dao;
 
+import com.botmasterzzz.telegram.entity.GetPartsDetailsEntity;
 import com.botmasterzzz.telegram.entity.GetPartsEntity;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface GetPartsDAO {
     boolean getPartsEntityExists(String name);
 
     List<GetPartsEntity> getPartsSearchEntityGet(String text);
+
+    List<GetPartsDetailsEntity> getPartsDetailsCatList();
 }
 
 
