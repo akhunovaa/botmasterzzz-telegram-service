@@ -54,6 +54,40 @@ public class InnerCatalogGetPartsMenuController {
         return editMessageText;
     }
 
+    @BotRequestMapping(value = "getparts-cat-kamaz")
+    public EditMessageText kamazParts(Update update) {
+        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
+        int chosenCat = callBackData.getCategoryId();
+        List<GetPartsDetailsEntity> getPartsDetailsEntityList = UserContextHolder.currentContext().getGetPartsDetailsEntityList();
+        String catName = null != getPartsDetailsEntityList.get(chosenCat) ? String.valueOf(getPartsDetailsEntityList.get(chosenCat)) : "";
+        List<GetPartsEntity> getPartsEntityList = getPartsMessageService.getPartsListCatName(catName);
+        UserContextHolder.currentContext().setGetPartsEntityList(getPartsEntityList);
+        InlineKeyboardMarkup inlineKeyboardMarkup;
+        StringBuilder stringBuilder = new StringBuilder();
+        if (!getPartsEntityList.isEmpty()){
+            stringBuilder.append("\uD83D\uDCC2<b>Данные по товару:</b>\n");
+            stringBuilder.append("<b>Наименование:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getName())).append("\n");
+            stringBuilder.append("<b>Брэнд:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getBrandName())).append("\n");
+            stringBuilder.append("<b>Артикул:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getArticle())).append("\n");
+            stringBuilder.append("<b>Категория:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getCatName())).append("\n");
+            stringBuilder.append("<b>Описание:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getDescription())).append("\n");
+            stringBuilder.append("<b>Цвет:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getColour())).append("\n");
+            stringBuilder.append("<b>Материал:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getMaterial())).append("\n");
+            stringBuilder.append("<b>Высота:</b> ").append(HelperUtil.stringBeautyMeausreFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getHeight())).append("\n");
+            stringBuilder.append("<b>Длина:</b> ").append(HelperUtil.stringBeautyMeausreFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getLength())).append("\n");
+            stringBuilder.append("<b>Вес:</b> ").append(HelperUtil.stringBeautyFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getWeight())).append("\n");
+            stringBuilder.append("<b>Ширина:</b> ").append(HelperUtil.stringBeautyMeausreFormat(getPartsEntityList.get(0).getGetPartsDetailsEntity().getWidth())).append("\n");
+            UserContextHolder.currentContext().setPartId(getPartsEntityList.get(0).getId());
+            UserContextHolder.currentContext().setGetPartsEntityList(getPartsEntityList);
+        }else {
+            stringBuilder.append("Ничего не найдено. Поробуйте снова!");
+        }
+        inlineKeyboardMarkup = getPartsMessageService.getPartsPhotoButton(getPartsEntityList.get(0).getId(), 0, getPartsEntityList.size());
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
     @BotRequestMapping(value = "getparts-photo-part")
     public SendPhoto photo(Update update) {
         long partId = UserContextHolder.currentContext().getPartId();

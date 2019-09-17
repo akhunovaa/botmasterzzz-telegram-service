@@ -24,6 +24,8 @@ public interface GetPartsDAO {
     List<GetPartsEntity> getPartsSearchEntityGet(String text);
 
     List<GetPartsDetailsEntity> getPartsDetailsCatList();
+
+    List<GetPartsEntity> getPartsListFromCatName(String catName);
 }
 
 

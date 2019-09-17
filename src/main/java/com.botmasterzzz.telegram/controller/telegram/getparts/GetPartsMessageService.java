@@ -18,6 +18,8 @@ public interface GetPartsMessageService {
 
     List<GetPartsEntity> getPartsList();
 
+    List<GetPartsEntity> getPartsListCatName(String catName);
+
     List<GetPartsDetailsEntity> getPartsDetailsCatList();
 
 }

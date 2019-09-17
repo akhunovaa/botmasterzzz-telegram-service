@@ -132,4 +132,21 @@ public class GetPartsDAOImpl implements GetPartsDAO {
         }
         return getPartsDetailsEntityList;
     }
+
+    @Override
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public List<GetPartsEntity> getPartsListFromCatName(String catName) {
+        List<GetPartsEntity>  getPartsEntityList = null;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(GetPartsEntity.class);
+        criteria.add(Restrictions.eq("getPartsDetailsEntity", catName));
+        try{
+            getPartsEntityList = criteria.list();
+        }catch (QueryException e){
+            session.close();
+        }finally {
+            session.close();
+        }
+        return getPartsEntityList;
+    }
 }
