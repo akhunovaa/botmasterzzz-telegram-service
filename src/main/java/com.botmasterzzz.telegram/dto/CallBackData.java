@@ -9,8 +9,8 @@ public class CallBackData {
     private Integer offset;
     private Integer limit;
     private Integer productId;
-    private int fileCount;
-    private int fileSelected;
+    private Integer fileCount;
+    private Integer fileSelected;
 
     public CallBackData() {
     }
@@ -51,7 +51,7 @@ public class CallBackData {
         this.limit = limit;
     }
 
-    public Integer getOffset(int max) {
+    public Integer getOffset(Integer max) {
         return Optional.ofNullable(this.offset).orElse(0) > max ? max : Optional.ofNullable(this.offset).orElse(0);
     }
 
@@ -59,19 +59,19 @@ public class CallBackData {
         this.offset = offset < 0 ? 0 : offset;
     }
 
-    public int getFileCount() {
+    public Integer getFileCount() {
         return fileCount;
     }
 
-    public void setFileCount(int fileCount) {
+    public void setFileCount(Integer fileCount) {
         this.fileCount = fileCount;
     }
 
-    public int getFileSelected() {
+    public Integer getFileSelected() {
         return fileSelected;
     }
 
-    public void setFileSelected(int fileSelected) {
+    public void setFileSelected(Integer fileSelected) {
         this.fileSelected = fileSelected;
     }
 
