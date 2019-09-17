@@ -6,6 +6,7 @@ public class CallBackData {
 
     private String path;
     private Integer categoryId;
+    private String categoryName;
     private Integer offset;
     private Integer limit;
     private Integer productId;
@@ -75,14 +76,25 @@ public class CallBackData {
         this.fileSelected = fileSelected;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public String toString() {
         return "CallBackData{" +
                 "path='" + path + '\'' +
                 ", categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
                 ", offset=" + offset +
                 ", limit=" + limit +
                 ", productId=" + productId +
+                ", fileCount=" + fileCount +
+                ", fileSelected=" + fileSelected +
                 '}';
     }
 }
