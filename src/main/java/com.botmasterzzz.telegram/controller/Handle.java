@@ -39,7 +39,6 @@ public class Handle {
         int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         BotApiMethodController controller;
         if (update.hasCallbackQuery()){
-            UserContextHolder.currentContext().setCallBackData(gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class));
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
             if (!userExists){
                 telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
@@ -56,6 +55,7 @@ public class Handle {
             case 1:
                 if (update.hasCallbackQuery()){
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    UserContextHolder.currentContext().setCallBackData(callBackData);
                     message = callBackData.getPath();
                 }
                 boolean remain = UserContextHolder.currentContext().isRemain();
@@ -64,6 +64,7 @@ public class Handle {
             case 5:
                 if (update.hasCallbackQuery()){
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    UserContextHolder.currentContext().setCallBackData(callBackData);
                     message = callBackData.getPath();
                 }
                 controller = container.getControllerMap().get("gkh-" + message);
