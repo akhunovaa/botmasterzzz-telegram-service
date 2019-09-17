@@ -6,7 +6,7 @@ public class CallBackData {
 
     private String path;
     private Integer categoryId;
-    private String categoryName;
+    private String ca;
     private Integer offset;
     private Integer limit;
     private Integer productId;
@@ -56,6 +56,10 @@ public class CallBackData {
         return Optional.ofNullable(this.offset).orElse(0) > max ? max : Optional.ofNullable(this.offset).orElse(0);
     }
 
+    public Integer getOffset() {
+        return offset;
+    }
+
     public void setOffset(Integer offset) {
         this.offset = offset < 0 ? 0 : offset;
     }
@@ -76,12 +80,12 @@ public class CallBackData {
         this.fileSelected = fileSelected;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCa() {
+        return ca;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCa(String ca) {
+        this.ca = ca;
     }
 
     @Override
@@ -89,7 +93,7 @@ public class CallBackData {
         return "CallBackData{" +
                 "path='" + path + '\'' +
                 ", categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
+                ", ca='" + ca + '\'' +
                 ", offset=" + offset +
                 ", limit=" + limit +
                 ", productId=" + productId +

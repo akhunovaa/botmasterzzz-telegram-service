@@ -9,6 +9,7 @@ import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
+import com.botmasterzzz.telegram.entity.GetPartsDetailsEntity;
 import com.botmasterzzz.telegram.entity.GetPartsEntity;
 import com.botmasterzzz.telegram.util.HelperUtil;
 import org.slf4j.Logger;
@@ -30,7 +31,21 @@ public class InnerCatalogGetPartsMenuController {
     public EditMessageText kamaz(Update update) {
         List<GetPartsEntity> getPartsEntityList = getPartsMessageService.getPartsList();
         UserContextHolder.currentContext().setGetPartsEntityList(getPartsEntityList);
-        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz();
+        List<GetPartsDetailsEntity> getPartsDetailsEntityList =  getPartsMessageService.getPartsDetailsCatList();
+        UserContextHolder.currentContext().setGetPartsDetailsEntityList(getPartsDetailsEntityList);
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz(0);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("⚙️<b>Раздел</b>\n");
+        stringBuilder.append("Выберите наименование раздела:");
+        EditMessageText editMessageText = getEditMessage(stringBuilder.toString(), update);
+        editMessageText.setReplyMarkup(inlineKeyboardMarkup);
+        return editMessageText;
+    }
+
+    @BotRequestMapping(value = "getparts-cat-nav-arrow")
+    public EditMessageText navCatKamaz(Update update) {
+        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
+        InlineKeyboardMarkup inlineKeyboardMarkup = getPartsMessageService.getInlineKeyboardForKamaz(callBackData.getOffset());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("⚙️<b>Раздел</b>\n");
         stringBuilder.append("Выберите наименование раздела:");
