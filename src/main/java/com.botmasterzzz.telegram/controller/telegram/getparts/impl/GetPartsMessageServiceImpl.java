@@ -223,7 +223,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     }
 
     @Override
-    public InlineKeyboardMarkup getPartsPhotoButton(long partId) {
+    public InlineKeyboardMarkup getPartsPhotoButton(long partId, int offset, int limit) {
         String path = FILE_PATH + partId;
         File file = new File(path);
         String[] files = file.list();
@@ -231,6 +231,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRowRow = new ArrayList<>();
         CallBackData callBackData = new CallBackData("photo-part");
         if (fileCount > 0){
             InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
@@ -253,14 +254,26 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
                 inlineKeyboardButtonsFirstRow.add(thirdInlineButton);
             }
         }
+        InlineKeyboardButton rowLeftInlineButton = new InlineKeyboardButton();
+        InlineKeyboardButton rowRightInlineButton = new InlineKeyboardButton();
+        rowRightInlineButton.setText(">");
+        rowLeftInlineButton.setText("<");
+        callBackData.setOffset(offset > 0 ? offset - 1 : 0);
+        callBackData.setPath("part-nav-arrow");
+        rowLeftInlineButton.setCallbackData(gson.toJson(callBackData));
+        callBackData.setOffset(offset >= limit ? limit : offset + 1);
+        rowRightInlineButton.setCallbackData(gson.toJson(callBackData));
+        inlineKeyboardButtonsSecondRowRow.add(rowRightInlineButton);
+        inlineKeyboardButtonsSecondRowRow.add(rowLeftInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRowRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         return inlineKeyboardMarkup;
     }
 
     @Override
-    public GetPartsEntity searchPart(String text) {
-        GetPartsEntity getPartsEntity = getPartsDAO.getPartsSearchEntityGet(text);
-        return getPartsEntity;
+    public List<GetPartsEntity> searchPart(String text) {
+        List<GetPartsEntity> getPartsEntityList = getPartsDAO.getPartsSearchEntityGet(text);
+        return getPartsEntityList;
     }
 }

@@ -74,26 +74,23 @@ public class GetPartsDAOImpl implements GetPartsDAO {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public GetPartsEntity getPartsSearchEntityGet(String text) {
-        String searchText = text.toLowerCase();
-        GetPartsEntity getPartsEntity = null;
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public List<GetPartsEntity> getPartsSearchEntityGet(String text) {
+        List<GetPartsEntity>  getPartsEntityList = null;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GetPartsEntity.class);
         criteria.add(Restrictions.disjunction()
-                .add(Restrictions.like("name", searchText, MatchMode.ANYWHERE))
-                .add(Restrictions.ilike("article", searchText, MatchMode.ANYWHERE))
-                .add(Restrictions.ilike("brandName", searchText, MatchMode.ANYWHERE))
-                .add(Restrictions.ilike("brandName", searchText, MatchMode.ANYWHERE)));
-        criteria.setMaxResults(1);
+                .add(Restrictions.like("name", text, MatchMode.ANYWHERE))
+                .add(Restrictions.ilike("article", text, MatchMode.ANYWHERE))
+                .add(Restrictions.ilike("brandName", text, MatchMode.ANYWHERE)));
         try{
-            getPartsEntity = (GetPartsEntity) criteria.uniqueResult();
+            getPartsEntityList = criteria.list();
         }catch (QueryException e){
             session.close();
         }finally {
             session.close();
         }
-        return getPartsEntity;
+        return getPartsEntityList;
     }
 
     @Override

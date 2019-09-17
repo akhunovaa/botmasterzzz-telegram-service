@@ -6,6 +6,7 @@ import com.botmasterzzz.bot.api.impl.objects.User;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.botmasterzzz.telegram.entity.GetPartsEntity;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class UserContext {
     private InlineKeyboardMarkup inlineKeyboardMarkup;
     private CallBackData callBackData;
     private List<ProjectCommandDTO> projectCommandDTOList;
+    private List<GetPartsEntity> getPartsEntityList;
     private Long instanceId;
     private boolean remain;
     private long partId;
@@ -100,5 +102,13 @@ public class UserContext {
 
     public void setPartId(long partId) {
         this.partId = partId;
+    }
+
+    public List<GetPartsEntity> getGetPartsEntityList() {
+        return getPartsEntityList;
+    }
+
+    public void setGetPartsEntityList(List<GetPartsEntity> getPartsEntityList) {
+        this.getPartsEntityList = getPartsEntityList;
     }
 }
