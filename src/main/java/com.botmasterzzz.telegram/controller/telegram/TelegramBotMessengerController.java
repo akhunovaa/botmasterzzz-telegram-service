@@ -57,9 +57,7 @@ public class TelegramBotMessengerController {
 
     @BotRequestMapping(value = "random_text")
     public BotApiMethod randomTextMessage(Update update) {
-        SendMessage sendMessage = new SendMessage();
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
-        sendMessage.setChatId(chatId);
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
@@ -69,9 +67,18 @@ public class TelegramBotMessengerController {
         String[] choosenAnswer = answer.trim().split("%");
         Random rnd = new Random();
         int n = rnd.nextInt(choosenAnswer.length);
-        sendMessage.setText(choosenAnswer[n]);
+        String messageToSend = choosenAnswer[n];
         logger.info("User id {} sent random message {} from command {} with a command name like {} and message {}", user.getId(), answer, command, commandName, choosenAnswer[n]);
-        return sendMessage;
+        if (update.hasMessage()){
+            return new SendMessage()
+                    .setChatId(chatId).enableHtml(true)
+                    .setText(messageToSend);
+        }else {
+            return new EditMessageText()
+                    .setChatId(chatId)
+                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+                    .setText(messageToSend);
+        }
 
     }
 
@@ -99,6 +106,35 @@ public class TelegramBotMessengerController {
         sendPhoto.setChatId(chatId);
         sendPhoto.disableNotification();
         logger.info("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
+        return sendPhoto;
+    }
+
+    @BotRequestMapping(value = "random_picture")
+    public SendPhoto randomPictureMessage(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+        UserContext userContext = UserContextHolder.currentContext();
+        User user = userContext.getUser();
+        ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText(commandName);
+        firstInlineButton.setCallbackData(command);
+        SendPhoto sendPhoto = new SendPhoto();
+        String[] choosenPicture = answer.trim().split("%");
+        Random rnd = new Random();
+        int n = rnd.nextInt(choosenPicture.length);
+        String pictureToSend = choosenPicture[n];
+        try {
+            pictureToSend = HelperUtil.saveImage(answer, "temporary" + chatId);
+            File file1 = new File(pictureToSend);
+            sendPhoto.setPhoto(new InputFile(file1, "image-one"));
+        } catch (IOException e) {
+            logger.error("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
+        }
+        sendPhoto.setChatId(chatId);
+        logger.info("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
         return sendPhoto;
     }
 
