@@ -111,6 +111,7 @@ public class TelegramBotMessengerController {
 
     @BotRequestMapping(value = "random_picture")
     public SendPhoto randomPictureMessage(Update update) {
+
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         UserContext userContext = UserContextHolder.currentContext();
         User user = userContext.getUser();
@@ -118,9 +119,20 @@ public class TelegramBotMessengerController {
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText(commandName);
-        firstInlineButton.setCallbackData(command);
+        firstInlineButton.setCallbackData(commandName);
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+
         SendPhoto sendPhoto = new SendPhoto();
         String[] choosenPicture = answer.trim().split("%");
         Random rnd = new Random();
@@ -134,6 +146,7 @@ public class TelegramBotMessengerController {
             logger.error("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend, e);
         }
         sendPhoto.setChatId(chatId);
+        sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         logger.info("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
         return sendPhoto;
     }
