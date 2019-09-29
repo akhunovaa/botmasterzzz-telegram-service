@@ -131,7 +131,7 @@ public class TelegramBotMessengerController {
             File file1 = new File(pictureToSend);
             sendPhoto.setPhoto(new InputFile(file1, "image-one"));
         } catch (IOException e) {
-            logger.error("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
+            logger.error("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend, e);
         }
         sendPhoto.setChatId(chatId);
         logger.info("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
