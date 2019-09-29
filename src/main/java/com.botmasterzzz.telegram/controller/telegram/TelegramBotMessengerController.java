@@ -91,7 +91,7 @@ public class TelegramBotMessengerController {
             return new EditMessageText()
                     .setChatId(chatId)
                     .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
-                    .setText(messageToSend);
+                    .setText(messageToSend).setReplyMarkup(inlineKeyboardMarkup);
         }
 
     }
