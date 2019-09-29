@@ -101,6 +101,9 @@ public class Handle {
             case 4:
                 controller = container.getControllerMap().get("picture");
                 break;
+            case 5:
+                controller = container.getControllerMap().get("random_text");
+                break;
             default:
                 controller = container.getControllerMap().get("text");
         }
