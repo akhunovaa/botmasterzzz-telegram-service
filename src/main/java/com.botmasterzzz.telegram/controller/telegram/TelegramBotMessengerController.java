@@ -127,7 +127,7 @@ public class TelegramBotMessengerController {
         int n = rnd.nextInt(choosenPicture.length);
         String pictureToSend = choosenPicture[n];
         try {
-            pictureToSend = HelperUtil.saveImage(answer, "temporary" + chatId);
+            pictureToSend = HelperUtil.saveImage(pictureToSend, "temporary" + chatId);
             File file1 = new File(pictureToSend);
             sendPhoto.setPhoto(new InputFile(file1, "image-one"));
         } catch (IOException e) {
