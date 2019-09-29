@@ -105,10 +105,10 @@ public class Handle {
                 controller = container.getControllerMap().get("random_text");
                 break;
             case 6:
-                controller = container.getControllerMap().get("random_text");
+                controller = container.getControllerMap().get("random_picture");
                 break;
             default:
-                controller = container.getControllerMap().get("random_picture");
+                controller = container.getControllerMap().get("text");
         }
         return controller;
     }
