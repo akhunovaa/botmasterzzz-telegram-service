@@ -65,6 +65,20 @@ public class TelegramBotMessengerController {
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
         String[] choosenAnswer = answer.trim().split("%");
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText(commandName);
+        firstInlineButton.setCallbackData(commandName);
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+
         Random rnd = new Random();
         int n = rnd.nextInt(choosenAnswer.length);
         String messageToSend = choosenAnswer[n];
@@ -72,7 +86,7 @@ public class TelegramBotMessengerController {
         if (update.hasMessage()){
             return new SendMessage()
                     .setChatId(chatId).enableHtml(true)
-                    .setText(messageToSend);
+                    .setText(messageToSend).setReplyMarkup(inlineKeyboardMarkup);
         }else {
             return new EditMessageText()
                     .setChatId(chatId)
