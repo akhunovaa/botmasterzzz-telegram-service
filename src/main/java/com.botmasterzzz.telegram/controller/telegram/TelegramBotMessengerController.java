@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @BotController
 public class TelegramBotMessengerController {
@@ -51,6 +52,26 @@ public class TelegramBotMessengerController {
                     .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
                     .setText(answer);
         }
+
+    }
+
+    @BotRequestMapping(value = "random_text")
+    public BotApiMethod randomTextMessage(Update update) {
+        SendMessage sendMessage = new SendMessage();
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+        sendMessage.setChatId(chatId);
+        UserContext userContext = UserContextHolder.currentContext();
+        User user = userContext.getUser();
+        ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String[] choosenAnswer = answer.trim().split("%");
+        Random rnd = new Random();
+        int n = rnd.nextInt(choosenAnswer.length);
+        sendMessage.setText(choosenAnswer[n]);
+        logger.info("User id {} sent random message {} from command {} with a command name like {} and message {}", user.getId(), answer, command, commandName, choosenAnswer[n]);
+        return sendMessage;
 
     }
 
