@@ -183,7 +183,9 @@ public class TelegramBotMessengerController {
             firstInlineButton.setText(iCommandName);
             firstInlineButton.setCallbackData(iCommandName);
             inlineKeyboardButtonsRow.add(firstInlineButton);
-            inlineKeyboardButtons.add(inlineKeyboardButtonsRow);
+            if (inlineKeyboardButtons.size() <= 6){
+                inlineKeyboardButtons.add(inlineKeyboardButtonsRow);
+            }
         }
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         logger.info("User id {} sent inlined buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
@@ -218,7 +220,9 @@ public class TelegramBotMessengerController {
         for (String iCommandName : commandsForButton) {
             KeyboardRow keyboardRowLine = new KeyboardRow();
             keyboardRowLine.add(iCommandName);
-            keyboardRows.add(keyboardRowLine);
+            if (keyboardRows.size() <= 6){
+                keyboardRows.add(keyboardRowLine);
+            }
         }
         keyboard.setKeyboard(keyboardRows);
         logger.info("User id {} sent reply keyboard buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
