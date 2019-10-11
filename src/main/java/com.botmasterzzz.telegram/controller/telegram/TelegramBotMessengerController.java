@@ -212,16 +212,17 @@ public class TelegramBotMessengerController {
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
-
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
+        String[] commandsForButton = commandName.trim().split("%");
         List<KeyboardRow> keyboardRows = new ArrayList<>();
-        KeyboardRow keyboardRowLineOne = new KeyboardRow();
-        keyboardRowLineOne.add(commandName);
-
-        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setOneTimeKeyboard(false);
+        for (String iCommandName : commandsForButton) {
+            KeyboardRow keyboardRowLine = new KeyboardRow();
+            keyboardRowLine.add(iCommandName);
+            keyboardRows.add(keyboardRowLine);
+        }
         keyboard.setKeyboard(keyboardRows);
-
         logger.info("User id {} sent reply keyboard buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
         return new SendMessage()
                 .setChatId(chatId).enableHtml(true)
