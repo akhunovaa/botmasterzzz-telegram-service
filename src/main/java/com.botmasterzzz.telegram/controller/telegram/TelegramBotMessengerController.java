@@ -219,7 +219,7 @@ public class TelegramBotMessengerController {
         keyboard.setOneTimeKeyboard(false);
         for (String iCommandName : commandsForButton) {
             KeyboardRow keyboardRowLine = new KeyboardRow();
-            String[] innerCommandsForButton = iCommandName.trim().split("$");
+            String[] innerCommandsForButton = iCommandName.trim().split("\\$");
             for (String xInnerCommandsForButton : innerCommandsForButton) {
                 if (keyboardRowLine.size() <= 6){
                     keyboardRowLine.add(xInnerCommandsForButton);
