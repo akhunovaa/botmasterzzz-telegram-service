@@ -174,20 +174,18 @@ public class TelegramBotMessengerController {
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
-
+        String[] commandsForButton = commandName.trim().split("%");
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
-
-        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-
-        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
-        firstInlineButton.setText(commandName);
-        firstInlineButton.setCallbackData(commandName);
-        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
-
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        for (String iCommandName : commandsForButton) {
+            List<InlineKeyboardButton> inlineKeyboardButtonsRow = new ArrayList<>();
+            InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+            firstInlineButton.setText(iCommandName);
+            firstInlineButton.setCallbackData(iCommandName);
+            inlineKeyboardButtonsRow.add(firstInlineButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsRow);
+        }
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
-
         logger.info("User id {} sent inlined buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
         if (update.hasMessage()){
             return new SendMessage()
