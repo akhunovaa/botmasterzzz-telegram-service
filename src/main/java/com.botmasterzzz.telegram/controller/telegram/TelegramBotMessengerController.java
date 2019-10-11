@@ -179,10 +179,15 @@ public class TelegramBotMessengerController {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
         for (String iCommandName : commandsForButton) {
             List<InlineKeyboardButton> inlineKeyboardButtonsRow = new ArrayList<>();
-            InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
-            firstInlineButton.setText(iCommandName);
-            firstInlineButton.setCallbackData(iCommandName);
-            inlineKeyboardButtonsRow.add(firstInlineButton);
+            String[] innerCommandsForButton = iCommandName.trim().split("\\$");
+            for (String sInnerCommandsForButton : innerCommandsForButton) {
+                InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+                firstInlineButton.setText(sInnerCommandsForButton);
+                firstInlineButton.setCallbackData(sInnerCommandsForButton);
+                if (inlineKeyboardButtonsRow.size() <= 6){
+                    inlineKeyboardButtonsRow.add(firstInlineButton);
+                }
+            }
             if (inlineKeyboardButtons.size() <= 6){
                 inlineKeyboardButtons.add(inlineKeyboardButtonsRow);
             }
