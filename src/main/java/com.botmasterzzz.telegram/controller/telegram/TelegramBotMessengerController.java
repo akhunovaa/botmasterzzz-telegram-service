@@ -42,16 +42,16 @@ public class TelegramBotMessengerController {
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
         logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
-        if (update.hasMessage()){
+//        if (update.hasMessage()){
             return new SendMessage()
                     .setChatId(chatId).enableHtml(true)
                     .setText(answer);
-        }else {
-            return new EditMessageText()
-                    .setChatId(chatId)
-                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
-                    .setText(answer);
-        }
+//        }else {
+//            return new EditMessageText()
+//                    .setChatId(chatId)
+//                    .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
+//                    .setText(answer);
+//        }
 
     }
 
