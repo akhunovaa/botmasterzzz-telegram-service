@@ -40,7 +40,7 @@ public class TelegramBotMessengerController {
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
-        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
         logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
 //        if (update.hasMessage()){
             return new SendMessage()
@@ -63,7 +63,7 @@ public class TelegramBotMessengerController {
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
-        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
         String[] choosenAnswer = answer.trim().split("%");
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -104,7 +104,7 @@ public class TelegramBotMessengerController {
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
-        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
         InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
         firstInlineButton.setText(commandName);
         firstInlineButton.setCallbackData(command);
@@ -132,7 +132,7 @@ public class TelegramBotMessengerController {
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
-        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
@@ -173,7 +173,7 @@ public class TelegramBotMessengerController {
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
-        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
         String[] commandsForButton = commandName.trim().split("%");
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
@@ -216,7 +216,7 @@ public class TelegramBotMessengerController {
         ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
         String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
         String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
-        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "Неизвестная команда. Повторите попытку позднее";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
         String[] commandsForButton = commandName.trim().split("%");
