@@ -5,7 +5,7 @@ pipeline {
         registryUrl = "https://rusberbank.ru"
         registry = "rusberbank.ru/${dockerImageName}"
         registryCredential = "ourHubPwd"
-        dockerExternalPort = "127.0.0.1:8064"
+        dockerExternalPort = "0.0.0.0:8064"
         dockerInternalPort = "8064"
         remoteHost = "5.189.146.63"
     }
