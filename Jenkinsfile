@@ -1,4 +1,15 @@
 pipeline {
+
+    environment {
+        dockerImageName = "botmasterzzz-telegram"
+        registryUrl = "https://rusberbank.ru"
+        registry = "rusberbank.ru/${dockerImageName}"
+        registryCredential = "ourHubPwd"
+        dockerExternalPort = "127.0.0.1:8064"
+        dockerInternalPort = "8064"
+        remoteHost = "5.189.146.63"
+    }
+
     agent any
 
     stages {
@@ -9,60 +20,75 @@ pipeline {
             }
         }
 
-            stage('Build') {
-                steps {
-                    echo 'Clean Build'
-                    sh 'mvn clean compile package'
-                }
+        stage('Build') {
+            steps {
+                echo 'Clean Build'
+                sh 'mvn clean compile -P dev'
             }
+        }
 
-            stage('Test') {
-                steps {
-                    echo 'Testing'
-                    sh 'mvn test'
-                }
+        stage('Test') {
+            steps {
+                echo 'Testing'
+                sh 'mvn test'
             }
+        }
 
 
-            stage('Package') {
-                steps {
-                    echo 'Packaging'
-                    sh 'mvn clean package -DskipTests'
-                }
+        stage('Package') {
+            steps {
+                echo 'Packaging'
+                sh 'mvn clean package -P dev'
             }
+        }
 
-            stage('Build Docker Image') {
-                steps {
-                    echo 'Build Docker Image'
-                    sh 'docker build --no-cache -t leon4uk/botmasterzzz-telegram:1.0.0 .'
-                }
-            }
-
-            stage('Push Docker image') {
-                steps {
-                    echo 'Push Docker image'
-                    withCredentials([string(credentialsId: 'dockerHubPwd', variable: 'dockerHubPwd')]) {
-                        sh "docker login -u leon4uk -p ${dockerHubPwd}"
-                    }
-                    sh 'docker push leon4uk/botmasterzzz-telegram:1.0.0'
-                    sh 'docker rmi leon4uk/botmasterzzz-telegram:1.0.0'
-                }
-            }
-
-
-           stage('Deploy') {
-                steps {
-                    echo '## Deploy remote ##'
-                    script {
-                        sshagent(credentials: ['second']) {
-                            echo '## Deploy remote ##'
-                            sh "ssh root@5.189.146.63 docker container ls -a -f name=botmasterzzz-telegram -q | ssh root@5.189.146.63 xargs --no-run-if-empty docker container stop"
-                            sh 'ssh root@5.189.146.63 docker container ls -a -f name=botmasterzzz-telegram -q | ssh root@5.189.146.63 xargs -r docker container rm'
-                            sh "ssh root@5.189.146.63 docker rmi --force leon4uk/botmasterzzz-telegram:1.0.0"
-                            sh 'ssh root@5.189.146.63 docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name botmasterzzz-telegram -d -p 0.0.0.0:8064:8064 --network=host --restart always leon4uk/botmasterzzz-telegram:1.0.0'
-                        }
-                    }
+        stage('Build Docker Image') {
+            steps {
+                echo "Building image: $registry:$BUILD_NUMBER"
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
+
+        stage('Push Docker Image') {
+            steps {
+                echo "Pushing image: $registry:$BUILD_NUMBER"
+                script {
+                    docker.withRegistry(registryUrl, registryCredential) {
+                        dockerImage.push()
+                    }
+
+                }
+            }
+        }
+
+        stage('Remove Unused Docker Image') {
+            steps {
+                echo "Removing image: $registry:$BUILD_NUMBER"
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sshagent(credentials: ['second']) {
+                    echo '## Deploy remote ##'
+                    echo "Stopping docker container: $dockerImageName"
+                    sh "ssh root@$remoteHost docker container ls -a -f name=$dockerImageName -q | ssh root@$remoteHost xargs --no-run-if-empty docker container stop"
+                    echo "Removing docker container: $dockerImageName"
+                    sh "ssh root@$remoteHost docker container ls -a -f name=$dockerImageName -q | ssh root@$remoteHost xargs -r docker container rm"
+                    echo "Removing remote image of pre-build: $registry:${currentBuild.previousBuild.getNumber()}"
+                    sh "ssh root@$remoteHost docker rmi --force $registry:${currentBuild.previousBuild.getNumber()}"
+                    echo "Running docker image: $registry:$BUILD_NUMBER"
+                    script {
+                        docker.withRegistry(registryUrl, registryCredential) {
+                            sh "ssh root@$remoteHost docker run -v /home/repository:/home/repository -v /etc/localtime:/etc/localtime --name $dockerImageName -d -p $dockerExternalPort:$dockerInternalPort --network=host --restart always $registry:$BUILD_NUMBER"
+                        }
+                    }
+                }
+                sh 'printenv'
+            }
+        }
+    }
 }
