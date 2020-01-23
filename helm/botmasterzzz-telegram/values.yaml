@@ -11,6 +11,12 @@ image:
 imagePullSecrets:
   - name: ourhubpwd
 
+volume:
+  name: local-repository
+  mountPath: /home/repository
+  claim:
+    name: local-repository-claim
+
 nameOverride: ""
 fullnameOverride: ""
 
