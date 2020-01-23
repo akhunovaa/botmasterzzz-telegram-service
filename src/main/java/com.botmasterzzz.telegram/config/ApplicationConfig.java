@@ -51,6 +51,8 @@ public class ApplicationConfig implements WebApplicationInitializer {
     public BasicDataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(environment.getProperty("app.db.worker.driver"));
+        dataSource.setMaxWaitMillis(60000);
+        dataSource.setMinIdle(6);
         dataSource.setUrl(environment.getProperty("app.db.worker.url"));
         dataSource.setUsername(environment.getProperty("app.db.worker.login"));
         dataSource.setPassword(environment.getProperty("app.db.worker.password"));
