@@ -48,6 +48,7 @@ public class ApplicationConfig implements WebApplicationInitializer {
     }
 
     @Bean
+    @Lazy
     public BasicDataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(environment.getProperty("app.db.worker.driver"));
@@ -97,6 +98,7 @@ public class ApplicationConfig implements WebApplicationInitializer {
     }
 
     @Bean
+    @DependsOn("dataSource")
     public SpringLiquibase liquibase() {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(dataSource());
