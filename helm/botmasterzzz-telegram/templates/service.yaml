@@ -7,5 +7,7 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       name: http
+  externalIPs:
+    - 10.0.0.6
   selector:
     app: botmasterzzz-telegram
