@@ -159,6 +159,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         logger.info("Location load: {}", Arrays.toString(new File(this.path + FILE_PATH).list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home").list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home/repository").list()));
+        logger.info("Location load: {}", Arrays.toString(new File("/home/repository/get_parts").list()));
         File file = new File(path);
         String[] files = file.list();
         int fileCount = null != files ? files.length : 0;
