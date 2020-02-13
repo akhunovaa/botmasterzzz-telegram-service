@@ -28,7 +28,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     @PostConstruct
     public void init() {
-        String fullPath = path + "/images";
+        String fullPath = path + "/get_parts";
         try {
             FileUtils.forceMkdir(new File(fullPath));
         } catch (IOException e) {
@@ -38,7 +38,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public void storeMainImage(MultipartFile file, String projectId) {
-        String fullPath = path + "/images";
+        String fullPath = path + "/get_parts";
         String usersPathLocation = fullPath + "/project/" + projectId;
         try {
             FileUtils.forceMkdir(new File(usersPathLocation));
@@ -68,7 +68,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Path load(Long projectId) {
-        String fullPath = path + "/images";
+        String fullPath = path + "/get_parts";
         String usersPathLocation = fullPath + "/project/" + projectId;
         logger.info("User path location directory {}", usersPathLocation);
         String[] files = FileUtils.getFile(new File(usersPathLocation)).exists() ? FileUtils.getFile(new File(usersPathLocation)).list() : new String[]{"empty"};
