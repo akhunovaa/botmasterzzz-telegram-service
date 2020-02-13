@@ -96,7 +96,7 @@ public class InnerCatalogGetPartsMenuController {
     public SendPhoto photo(Update update) {
         long partId = UserContextHolder.currentContext().getPartId();
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        String fileName = this.path + "/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
+        String fileName = "/home/repository/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
         logger.info("Image for inner load from file  path: {}", fileName);
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();

@@ -27,7 +27,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     @Value("${multipart.file.upload.path}")
     private String path;
 
-    private static final String FILE_PATH = "/get_parts/images/";
+    private static final String FILE_PATH = "/home/repository/get_parts/images/";
 
     @Autowired
     private Gson gson;
@@ -153,13 +153,13 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
     @Override
     public InlineKeyboardMarkup getPartsPhotoButton(long partId, int offset, int limit) {
-        String path = this.path + FILE_PATH + partId;
+        String path = FILE_PATH + partId;
         logger.info("Images load from file  path: {}", path);
         logger.info("Location load: {}", new File(path).getAbsolutePath());
-        logger.info("Location load: {}", Arrays.toString(new File(this.path + FILE_PATH).list()));
+        logger.info("Location load: {}", Arrays.toString(new File(FILE_PATH).list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home").list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home/repository").list()));
-        logger.info("Location load: {}", Arrays.toString(new File("/home/repository/get_parts").list()));
+        logger.info("Location load: {}", Arrays.toString(new File("/home/repository/get_parts/images").list()));
         File file = new File(path);
         String[] files = file.list();
         int fileCount = null != files ? files.length : 0;
