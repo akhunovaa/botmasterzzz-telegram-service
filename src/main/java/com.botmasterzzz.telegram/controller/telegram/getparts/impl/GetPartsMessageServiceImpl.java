@@ -156,6 +156,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         String path = FILE_PATH + partId;
         logger.info("Images load from file  path: {}", path);
         logger.info("Location load: {}", Arrays.toString(new File(FILE_PATH).list()));
+        logger.info("Location load: {}", Arrays.toString(new File(path).list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home").list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home/repository").list()));
         logger.info("Location load: {}", Arrays.toString(new File("/home/repository/get_parts").list()));
