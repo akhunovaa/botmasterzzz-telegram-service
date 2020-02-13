@@ -8,7 +8,10 @@ import com.botmasterzzz.telegram.dao.GetPartsDAO;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.entity.GetPartsDetailsEntity;
 import com.botmasterzzz.telegram.entity.GetPartsEntity;
+import com.botmasterzzz.telegram.service.StorageService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,8 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
     @Autowired
     private GetPartsDAO getPartsDAO;
+
+    private static final Logger logger = LoggerFactory.getLogger(StorageService.class);
 
     @Override
     public InlineKeyboardMarkup getInlineKeyboardForCatalog() {
@@ -144,6 +149,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     @Override
     public InlineKeyboardMarkup getPartsPhotoButton(long partId, int offset, int limit) {
         String path = FILE_PATH + partId;
+        logger.info("Images load from file  path: {}", path);
         File file = new File(path);
         String[] files = file.list();
         int fileCount = null != files ? files.length : 0;
