@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
-    private static final String FILE_PATH = "/home/repository/get_parts/images/";
+    private static final String FILE_PATH = "/repository/get_parts/images/";
 
     @Autowired
     private Gson gson;
@@ -219,7 +219,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<GetPartsEntity> getPartsEntityList = getPartsDAO.getGetPartsEntityList();
         List<GetPartsEntity> getPartsEntityNewList = new ArrayList<>();
         for (GetPartsEntity getPartsEntity : getPartsEntityList) {
-            if (null!= getPartsEntity.getGetPartsDetailsEntity().getCatName() && getPartsEntity.getGetPartsDetailsEntity().getCatName().equals(catName)){
+            if (getPartsEntity.getGetPartsDetailsEntity().getCatName().equals(catName)){
                 getPartsEntityNewList.add(getPartsEntity);
             }
         }
