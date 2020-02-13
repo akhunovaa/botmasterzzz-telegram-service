@@ -7,21 +7,21 @@ replicaCount: 1
 image:
   repository: rusberbank.ru/botmasterzzz-telegram
   pullPolicy: IfNotPresent
-  appVersion: 45
+  appVersion: 46
 
 imagePullSecrets:
   - name: ourhubpwd
 
 volume:
-  path: /repository
+  path: /home/repository
   name: yourapi-nfs-dev
   hostName: host-volume
-  mountPath: /repository
+  mountPath: /home/repository
   storageClassName: nfs-repository-dev
   claim:
     name: pvc1
   nfs:
-    path: /repository
+    path: /home/repository
     server: 10.107.255.41
 
 nameOverride: ""
