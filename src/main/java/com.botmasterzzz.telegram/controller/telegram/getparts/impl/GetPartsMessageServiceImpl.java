@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
-    private static final String FILE_PATH = "/home/repository/get_parts/images/";
+    private static final String FILE_PATH = "/get_parts/images/";
 
     @Autowired
     private Gson gson;
@@ -150,6 +150,8 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     public InlineKeyboardMarkup getPartsPhotoButton(long partId, int offset, int limit) {
         String path = FILE_PATH + partId;
         logger.info("Images load from file  path: {}", path);
+        logger.info("Location load: {}", new File(path).getAbsolutePath());
+        logger.info("Location load: {}", new File("/").getAbsolutePath());
         File file = new File(path);
         String[] files = file.list();
         int fileCount = null != files ? files.length : 0;
