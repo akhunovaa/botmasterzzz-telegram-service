@@ -70,7 +70,7 @@ public class StorageServiceImpl implements StorageService {
     public Path load(Long projectId) {
         String fullPath = path + "/images";
         String usersPathLocation = fullPath + "/project/" + projectId;
-        logger.debug("User path location directory {}", usersPathLocation);
+        logger.info("User path location directory {}", usersPathLocation);
         String[] files = FileUtils.getFile(new File(usersPathLocation)).exists() ? FileUtils.getFile(new File(usersPathLocation)).list() : new String[]{"empty"};
         File imageFile = null;
         for (String file : files) {
