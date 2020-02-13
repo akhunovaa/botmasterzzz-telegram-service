@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -155,7 +156,8 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         String path = this.path + FILE_PATH + partId;
         logger.info("Images load from file  path: {}", path);
         logger.info("Location load: {}", new File(path).getAbsolutePath());
-        logger.info("Location load: {}", new File("/").getAbsolutePath());
+        logger.info("Location load: {}", Arrays.toString(new File(path).list()));
+        logger.info("Location load: {}", Arrays.toString(new File("/").list()));
         File file = new File(path);
         String[] files = file.list();
         int fileCount = null != files ? files.length : 0;
