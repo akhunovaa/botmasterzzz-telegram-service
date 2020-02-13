@@ -15,6 +15,7 @@ import com.botmasterzzz.telegram.util.HelperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
 public class InnerCatalogGetPartsMenuController {
 
     private static final Logger logger = LoggerFactory.getLogger(InnerCatalogGetPartsMenuController.class);
+
+    @Value("${multipart.file.upload.path}")
+    private String path;
 
     @Autowired
     private GetPartsMessageService getPartsMessageService;
@@ -92,7 +96,7 @@ public class InnerCatalogGetPartsMenuController {
     public SendPhoto photo(Update update) {
         long partId = UserContextHolder.currentContext().getPartId();
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        String fileName = "/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
+        String fileName = this.path + "/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
         logger.info("Image for inner load from file  path: {}", fileName);
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();

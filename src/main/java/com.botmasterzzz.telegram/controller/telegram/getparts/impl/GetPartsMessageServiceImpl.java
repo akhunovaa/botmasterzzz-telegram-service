@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,6 +22,9 @@ import java.util.List;
 
 @Service
 public class GetPartsMessageServiceImpl implements GetPartsMessageService {
+
+    @Value("${multipart.file.upload.path}")
+    private String path;
 
     private static final String FILE_PATH = "/get_parts/images/";
 
@@ -148,7 +152,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
     @Override
     public InlineKeyboardMarkup getPartsPhotoButton(long partId, int offset, int limit) {
-        String path = FILE_PATH + partId;
+        String path = this.path + FILE_PATH + partId;
         logger.info("Images load from file  path: {}", path);
         logger.info("Location load: {}", new File(path).getAbsolutePath());
         logger.info("Location load: {}", new File("/").getAbsolutePath());
