@@ -92,7 +92,7 @@ public class InnerCatalogGetPartsMenuController {
     public SendPhoto photo(Update update) {
         long partId = UserContextHolder.currentContext().getPartId();
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        String fileName = "/repository/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
+        String fileName = "/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("⚙ Фото #" + callBackData.getFileSelected() + "\n");
