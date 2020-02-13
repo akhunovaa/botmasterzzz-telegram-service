@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class GetPartsMessageServiceImpl implements GetPartsMessageService {
 
-    private static final String FILE_PATH = "/get_parts/images/";
+    private static final String FILE_PATH = "/home/repository/get_parts/images/";
 
     @Autowired
     private Gson gson;
