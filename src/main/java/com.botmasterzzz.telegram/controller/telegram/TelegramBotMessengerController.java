@@ -109,11 +109,17 @@ public class TelegramBotMessengerController {
         firstInlineButton.setText(commandName);
         firstInlineButton.setCallbackData(command);
         SendPhoto sendPhoto = new SendPhoto();
-        String filePath;
+        String filePath = System.getProperty("java.io.tmpdir") + "/" + answer.hashCode();
         try {
-            filePath = HelperUtil.saveImage(answer, "temporary" + chatId);
-            File file1 = new File(filePath);
-            sendPhoto.setPhoto(new InputFile(file1, "image-one"));
+            File existdFile = new File(filePath);
+            if (existdFile.exists()){
+                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+                logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
+            }else {
+                filePath = HelperUtil.saveImage(filePath, String.valueOf(filePath.hashCode()));
+                existdFile = new File(filePath);
+                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+            }
         } catch (IOException e) {
             logger.error("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
         }
@@ -153,13 +159,13 @@ public class TelegramBotMessengerController {
         int n = rnd.nextInt(choosenPicture.length);
         String pictureToSend = choosenPicture[n];
         try {
-            String filePath = System.getProperty("java.io.tmpdir") + "/" + pictureToSend;
+            String filePath = System.getProperty("java.io.tmpdir") + "/" + pictureToSend.hashCode();
             File existdFile = new File(filePath);
             if (existdFile.exists()){
                 sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
                 logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
             }else {
-                pictureToSend = HelperUtil.saveImage(pictureToSend, pictureToSend);
+                pictureToSend = HelperUtil.saveImage(pictureToSend, String.valueOf(pictureToSend.hashCode()));
                 existdFile = new File(pictureToSend);
                 sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
             }
