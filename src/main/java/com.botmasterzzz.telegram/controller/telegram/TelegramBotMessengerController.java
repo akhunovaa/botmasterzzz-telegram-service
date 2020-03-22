@@ -153,9 +153,16 @@ public class TelegramBotMessengerController {
         int n = rnd.nextInt(choosenPicture.length);
         String pictureToSend = choosenPicture[n];
         try {
-            pictureToSend = HelperUtil.saveImage(pictureToSend, "temporary" + chatId);
-            File file1 = new File(pictureToSend);
-            sendPhoto.setPhoto(new InputFile(file1, "image-one"));
+            String filePath = System.getProperty("java.io.tmpdir") + "/" + pictureToSend;
+            File existdFile = new File(filePath);
+            if (existdFile.exists()){
+                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+                logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
+            }else {
+                pictureToSend = HelperUtil.saveImage(pictureToSend, pictureToSend);
+                existdFile = new File(pictureToSend);
+                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+            }
         } catch (IOException e) {
             logger.error("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend, e);
         }
