@@ -40,20 +40,20 @@ public class MainGetPartsMenuController {
                 .setReplyMarkup(keyboard);
     }
 
-    @BotRequestMapping(value = "getparts-\uD83D\uDDA5Главное меню")
-    public SendMessage main(Update update) {
-        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
-        ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Добро пожаловать!</b>\n");
-        stringBuilder.append("Приветствуем Вас у себя в онлайн магазине Get Parts, ").append(name).append("! \n");
-        stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
-        return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(stringBuilder.toString())
-                .setReplyMarkup(keyboard);
-    }
+//    @BotRequestMapping(value = "getparts-\uD83D\uDDA5Главное меню")
+//    public SendMessage main(Update update) {
+//        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+//        ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("<b>Добро пожаловать!</b>\n");
+//        stringBuilder.append("Приветствуем Вас у себя в онлайн магазине Get Parts, ").append(name).append("! \n");
+//        stringBuilder.append("\n");
+//        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
+//        return new SendMessage()
+//                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+//                .setText(stringBuilder.toString())
+//                .setReplyMarkup(keyboard);
+//    }
 
     @BotRequestMapping(value = "getparts-\uD83D\uDCC4Новости")
     public SendMessage news(Update update) {
