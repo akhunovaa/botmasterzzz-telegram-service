@@ -69,6 +69,14 @@ public class Handle {
                 }
                 controller = container.getControllerMap().get("gkh-" + message);
                 return controller;
+            case 31:
+                if (update.hasCallbackQuery()){
+                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    UserContextHolder.currentContext().setCallBackData(callBackData);
+                    message = callBackData.getPath();
+                }
+                controller = container.getControllerMap().get("tiktok-" + message);
+                return controller;
         }
         int commandMessageType = 1;
         UserContextHolder.currentContext().setProjectCommandDTO(null);
