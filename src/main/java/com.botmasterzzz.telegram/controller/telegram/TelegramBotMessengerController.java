@@ -3,6 +3,7 @@ package com.botmasterzzz.telegram.controller.telegram;
 import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
+import com.botmasterzzz.bot.api.impl.methods.send.SendVideo;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageText;
 import com.botmasterzzz.bot.api.impl.objects.InputFile;
 import com.botmasterzzz.bot.api.impl.objects.Update;
@@ -18,6 +19,7 @@ import com.botmasterzzz.telegram.config.context.UserContext;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
 import com.botmasterzzz.telegram.util.HelperUtil;
+import com.botmasterzzz.telegram.util.HttpDownloadUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,12 +115,12 @@ public class TelegramBotMessengerController {
         try {
             File existdFile = new File(filePath);
             if (existdFile.exists()){
-                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+                sendPhoto.setPhoto(new InputFile(existdFile, String.valueOf(answer.hashCode())));
                 logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
             }else {
-                filePath = HelperUtil.saveImage(filePath, String.valueOf(filePath.hashCode()));
+                filePath = HelperUtil.saveImage(answer, filePath);
                 existdFile = new File(filePath);
-                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+                sendPhoto.setPhoto(new InputFile(existdFile, String.valueOf(answer.hashCode())));
             }
         } catch (IOException e) {
             logger.error("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
@@ -176,6 +178,92 @@ public class TelegramBotMessengerController {
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         logger.info("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
         return sendPhoto;
+    }
+
+    @BotRequestMapping(value = "video")
+    public SendVideo videoMessage(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+        UserContext userContext = UserContextHolder.currentContext();
+        User user = userContext.getUser();
+        ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText(commandName);
+        firstInlineButton.setCallbackData(command);
+
+        SendVideo sendVideo = new SendVideo();
+        String videoTemporaryName = String.valueOf(answer.hashCode());
+        String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
+        try {
+            File existdFile = new File(filePath);
+            if (existdFile.exists()){
+                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+                logger.info("SENT EXISTS file User id {} sent video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
+            }else {
+                filePath = HelperUtil.saveImage(filePath, filePath);
+                HttpDownloadUtility.downloadFile(answer, filePath);
+                existdFile = new File(filePath);
+                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+            }
+        } catch (IOException e) {
+            logger.error("User id {} sent video message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
+        }
+        sendVideo.setChatId(chatId);
+        sendVideo.disableNotification();
+        logger.info("User id {} sent video message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
+        return sendVideo;
+    }
+
+    @BotRequestMapping(value = "random_video")
+    public SendVideo randomVideoMessage(Update update) {
+
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+        UserContext userContext = UserContextHolder.currentContext();
+        User user = userContext.getUser();
+        ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+
+        InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
+        firstInlineButton.setText(commandName);
+        firstInlineButton.setCallbackData(commandName);
+        inlineKeyboardButtonsFirstRow.add(firstInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+
+        SendVideo sendVideo = new SendVideo();
+        String[] choosenVideo = answer.trim().split("%");
+        Random rnd = new Random();
+        int n = rnd.nextInt(choosenVideo.length);
+        String videoToSend = choosenVideo[n];
+        String videoTemporaryName = String.valueOf(videoToSend.hashCode());
+        try {
+            String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
+            File existdFile = new File(filePath);
+            if (existdFile.exists()){
+                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+                logger.info("SENT EXISTS file User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend);
+            }else {
+                HttpDownloadUtility.downloadFile(videoToSend, filePath);
+                existdFile = new File(videoToSend);
+                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+            }
+        } catch (IOException e) {
+            logger.error("User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend, e);
+        }
+        sendVideo.setChatId(chatId);
+        sendVideo.setReplyMarkup(inlineKeyboardMarkup);
+        logger.info("User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend);
+        return sendVideo;
     }
 
     @BotRequestMapping(value = "inner_button")
