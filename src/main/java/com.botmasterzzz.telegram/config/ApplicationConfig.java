@@ -97,17 +97,17 @@ public class ApplicationConfig implements WebApplicationInitializer {
         servletContext.setInitParameter("spring.profiles.active", "dev");
     }
 
-    @Bean
-    @DependsOn("dataSource")
-    public SpringLiquibase liquibase() {
-        SpringLiquibase liquibase = new SpringLiquibase();
-        liquibase.setDataSource(dataSource());
-        liquibase.setChangeLog("classpath:liquibase/db-migrations/changelog.xml");
-        return liquibase;
-    }
+//    @Bean
+//    @DependsOn("dataSource")
+//    public SpringLiquibase liquibase() {
+//        SpringLiquibase liquibase = new SpringLiquibase();
+//        liquibase.setDataSource(dataSource());
+//        liquibase.setChangeLog("classpath:liquibase/db-migrations/changelog.xml");
+//        return liquibase;
+//    }
 
+//    @DependsOn("liquibase")
     @Bean
-    @DependsOn("liquibase")
     public LocalSessionFactoryBean localSessionFactoryBean() {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource());

@@ -28,6 +28,13 @@ public class HelperUtil {
         return filePath;
     }
 
+    public static String saveVideo(String imageUrl, String destinationFile) throws IOException {
+        String filePath = System.getProperty("java.io.tmpdir") + "/" + destinationFile;
+
+        ImageIO.write(ImageIO.read(new URL(imageUrl)), "jpg", new File(filePath));
+        return filePath;
+    }
+
     public static String stringBeautyFormat(String text){
         if (null == text){
             return "неизвестно";
