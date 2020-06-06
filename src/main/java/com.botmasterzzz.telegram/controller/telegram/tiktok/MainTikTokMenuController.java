@@ -37,7 +37,7 @@ public class MainTikTokMenuController {
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<bvЗдесь вы можете выложить видео и оценивать видео других. С нами всегда интересно\uD83E\uDD29, " + name + ".\n" +
+                .setText("<b>vЗдесь вы можете выложить видео и оценивать видео других. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
@@ -62,7 +62,7 @@ public class MainTikTokMenuController {
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<bvЗдесь вы можете выложить видео и оценивать видео других. С нами всегда интересно\uD83E\uDD29, " + name + ".\n" +
+                .setText("<b>vЗдесь вы можете выложить видео и оценивать видео других. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }

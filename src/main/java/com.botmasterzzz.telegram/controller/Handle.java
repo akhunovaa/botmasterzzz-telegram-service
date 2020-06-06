@@ -52,15 +52,15 @@ public class Handle {
             telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId, update.getMessage().getFrom().getId());
         }
         switch (instanceId){
-//            case 1:
-//                if (update.hasCallbackQuery()){
-//                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-//                    UserContextHolder.currentContext().setCallBackData(callBackData);
-//                    message = callBackData.getPath();
-//                }
-//                boolean remain = UserContextHolder.currentContext().isRemain();
-//                controller = !remain ? container.getControllerMap().get("getparts-" + message) : container.getControllerMap().get("getparts-SECRET-FIND") ;
-//                return controller;
+            case 31:
+                if (update.hasCallbackQuery()){
+                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    UserContextHolder.currentContext().setCallBackData(callBackData);
+                    message = callBackData.getPath();
+                }
+                boolean remain = UserContextHolder.currentContext().isRemain();
+                controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-SECRET-FIND") ;
+                return controller;
             case 5:
                 if (update.hasCallbackQuery()){
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
@@ -68,14 +68,6 @@ public class Handle {
                     message = callBackData.getPath();
                 }
                 controller = container.getControllerMap().get("gkh-" + message);
-                return controller;
-            case 31:
-                if (update.hasCallbackQuery()){
-                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-                    UserContextHolder.currentContext().setCallBackData(callBackData);
-                    message = callBackData.getPath();
-                }
-                controller = container.getControllerMap().get("tiktok-" + message);
                 return controller;
         }
         int commandMessageType = 1;
