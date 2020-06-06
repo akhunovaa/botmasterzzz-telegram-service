@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @BotController
-public class MainGkhMenuController {
+public class MainTikTokMenuController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MainGkhMenuController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainTikTokMenuController.class);
 
     @BotRequestMapping(value = "tiktok-/start")
     public SendMessage start(Update update) {
