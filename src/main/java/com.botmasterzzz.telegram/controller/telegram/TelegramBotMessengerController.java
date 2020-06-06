@@ -197,15 +197,14 @@ public class TelegramBotMessengerController {
         String videoTemporaryName = String.valueOf(answer.hashCode());
         String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
         try {
-            File existdFile = new File(filePath);
-            if (existdFile.exists()){
-                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+            File existsFile = new File(filePath);
+            if (existsFile.exists()){
+                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
                 logger.info("SENT EXISTS file User id {} sent video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
             }else {
-                filePath = HelperUtil.saveImage(filePath, filePath);
-                HttpDownloadUtility.downloadFile(answer, filePath);
-                existdFile = new File(filePath);
-                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+                HttpDownloadUtility.downloadFile(answer, videoTemporaryName);
+                existsFile = new File(filePath);
+                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
             }
         } catch (IOException e) {
             logger.error("User id {} sent video message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
@@ -248,14 +247,14 @@ public class TelegramBotMessengerController {
         String videoTemporaryName = String.valueOf(videoToSend.hashCode());
         try {
             String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
-            File existdFile = new File(filePath);
-            if (existdFile.exists()){
-                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+            File existsFile = new File(filePath);
+            if (existsFile.exists()){
+                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
                 logger.info("SENT EXISTS file User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend);
             }else {
-                HttpDownloadUtility.downloadFile(videoToSend, filePath);
-                existdFile = new File(videoToSend);
-                sendVideo.setVideo(new InputFile(existdFile, videoTemporaryName));
+                HttpDownloadUtility.downloadFile(videoToSend, videoTemporaryName);
+                existsFile = new File(videoToSend);
+                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
             }
         } catch (IOException e) {
             logger.error("User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend, e);
