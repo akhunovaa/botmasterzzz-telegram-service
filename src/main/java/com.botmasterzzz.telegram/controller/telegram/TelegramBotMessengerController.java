@@ -253,7 +253,7 @@ public class TelegramBotMessengerController {
                 logger.info("SENT EXISTS file User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend);
             }else {
                 HttpDownloadUtility.downloadFile(videoToSend, videoTemporaryName);
-                existsFile = new File(videoToSend);
+                existsFile = new File(filePath);
                 sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
             }
         } catch (IOException e) {
