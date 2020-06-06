@@ -4,6 +4,7 @@ import com.botmasterzzz.bot.TelegramLongPollingBot;
 import com.botmasterzzz.bot.api.impl.methods.BotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.PartialBotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
+import com.botmasterzzz.bot.api.impl.methods.send.SendVideo;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.bot.DefaultBotOptions;
 import com.botmasterzzz.bot.exceptions.TelegramApiException;
@@ -49,6 +50,8 @@ public class Telegram extends TelegramLongPollingBot {
         try {
             if (partialBotApiMethod instanceof SendPhoto){
                 executePhoto((SendPhoto) partialBotApiMethod);
+            }else if(partialBotApiMethod instanceof SendVideo){
+                executeVideo((SendVideo) partialBotApiMethod);
             }else {
                 execute((BotApiMethod)partialBotApiMethod);
             }

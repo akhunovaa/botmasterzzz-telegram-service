@@ -11,7 +11,7 @@ public class HttpDownloadUtility {
     private static final int BUFFER_SIZE = 4096;
 
 
-    public static void downloadFile(String fileURL, String destinationFile)
+    public static void downloadFile(String fileURL, String fileName)
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -20,7 +20,7 @@ public class HttpDownloadUtility {
         // always check HTTP response code first
         if (responseCode == HttpURLConnection.HTTP_OK) {
 
-            String filePath = System.getProperty("java.io.tmpdir") + "/" + destinationFile;
+            String filePath = System.getProperty("java.io.tmpdir") + "/" + fileName;
 
             String disposition = httpConn.getHeaderField("Content-Disposition");
             String contentType = httpConn.getContentType();
