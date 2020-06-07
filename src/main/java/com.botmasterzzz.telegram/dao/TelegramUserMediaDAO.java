@@ -16,6 +16,8 @@ public interface TelegramUserMediaDAO {
 
     Optional<TelegramMediaStatisticEntity> findTouchTypeMedia(long telegramUserId, Long mediaFileId, String touchType);
 
+    long countUserTouch(long telegramUserId, Long mediaFileId, String touchType);
+
     void mediaTouchAdd(TelegramMediaStatisticEntity telegramMediaStatisticEntity);
 
 }

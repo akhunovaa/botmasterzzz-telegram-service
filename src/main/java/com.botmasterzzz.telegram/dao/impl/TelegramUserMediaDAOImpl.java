@@ -4,6 +4,7 @@ import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import org.hibernate.*;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -73,6 +74,24 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
             session.close();
         }
         return Optional.ofNullable(telegramMediaStatisticEntity);
+    }
+
+    @SuppressWarnings({"deprecation"})
+    @Override
+    public long countUserTouch(long telegramUserId, Long mediaFileId, String touchType) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramMediaStatisticEntity.class)
+                .setProjection(Projections.rowCount());
+        criteria.add(Restrictions.eq("telegramUserMediaEntity.id", mediaFileId));
+        criteria.add(Restrictions.eq("telegramUserId", telegramUserId));
+        criteria.add(Restrictions.eq("touchType", touchType));
+        Long rowCount = 0L;
+        List result = criteria.list();
+        if (!result.isEmpty()) {
+            rowCount = (Long) result.get(0);
+        }
+        session.close();
+        return rowCount;
     }
 
     @SuppressWarnings({"deprecation", "unchecked"})

@@ -29,4 +29,6 @@ public interface TelegramMediaService {
 
     Optional<TelegramMediaStatisticEntity> findDislikeUserTouch(Long telegramUserId, Long fileId);
 
+    long countUserTouch(Long telegramUserId, Long fileId, String touchType);
+
 }

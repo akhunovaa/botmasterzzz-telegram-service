@@ -38,6 +38,7 @@ public class TikTokMediaFileLoaderController {
         Random rnd = new Random();
         int randomlyChoosenIndex = rnd.nextInt(telegramUserMediaEntityList.size());
         TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(randomlyChoosenIndex);
+
         TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
         String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -45,11 +46,11 @@ public class TikTokMediaFileLoaderController {
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
-        long hearCount = telegramUserMediaEntity.getHeartCount();
-        long likeCount = telegramUserMediaEntity.getLikeCount();
-        long dislikeCount = telegramUserMediaEntity.getDislikeCount();
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+        long hearCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount);
@@ -92,6 +93,7 @@ public class TikTokMediaFileLoaderController {
         Random rnd = new Random();
         int randomlyChoosenIndex = rnd.nextInt(telegramUserMediaEntityList.size());
         TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(randomlyChoosenIndex);
+
         TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
         String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -99,11 +101,12 @@ public class TikTokMediaFileLoaderController {
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
-        long hearCount = telegramUserMediaEntity.getHeartCount();
-        long likeCount = telegramUserMediaEntity.getLikeCount();
-        long dislikeCount = telegramUserMediaEntity.getDislikeCount();
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+
+        long hearCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount);
