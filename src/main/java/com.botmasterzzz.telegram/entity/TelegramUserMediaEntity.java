@@ -1,7 +1,6 @@
 package com.botmasterzzz.telegram.entity;
 
 import com.google.common.base.Objects;
-import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -37,13 +36,13 @@ public class TelegramUserMediaEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private TelegramBotUserEntity telegramBotUserEntity;
 
-    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='HEART' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
+//    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='HEART' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
     private long heartCount;
 
-    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='LIKE' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
+//    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='LIKE' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
     private long likeCount;
 
-    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='DISLIKE' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
+//    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='DISLIKE' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
     private long dislikeCount;
 
     @Column(name = "aud_when_create")

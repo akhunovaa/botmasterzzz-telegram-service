@@ -101,4 +101,9 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     public Optional<TelegramMediaStatisticEntity> findDislikeUserTouch(Long telegramUserId, Long fileId) {
         return telegramUserMediaDAO.findTouchTypeMedia(telegramUserId, fileId, "DISLIKE");
     }
+
+    @Override
+    public long countUserTouch(Long telegramUserId, Long fileId, String touchType) {
+        return telegramUserMediaDAO.countUserTouch(telegramUserId, fileId, touchType);
+    }
 }
