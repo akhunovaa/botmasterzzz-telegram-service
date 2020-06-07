@@ -1,7 +1,9 @@
 package com.botmasterzzz.telegram.controller.telegram.tiktok;
 
+import com.botmasterzzz.bot.api.impl.methods.PartialBotApiMethod;
 import com.botmasterzzz.bot.api.impl.methods.send.SendDocument;
 import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
+import com.botmasterzzz.bot.api.impl.methods.send.SendVideo;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -85,7 +87,7 @@ public class TikTokMediaFileLoaderController {
     }
 
     @BotRequestMapping(value = "tiktok-\uD83D\uDCF2Видео")
-    public SendDocument sendRandomlyVideo(Update update) {
+    public PartialBotApiMethod sendRandomlyVideo(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
 
 
@@ -128,22 +130,26 @@ public class TikTokMediaFileLoaderController {
 
 
         String fileIdx = telegramUserMediaEntity.getFileId();
-
-//        SendVideo sendVideo = new SendVideo();
-//        sendVideo.setChatId(chatId);
-//        sendVideo.setVideo(fileIdx);
-//        sendVideo.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
-//        sendVideo.setReplyMarkup(inlineKeyboardMarkup);
-//        sendVideo.setParseMode("HTML");
-//        sendVideo.disableNotification();
-        SendDocument sendDocument = new SendDocument();
-        sendDocument.setChatId(chatId);
-        sendDocument.setDocument(fileIdx);
-        sendDocument.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
-        sendDocument.setReplyMarkup(inlineKeyboardMarkup);
-        sendDocument.setParseMode("HTML");
-        sendDocument.disableNotification();
-        logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
-        return sendDocument;
+        if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
+            SendVideo sendVideo = new SendVideo();
+            sendVideo.setChatId(chatId);
+            sendVideo.setVideo(fileIdx);
+            sendVideo.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendVideo.setReplyMarkup(inlineKeyboardMarkup);
+            sendVideo.setParseMode("HTML");
+            sendVideo.disableNotification();
+            logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
+            return sendVideo;
+        }else {
+            SendDocument sendDocument = new SendDocument();
+            sendDocument.setChatId(chatId);
+            sendDocument.setDocument(fileIdx);
+            sendDocument.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendDocument.setReplyMarkup(inlineKeyboardMarkup);
+            sendDocument.setParseMode("HTML");
+            sendDocument.disableNotification();
+            logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
+            return sendDocument;
+        }
     }
 }
