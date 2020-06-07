@@ -164,9 +164,9 @@ public class TikTokMediaTouchController {
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
-        long hearCount = telegramUserMediaEntity.getHeartCount();
-        long likeCount = telegramUserMediaEntity.getLikeCount();
-        long dislikeCount = telegramUserMediaEntity.getDislikeCount();
+        long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount);
