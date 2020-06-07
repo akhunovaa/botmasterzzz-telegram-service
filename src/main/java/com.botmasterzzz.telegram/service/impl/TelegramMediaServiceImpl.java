@@ -103,7 +103,7 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     }
 
     @Override
-    public long countUserTouch(Long telegramUserId, Long fileId, String touchType) {
-        return telegramUserMediaDAO.countUserTouch(telegramUserId, fileId, touchType);
+    public long countUserTouch(Long fileId, String touchType) {
+        return telegramUserMediaDAO.countUserTouch(fileId, touchType);
     }
 }

@@ -37,7 +37,7 @@ public class TikTokMediaTouchController {
         Integer messageId = update.getCallbackQuery().getMessage().getMessageId();
         String restricted = "";
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        Long telegramUserId = callBackData.getUserId();
+        Long telegramUserId = Long.valueOf(update.getCallbackQuery().getFrom().getId());
         Long fileId = callBackData.getFileId();
         Optional<TelegramMediaStatisticEntity> telegramMediaStatisticOptionalEntity = telegramMediaService.findHeartUserTouch(telegramUserId, fileId);
         if (telegramMediaStatisticOptionalEntity.isPresent()) {
@@ -55,9 +55,10 @@ public class TikTokMediaTouchController {
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
-        long hearCount = telegramUserMediaEntity.getHeartCount();
-        long likeCount = telegramUserMediaEntity.getLikeCount();
-        long dislikeCount = telegramUserMediaEntity.getDislikeCount();
+        long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
+
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount + (restricted.equals("") ? "" : restricted));
@@ -91,7 +92,7 @@ public class TikTokMediaTouchController {
         Integer messageId = update.getCallbackQuery().getMessage().getMessageId();
         String restricted = "";
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        Long telegramUserId = callBackData.getUserId();
+        Long telegramUserId = Long.valueOf(update.getCallbackQuery().getFrom().getId());
         Long fileId = callBackData.getFileId();
         Optional<TelegramMediaStatisticEntity> telegramMediaStatisticOptionalEntity = telegramMediaService.findLikeUserTouch(telegramUserId, fileId);
         if (telegramMediaStatisticOptionalEntity.isPresent()) {
@@ -109,9 +110,9 @@ public class TikTokMediaTouchController {
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
-        long hearCount = telegramUserMediaEntity.getHeartCount();
-        long likeCount = telegramUserMediaEntity.getLikeCount();
-        long dislikeCount = telegramUserMediaEntity.getDislikeCount();
+        long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount);
@@ -145,7 +146,7 @@ public class TikTokMediaTouchController {
         Integer messageId = update.getCallbackQuery().getMessage().getMessageId();
         String restricted = "";
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        Long telegramUserId = callBackData.getUserId();
+        Long telegramUserId = Long.valueOf(update.getCallbackQuery().getFrom().getId());
         Long fileId = callBackData.getFileId();
         Optional<TelegramMediaStatisticEntity> telegramMediaStatisticOptionalEntity = telegramMediaService.findDislikeUserTouch(telegramUserId, fileId);
         if (telegramMediaStatisticOptionalEntity.isPresent()) {
