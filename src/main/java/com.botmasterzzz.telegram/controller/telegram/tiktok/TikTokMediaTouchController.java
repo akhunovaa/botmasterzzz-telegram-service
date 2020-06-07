@@ -61,7 +61,7 @@ public class TikTokMediaTouchController {
 
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
-        heartInlineButton.setText("❤️ ️️" + hearCount + (restricted.equals("") ? "" : restricted));
+        heartInlineButton.setText("❤️ " + hearCount + (restricted.equals("") ? "" : restricted));
         heartInlineButton.setCallbackData(gson.toJson(new CallBackData("heart", telegramUserId, fileId)));
 
         InlineKeyboardButton likeInlineButton = new InlineKeyboardButton();
@@ -115,7 +115,7 @@ public class TikTokMediaTouchController {
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
-        heartInlineButton.setText("❤️ ️️" + hearCount);
+        heartInlineButton.setText("❤️ " + hearCount);
         heartInlineButton.setCallbackData(gson.toJson(new CallBackData("heart", telegramUserId, fileId)));
 
         InlineKeyboardButton likeInlineButton = new InlineKeyboardButton();
@@ -169,7 +169,7 @@ public class TikTokMediaTouchController {
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
-        heartInlineButton.setText("❤️ ️️" + hearCount);
+        heartInlineButton.setText("❤️ " + hearCount);
         heartInlineButton.setCallbackData(gson.toJson(new CallBackData("heart", telegramUserId, fileId)));
 
         InlineKeyboardButton likeInlineButton = new InlineKeyboardButton();
