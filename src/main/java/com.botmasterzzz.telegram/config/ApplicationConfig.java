@@ -4,13 +4,13 @@ import com.botmasterzzz.bot.bot.DefaultBotOptions;
 import com.botmasterzzz.bot.generic.BotSession;
 import com.botmasterzzz.bot.updatesreceivers.DefaultBotSession;
 import com.google.gson.Gson;
-import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
@@ -29,6 +29,7 @@ import javax.servlet.ServletRegistration;
 import java.util.Properties;
 
 @Configuration
+@EnableAsync
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
 @ComponentScan({"com.botmasterzzz.telegram"})

@@ -5,6 +5,7 @@ import java.util.Optional;
 public class CallBackData {
 
     private String path;
+    private Long userId;
     private Integer categoryId;
     private String ca;
     private Integer offset;
@@ -12,12 +13,28 @@ public class CallBackData {
     private Integer productId;
     private Integer fileCount;
     private Integer fileSelected;
+    private Long fileId;
 
     public CallBackData() {
     }
 
     public CallBackData(String path) {
         this.path = path;
+    }
+
+    public CallBackData(String path, Long fileId) {
+        this.path = path;
+        this.fileId = fileId;
+    }
+
+    public CallBackData(String path, Long userId, Long fileId) {
+        this.path = path;
+        this.fileId = fileId;
+        this.userId = userId;
+    }
+
+    public CallBackData(Long telegramId) {
+        this.userId = telegramId;
     }
 
     public String getPath() {
@@ -88,10 +105,27 @@ public class CallBackData {
         this.ca = ca;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
     @Override
     public String toString() {
         return "CallBackData{" +
                 "path='" + path + '\'' +
+                ", userId=" + userId +
                 ", categoryId=" + categoryId +
                 ", ca='" + ca + '\'' +
                 ", offset=" + offset +
@@ -99,6 +133,7 @@ public class CallBackData {
                 ", productId=" + productId +
                 ", fileCount=" + fileCount +
                 ", fileSelected=" + fileSelected +
+                ", fileId=" + fileId +
                 '}';
     }
 }

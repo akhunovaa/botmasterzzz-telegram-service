@@ -59,7 +59,12 @@ public class Handle {
                     message = callBackData.getPath();
                 }
                 boolean remain = UserContextHolder.currentContext().isRemain();
-                controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-SECRET-FIND") ;
+                controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
+                if (remain && null != message && message.equals("❌Отмена")){
+                    controller = container.getControllerMap().get("tiktok-" + message);
+                }else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())){
+                    controller = container.getControllerMap().get("tiktok-media-upload-error");
+                }
                 return controller;
             case 5:
                 if (update.hasCallbackQuery()){

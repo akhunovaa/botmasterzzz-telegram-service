@@ -24,40 +24,16 @@ public class MainTikTokMenuController {
         keyboard.setOneTimeKeyboard(false);
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
-        KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
-        keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
-        keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
-        keyboardRowLineThree.add("❓Помощь");
-        keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото/видео");
+        KeyboardRow keyboardRowLineFourth = new KeyboardRow();
+        keyboardRowLineOne.add("\uD83D\uDCF2Видео");
+        keyboardRowLineOne.add("\uD83D\uDCF2Фото");
+        keyboardRowLineThree.add("\uD83C\uDFACЗагрузить видео");
+        keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото");
+        keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
-        keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
-        keyboard.setKeyboard(keyboardRows);
-
-        return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Здесь вы можете выложить видео и оценивать видео других. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
-                        "Выберите раздел: \uD83D\uDD3D")
-                .setReplyMarkup(keyboard);
-    }
-
-    @BotRequestMapping(value = "tiktok-\uD83D\uDDA5Главное меню")
-    public SendMessage main(Update update) {
-        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
-        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
-        keyboard.setOneTimeKeyboard(false);
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        KeyboardRow keyboardRowLineOne = new KeyboardRow();
-        KeyboardRow keyboardRowLineTwo = new KeyboardRow();
-        KeyboardRow keyboardRowLineThree = new KeyboardRow();
-        keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
-        keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
-        keyboardRowLineThree.add("❓Помощь");
-        keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото/видео");
-        keyboardRows.add(keyboardRowLineOne);
-        keyboardRows.add(keyboardRowLineTwo);
-        keyboardRows.add(keyboardRowLineThree);
+        keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
 
         return new SendMessage()
@@ -70,8 +46,8 @@ public class MainTikTokMenuController {
     @BotRequestMapping(value = "tiktok-❓Помощь")
     public SendMessage help(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\uD83D\uDDA5<b>Главное меню</b>\n");
-        stringBuilder.append("Нажмите на эту кнопку, для того чтобы попасть на главную страницу нашего портала.\n");
+        stringBuilder.append("\uD83D\uDCF2<b>Новое видео/фото</b>\n");
+        stringBuilder.append("Нажмите на эту кнопку, для того чтобы запросить новое случайное видео/фото случайного пользователя, загрузившего медиа файл.\n");
         stringBuilder.append("\n");
         stringBuilder.append("\uD83D\uDCD2<b>Контакты</b>\n");
         stringBuilder.append("Нажмите на эту кнопку, для получения списка наших контактных данных.\n");
@@ -79,7 +55,7 @@ public class MainTikTokMenuController {
         stringBuilder.append("❓<b>Помощь</b>\n");
         stringBuilder.append("Раздел помощи.\n");
         stringBuilder.append("\n");
-        stringBuilder.append("\uD83C\uDFACЗагрузить фото/видео\n");
+        stringBuilder.append("\uD83C\uDFACЗагрузить фото\n");
         stringBuilder.append("Здесь вы можете загрузить видео или фото.\n");
         stringBuilder.append("\n");
         stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
