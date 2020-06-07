@@ -78,12 +78,11 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
 
     @SuppressWarnings({"deprecation"})
     @Override
-    public long countUserTouch(long telegramUserId, Long mediaFileId, String touchType) {
+    public long countUserTouch(Long mediaFileId, String touchType) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TelegramMediaStatisticEntity.class)
                 .setProjection(Projections.rowCount());
         criteria.add(Restrictions.eq("telegramUserMediaEntity.id", mediaFileId));
-        criteria.add(Restrictions.eq("telegramUserId", telegramUserId));
         criteria.add(Restrictions.eq("touchType", touchType));
         Long rowCount = 0L;
         List result = criteria.list();

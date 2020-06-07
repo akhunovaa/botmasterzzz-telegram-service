@@ -48,9 +48,9 @@ public class TikTokMediaFileLoaderController {
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
-        long hearCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "HEART");
-        long likeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "LIKE");
-        long dislikeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "DISLIKE");
+        long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount);
@@ -104,9 +104,9 @@ public class TikTokMediaFileLoaderController {
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
 
-        long hearCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "HEART");
-        long likeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "LIKE");
-        long dislikeCount = telegramMediaService.countUserTouch(telegramUserId, fileId, "DISLIKE");
+        long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
+        long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
+        long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ ️️" + hearCount);

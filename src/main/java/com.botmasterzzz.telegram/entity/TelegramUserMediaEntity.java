@@ -37,12 +37,13 @@ public class TelegramUserMediaEntity {
     private TelegramBotUserEntity telegramBotUserEntity;
 
 //    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='HEART' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
+    @Transient
     private long heartCount;
 
-//    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='LIKE' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
+    @Transient
     private long likeCount;
 
-//    @Formula(value = "(SELECT count(*) FROM telegram_media_statistic statistic inner join telegram_bot_users usr on statistic.telegram_user_id=usr.telegram_id WHERE statistic.touch_type='DISLIKE' and statistic.telegram_user_id=usr.telegram_id and statistic.media_file = this_.id)")
+    @Transient
     private long dislikeCount;
 
     @Column(name = "aud_when_create")
