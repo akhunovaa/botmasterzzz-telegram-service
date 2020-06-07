@@ -34,13 +34,12 @@ public class TikTokMediaFileLoaderController {
     @BotRequestMapping(value = "tiktok-\uD83D\uDCF2Фото")
     public SendPhoto sendRandomlyMedia(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
-        String telegramUser = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
-
         List<TelegramUserMediaEntity> telegramUserMediaEntityList = telegramMediaService.telegramUserMediaList(1);
         Random rnd = new Random();
         int randomlyChoosenIndex = rnd.nextInt(telegramUserMediaEntityList.size());
         TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(randomlyChoosenIndex);
         TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
+        String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
@@ -87,13 +86,14 @@ public class TikTokMediaFileLoaderController {
     @BotRequestMapping(value = "tiktok-\uD83D\uDCF2Видео")
     public SendDocument sendRandomlyVideo(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
-        String telegramUser = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+
 
         List<TelegramUserMediaEntity> telegramUserMediaEntityList = telegramMediaService.telegramUserMediaList(2);
         Random rnd = new Random();
         int randomlyChoosenIndex = rnd.nextInt(telegramUserMediaEntityList.size());
         TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(randomlyChoosenIndex);
         TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
+        String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
