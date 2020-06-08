@@ -24,6 +24,7 @@ public class UserContext {
     private List<GetPartsDetailsEntity> getPartsDetailsEntityList;
     private Long instanceId;
     private boolean remain;
+    private boolean anon;
     private long partId;
 
     public void setUser(User user) {
@@ -120,5 +121,13 @@ public class UserContext {
 
     public void setGetPartsDetailsEntityList(List<GetPartsDetailsEntity> getPartsDetailsEntityList) {
         this.getPartsDetailsEntityList = getPartsDetailsEntityList;
+    }
+
+    public boolean isAnon() {
+        return anon;
+    }
+
+    public void setAnon(boolean anon) {
+        this.anon = anon;
     }
 }

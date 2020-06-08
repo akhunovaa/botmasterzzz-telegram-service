@@ -27,7 +27,7 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
 
     @Async
     @Override
-    public void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId) {
+    public void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
         int lasIndex = pictures.size() - 1;
         PhotoSize picture = pictures.get(lasIndex);
@@ -37,12 +37,13 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         telegramUserMediaEntity.setHeight(picture.getHeight());
         telegramUserMediaEntity.setFileSize(picture.getFileSize());
         telegramUserMediaEntity.setFileType(1);
+        telegramUserMediaEntity.setAnon(isAnon);
         telegramUserMediaEntity.setTelegramBotUserEntity(telegramBotUserEntity);
         telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
     }
 
     @Override
-    public void telegramUserMediaAdd(Video video, Long telegramUserId) {
+    public void telegramUserMediaAdd(Video video, Long telegramUserId, boolean isAnon) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
         TelegramUserMediaEntity telegramUserMediaEntity = new TelegramUserMediaEntity();
         telegramUserMediaEntity.setFileId(video.getFileId());
@@ -50,12 +51,13 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         telegramUserMediaEntity.setHeight(video.getHeight());
         telegramUserMediaEntity.setFileSize(video.getFileSize());
         telegramUserMediaEntity.setFileType(2);
+        telegramUserMediaEntity.setAnon(isAnon);
         telegramUserMediaEntity.setTelegramBotUserEntity(telegramBotUserEntity);
         telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
     }
 
     @Override
-    public void telegramUserMediaAdd(Document document, Long telegramUserId) {
+    public void telegramUserMediaAdd(Document document, Long telegramUserId, boolean isAnon) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
         TelegramUserMediaEntity telegramUserMediaEntity = new TelegramUserMediaEntity();
         telegramUserMediaEntity.setFileId(document.getFileId());
@@ -63,6 +65,7 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         telegramUserMediaEntity.setHeight(0);
         telegramUserMediaEntity.setFileSize(document.getFileSize());
         telegramUserMediaEntity.setFileType(2);
+        telegramUserMediaEntity.setAnon(isAnon);
         telegramUserMediaEntity.setTelegramBotUserEntity(telegramBotUserEntity);
         telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
     }
