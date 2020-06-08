@@ -109,8 +109,8 @@ public class TikTokMediaFileUploaderController {
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineFourth);
         keyboardRows.add(keyboardRowLineThreeSub);
+        keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
         UserContextHolder.currentContext().setRemain(false);
         return new SendMessage()
@@ -146,8 +146,8 @@ public class TikTokMediaFileUploaderController {
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineFourth);
         keyboardRows.add(keyboardRowLineThreeSub);
+        keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
         boolean isAnon = UserContextHolder.currentContext().isAnon();
         Message message = update.getMessage();
