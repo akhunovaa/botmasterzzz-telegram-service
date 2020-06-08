@@ -36,8 +36,8 @@ public class MainTikTokMenuController {
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineFourth);
         keyboardRows.add(keyboardRowLineThreeSub);
+        keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
 
         return new SendMessage()
