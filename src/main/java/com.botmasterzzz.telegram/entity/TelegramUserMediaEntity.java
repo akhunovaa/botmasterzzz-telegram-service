@@ -32,6 +32,9 @@ public class TelegramUserMediaEntity {
     @Column(name = "file_type")
     private Integer fileType;
 
+    @Column(name = "is_anon")
+    private boolean isAnon;
+
     @JoinColumn(name = "telegram_user_id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private TelegramBotUserEntity telegramBotUserEntity;
@@ -156,12 +159,44 @@ public class TelegramUserMediaEntity {
         this.dislikeCount = dislikeCount;
     }
 
+    public boolean isAnon() {
+        return isAnon;
+    }
+
+    public void setAnon(boolean anon) {
+        isAnon = anon;
+    }
+
+    @Override
+    public String toString() {
+        return "TelegramUserMediaEntity{" +
+                "id=" + id +
+                ", fileId='" + fileId + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", fileSize=" + fileSize +
+                ", filePath='" + filePath + '\'' +
+                ", fileType=" + fileType +
+                ", isAnon=" + isAnon +
+                ", telegramBotUserEntity=" + telegramBotUserEntity +
+                ", heartCount=" + heartCount +
+                ", likeCount=" + likeCount +
+                ", dislikeCount=" + dislikeCount +
+                ", audWhenCreate=" + audWhenCreate +
+                ", audWhenUpdate=" + audWhenUpdate +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TelegramUserMediaEntity that = (TelegramUserMediaEntity) o;
-        return Objects.equal(id, that.id) &&
+        return isAnon == that.isAnon &&
+                heartCount == that.heartCount &&
+                likeCount == that.likeCount &&
+                dislikeCount == that.dislikeCount &&
+                Objects.equal(id, that.id) &&
                 Objects.equal(fileId, that.fileId) &&
                 Objects.equal(width, that.width) &&
                 Objects.equal(height, that.height) &&
@@ -175,25 +210,6 @@ public class TelegramUserMediaEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, fileId, width, height, fileSize, filePath, fileType, telegramBotUserEntity, audWhenCreate, audWhenUpdate);
-    }
-
-    @Override
-    public String toString() {
-        return "TelegramUserMediaEntity{" +
-                "id=" + id +
-                ", fileId='" + fileId + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", fileSize=" + fileSize +
-                ", filePath='" + filePath + '\'' +
-                ", fileType=" + fileType +
-                ", telegramBotUserEntity=" + telegramBotUserEntity +
-                ", heartCount=" + heartCount +
-                ", likeCount=" + likeCount +
-                ", dislikeCount=" + dislikeCount +
-                ", audWhenCreate=" + audWhenCreate +
-                ", audWhenUpdate=" + audWhenUpdate +
-                '}';
+        return Objects.hashCode(id, fileId, width, height, fileSize, filePath, fileType, isAnon, telegramBotUserEntity, heartCount, likeCount, dislikeCount, audWhenCreate, audWhenUpdate);
     }
 }

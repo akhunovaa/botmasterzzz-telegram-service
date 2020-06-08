@@ -25,20 +25,24 @@ public class MainTikTokMenuController {
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
+        KeyboardRow keyboardRowLineThreeSub = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineThree.add("\uD83C\uDFACЗагрузить видео");
         keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото");
+        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить видео(анонимно)");
+        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить фото(анонимно)");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
+        keyboardRows.add(keyboardRowLineThreeSub);
         keyboard.setKeyboard(keyboardRows);
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Здесь вы можете выложить видео и оценивать видео других. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
+                .setText("<b>Здесь вы можете выложить фото/видео и оценивать фото/видео от других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }

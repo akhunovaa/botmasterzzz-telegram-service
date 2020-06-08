@@ -37,6 +37,24 @@ public class TikTokMediaFileUploaderController {
                 .setReplyMarkup(keyboard);
     }
 
+    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить фото(анонимно)")
+    public SendMessage uploadPhotoAnonymous(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        UserContextHolder.currentContext().setAnon(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
     @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить видео")
     public SendMessage uploadVideo(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
@@ -54,6 +72,24 @@ public class TikTokMediaFileUploaderController {
                 .setReplyMarkup(keyboard);
     }
 
+    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить видео(анонимно)")
+    public SendMessage uploadVideoAnonymous(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        UserContextHolder.currentContext().setAnon(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
     @BotRequestMapping(value = "tiktok-❌Отмена")
     public SendMessage uploadCancel(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
@@ -62,20 +98,24 @@ public class TikTokMediaFileUploaderController {
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
+        KeyboardRow keyboardRowLineThreeSub = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineThree.add("\uD83C\uDFACЗагрузить видео");
         keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото");
+        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить видео(анонимно)");
+        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить фото(анонимно)");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
+        keyboardRows.add(keyboardRowLineThreeSub);
         keyboard.setKeyboard(keyboardRows);
         UserContextHolder.currentContext().setRemain(false);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Здесь вы можете выложить видео и оценивать видео других. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
+                .setText("<b>Здесь вы можете выложить фото/видео и оценивать фото/видео других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
@@ -95,27 +135,32 @@ public class TikTokMediaFileUploaderController {
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
+        KeyboardRow keyboardRowLineThreeSub = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineThree.add("\uD83C\uDFACЗагрузить видео");
         keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото");
+        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить видео(анонимно)");
+        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить фото(анонимно)");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
+        keyboardRows.add(keyboardRowLineThreeSub);
         keyboard.setKeyboard(keyboardRows);
-
+        boolean isAnon = UserContextHolder.currentContext().isAnon();
         Message message = update.getMessage();
         Long telegramUserId = Long.valueOf(update.getMessage().getFrom().getId());
         if (message.hasPhoto()){
-            telegramMediaService.telegramUserMediaAdd(message.getPhoto(), telegramUserId);
+            telegramMediaService.telegramUserMediaAdd(message.getPhoto(), telegramUserId, isAnon);
         }else if(message.hasVideo()){
-            telegramMediaService.telegramUserMediaAdd(message.getVideo(), telegramUserId);
+            telegramMediaService.telegramUserMediaAdd(message.getVideo(), telegramUserId, isAnon);
         }else if(message.hasDocument()){
-            telegramMediaService.telegramUserMediaAdd(message.getDocument(), telegramUserId);
+            telegramMediaService.telegramUserMediaAdd(message.getDocument(), telegramUserId, isAnon);
         }
         UserContextHolder.currentContext().setRemain(false);
+        UserContextHolder.currentContext().setAnon(false);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>" + name + "</b>, мы получили и загрузили Ваш медиа файл.\n")

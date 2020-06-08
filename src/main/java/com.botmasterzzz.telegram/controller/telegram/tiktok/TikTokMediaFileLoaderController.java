@@ -72,13 +72,18 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
+        boolean isAnon = telegramUserMediaEntity.isAnon();
 
         String fileIdx = telegramUserMediaEntity.getFileId();
 
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
-        sendPhoto.setCaption("Фотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+        if (!isAnon){
+            sendPhoto.setCaption("Фотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+        }else {
+            sendPhoto.setCaption("anonymous");
+        }
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         sendPhoto.setParseMode("HTML");
         sendPhoto.disableNotification();
@@ -128,13 +133,18 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
+        boolean isAnon = telegramUserMediaEntity.isAnon();
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
             SendVideo sendVideo = new SendVideo();
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
-            sendVideo.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            if (!isAnon){
+                sendVideo.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            }else {
+                sendVideo.setCaption("anonymous");
+            }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
             sendVideo.disableNotification();
@@ -144,7 +154,11 @@ public class TikTokMediaFileLoaderController {
             SendDocument sendDocument = new SendDocument();
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
-            sendDocument.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            if (!isAnon){
+                sendDocument.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            }else {
+                sendDocument.setCaption("anonymous");
+            }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");
             sendDocument.disableNotification();
