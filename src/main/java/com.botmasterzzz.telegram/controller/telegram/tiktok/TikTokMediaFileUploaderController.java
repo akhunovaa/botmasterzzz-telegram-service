@@ -152,12 +152,13 @@ public class TikTokMediaFileUploaderController {
         boolean isAnon = UserContextHolder.currentContext().isAnon();
         Message message = update.getMessage();
         Long telegramUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        String caption = message.getCaption();
         if (message.hasPhoto()){
-            telegramMediaService.telegramUserMediaAdd(message.getPhoto(), telegramUserId, isAnon);
+            telegramMediaService.telegramUserMediaAdd(message.getPhoto(), telegramUserId, isAnon, caption);
         }else if(message.hasVideo()){
-            telegramMediaService.telegramUserMediaAdd(message.getVideo(), telegramUserId, isAnon);
+            telegramMediaService.telegramUserMediaAdd(message.getVideo(), telegramUserId, isAnon, caption);
         }else if(message.hasDocument()){
-            telegramMediaService.telegramUserMediaAdd(message.getDocument(), telegramUserId, isAnon);
+            telegramMediaService.telegramUserMediaAdd(message.getDocument(), telegramUserId, isAnon, caption);
         }
         UserContextHolder.currentContext().setRemain(false);
         UserContextHolder.currentContext().setAnon(false);

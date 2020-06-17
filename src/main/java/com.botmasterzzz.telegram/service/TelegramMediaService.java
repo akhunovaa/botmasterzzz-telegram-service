@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface TelegramMediaService {
 
-    void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon);
+    void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon, String message);
 
-    void telegramUserMediaAdd(Video video, Long telegramUserId, boolean isAnon);
+    void telegramUserMediaAdd(Video video, Long telegramUserId, boolean isAnon, String message);
 
-    void telegramUserMediaAdd(Document document, Long telegramUserId, boolean isAnon);
+    void telegramUserMediaAdd(Document document, Long telegramUserId, boolean isAnon, String message);
 
     TelegramUserMediaEntity telegramUserMediaGet(Long id);
 
