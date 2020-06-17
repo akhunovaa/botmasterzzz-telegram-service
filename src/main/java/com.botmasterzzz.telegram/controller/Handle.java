@@ -52,7 +52,7 @@ public class Handle {
             telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId, update.getMessage().getFrom().getId());
         }
         switch (instanceId){
-            case 31:
+            case 1:
                 if (update.hasCallbackQuery()){
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     UserContextHolder.currentContext().setCallBackData(callBackData);

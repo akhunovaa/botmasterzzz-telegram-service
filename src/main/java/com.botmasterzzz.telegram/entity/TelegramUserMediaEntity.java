@@ -35,6 +35,9 @@ public class TelegramUserMediaEntity {
     @Column(name = "is_anon")
     private boolean isAnon;
 
+    @Column(name = "message")
+    private String message;
+
     @JoinColumn(name = "telegram_user_id")
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private TelegramBotUserEntity telegramBotUserEntity;
@@ -167,24 +170,12 @@ public class TelegramUserMediaEntity {
         isAnon = anon;
     }
 
-    @Override
-    public String toString() {
-        return "TelegramUserMediaEntity{" +
-                "id=" + id +
-                ", fileId='" + fileId + '\'' +
-                ", width=" + width +
-                ", height=" + height +
-                ", fileSize=" + fileSize +
-                ", filePath='" + filePath + '\'' +
-                ", fileType=" + fileType +
-                ", isAnon=" + isAnon +
-                ", telegramBotUserEntity=" + telegramBotUserEntity +
-                ", heartCount=" + heartCount +
-                ", likeCount=" + likeCount +
-                ", dislikeCount=" + dislikeCount +
-                ", audWhenCreate=" + audWhenCreate +
-                ", audWhenUpdate=" + audWhenUpdate +
-                '}';
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
@@ -203,6 +194,7 @@ public class TelegramUserMediaEntity {
                 Objects.equal(fileSize, that.fileSize) &&
                 Objects.equal(filePath, that.filePath) &&
                 Objects.equal(fileType, that.fileType) &&
+                Objects.equal(message, that.message) &&
                 Objects.equal(telegramBotUserEntity, that.telegramBotUserEntity) &&
                 Objects.equal(audWhenCreate, that.audWhenCreate) &&
                 Objects.equal(audWhenUpdate, that.audWhenUpdate);
@@ -210,6 +202,27 @@ public class TelegramUserMediaEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, fileId, width, height, fileSize, filePath, fileType, isAnon, telegramBotUserEntity, heartCount, likeCount, dislikeCount, audWhenCreate, audWhenUpdate);
+        return Objects.hashCode(id, fileId, width, height, fileSize, filePath, fileType, isAnon, message, telegramBotUserEntity, heartCount, likeCount, dislikeCount, audWhenCreate, audWhenUpdate);
+    }
+
+    @Override
+    public String toString() {
+        return "TelegramUserMediaEntity{" +
+                "id=" + id +
+                ", fileId='" + fileId + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", fileSize=" + fileSize +
+                ", filePath='" + filePath + '\'' +
+                ", fileType=" + fileType +
+                ", isAnon=" + isAnon +
+                ", message='" + message + '\'' +
+                ", telegramBotUserEntity=" + telegramBotUserEntity +
+                ", heartCount=" + heartCount +
+                ", likeCount=" + likeCount +
+                ", dislikeCount=" + dislikeCount +
+                ", audWhenCreate=" + audWhenCreate +
+                ", audWhenUpdate=" + audWhenUpdate +
+                '}';
     }
 }

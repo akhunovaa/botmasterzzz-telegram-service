@@ -75,14 +75,14 @@ public class TikTokMediaFileLoaderController {
         boolean isAnon = telegramUserMediaEntity.isAnon();
 
         String fileIdx = telegramUserMediaEntity.getFileId();
-
+        String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
         if (!isAnon){
-            sendPhoto.setCaption("Фотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendPhoto.setCaption(caption + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
         }else {
-            sendPhoto.setCaption("anonymous");
+            sendPhoto.setCaption(caption + "\nanonymous");
         }
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         sendPhoto.setParseMode("HTML");
@@ -134,16 +134,16 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         boolean isAnon = telegramUserMediaEntity.isAnon();
-
+        String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
         String fileIdx = telegramUserMediaEntity.getFileId();
         if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
             SendVideo sendVideo = new SendVideo();
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendVideo.setCaption("anonymous");
+                sendVideo.setCaption(caption + "\nanonymous");
             }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
