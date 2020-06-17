@@ -4,6 +4,7 @@ import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import org.hibernate.*;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
         criteria.add(Restrictions.eq("fileType", mediaType));
+        criteria.addOrder(Order.desc("audWhenCreate"));
         telegramUserMediaEntityList = criteria.list();
         session.close();
         return telegramUserMediaEntityList;
