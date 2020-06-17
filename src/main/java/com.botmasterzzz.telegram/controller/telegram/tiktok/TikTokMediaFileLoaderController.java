@@ -38,8 +38,9 @@ public class TikTokMediaFileLoaderController {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         List<TelegramUserMediaEntity> telegramUserMediaEntityList = telegramMediaService.telegramUserMediaList(1);
 
+        int old = (int) UserContextHolder.currentContext().getPartId() >= telegramUserMediaEntityList.size() ? telegramUserMediaEntityList.size() - 1 : (int) UserContextHolder.currentContext().getPartId();
 //        Collections.shuffle(telegramUserMediaEntityList);
-        int choosen = (int) UserContextHolder.currentContext().getPartId() <= 0 ? telegramUserMediaEntityList.size() : (int) UserContextHolder.currentContext().getPartId();
+        int choosen = old <= 0 ? telegramUserMediaEntityList.size() : old;
         int lastOne = choosen - 1;
         UserContextHolder.currentContext().setPartId(lastOne);
         TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(lastOne);
@@ -102,7 +103,10 @@ public class TikTokMediaFileLoaderController {
 
 //        Collections.shuffle(telegramUserMediaEntityList);
 
-        int choosen = (int) UserContextHolder.currentContext().getPartId() <= 0 ? telegramUserMediaEntityList.size() : (int) UserContextHolder.currentContext().getPartId();
+        int old = (int) UserContextHolder.currentContext().getPartId() >= telegramUserMediaEntityList.size() ? telegramUserMediaEntityList.size() - 1 : (int) UserContextHolder.currentContext().getPartId();
+//        Collections.shuffle(telegramUserMediaEntityList);
+        int choosen = old <= 0 ? telegramUserMediaEntityList.size() : old;
+
         int lastOne = choosen - 1;
         UserContextHolder.currentContext().setPartId(lastOne);
         TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(lastOne);
