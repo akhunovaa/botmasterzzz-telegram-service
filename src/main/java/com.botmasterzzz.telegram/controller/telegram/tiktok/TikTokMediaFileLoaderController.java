@@ -9,6 +9,7 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.InlineKeyboardButton;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
+import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
@@ -20,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @BotController
 public class TikTokMediaFileLoaderController {
@@ -37,9 +37,12 @@ public class TikTokMediaFileLoaderController {
     public SendPhoto sendRandomlyMedia(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         List<TelegramUserMediaEntity> telegramUserMediaEntityList = telegramMediaService.telegramUserMediaList(1);
-        Random rnd = new Random();
-        int randomlyChoosenIndex = rnd.nextInt(telegramUserMediaEntityList.size());
-        TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(randomlyChoosenIndex);
+
+//        Collections.shuffle(telegramUserMediaEntityList);
+        int choosen = (int) UserContextHolder.currentContext().getPartId() <= 0 ? telegramUserMediaEntityList.size() : (int) UserContextHolder.currentContext().getPartId();
+        int lastOne = choosen - 1;
+        UserContextHolder.currentContext().setPartId(lastOne);
+        TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(lastOne);
 
         TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
         String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
@@ -95,11 +98,14 @@ public class TikTokMediaFileLoaderController {
     public PartialBotApiMethod sendRandomlyVideo(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
 
-
         List<TelegramUserMediaEntity> telegramUserMediaEntityList = telegramMediaService.telegramUserMediaList(2);
-        Random rnd = new Random();
-        int randomlyChoosenIndex = rnd.nextInt(telegramUserMediaEntityList.size());
-        TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(randomlyChoosenIndex);
+
+//        Collections.shuffle(telegramUserMediaEntityList);
+
+        int choosen = (int) UserContextHolder.currentContext().getPartId() <= 0 ? telegramUserMediaEntityList.size() : (int) UserContextHolder.currentContext().getPartId();
+        int lastOne = choosen - 1;
+        UserContextHolder.currentContext().setPartId(lastOne);
+        TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaEntityList.get(lastOne);
 
         TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
         String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
