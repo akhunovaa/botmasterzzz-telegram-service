@@ -138,6 +138,7 @@ public class TikTokMediaFileUploaderController {
                         "\uD83D\uDCF9 /video для получения случайного видео от бота\n" +
                         "\uD83D\uDCF8 /photo для получения случайного фото/картинки от бота\n" +
                         "\uD83D\uDCE4 /upload для чтобы загрузить видео/фото\n" +
+                        "\n" +
                         "или \n" +
                         "Выберите раздел ниже: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
