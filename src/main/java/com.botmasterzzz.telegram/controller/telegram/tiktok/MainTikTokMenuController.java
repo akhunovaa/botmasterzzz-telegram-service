@@ -42,8 +42,14 @@ public class MainTikTokMenuController {
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Здесь вы можете выложить фото/видео и оценивать фото/видео от других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
-                        "Выберите раздел: \uD83D\uDD3D")
+                .setText("<b>Здесь вы можете выложить \uD83D\uDCF9 фото/видео и оценивать \uD83D\uDCF8 фото/видео от других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
+                        "\n" +
+                        "❗️/start для перехода на главное меню" +
+                        "\uD83D\uDCF9 /video для получения случайного видео" +
+                        "\uD83D\uDCF8 /photo для получения случайного фото/картинки" +
+                        "\uD83D\uDCE4 /upload для чтобы загрузить видео/фото " +
+                        "или " +
+                        "Выберите раздел ниже: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
 

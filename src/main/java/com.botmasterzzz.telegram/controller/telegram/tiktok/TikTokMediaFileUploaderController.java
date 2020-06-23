@@ -72,6 +72,23 @@ public class TikTokMediaFileUploaderController {
                 .setReplyMarkup(keyboard);
     }
 
+    @BotRequestMapping(value = "tiktok-/upload")
+    public SendMessage uploadVideoFromCommand(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
     @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить видео(анонимно)")
     public SendMessage uploadVideoAnonymous(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
@@ -115,8 +132,14 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setRemain(false);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>Здесь вы можете выложить фото/видео и оценивать фото/видео других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
-                        "Выберите раздел: \uD83D\uDD3D")
+                .setText("<b>Здесь вы можете выложить \uD83D\uDCF9 фото/видео и оценивать \uD83D\uDCF8 фото/видео от других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
+                        "\n" +
+                        "❗️/start для перехода на главное меню" +
+                        "\uD83D\uDCF9 /video для получения случайного видео" +
+                        "\uD83D\uDCF8 /photo для получения случайного фото/картинки" +
+                        "\uD83D\uDCE4 /upload для чтобы загрузить видео/фото " +
+                        "или " +
+                        "Выберите раздел ниже: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
 
