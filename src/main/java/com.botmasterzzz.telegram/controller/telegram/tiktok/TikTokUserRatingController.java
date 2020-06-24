@@ -79,7 +79,7 @@ public class TikTokUserRatingController {
                         "7️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(6).getTelegramUserId() + "\">" + telegramUserSeventh + "</a> ❇️ \n\n" +
                         "8️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(7).getTelegramUserId() + "\">" + telegramUserEith + "</a> ❇️ \n\n" +
                         "9️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(8).getTelegramUserId() + "\">" + telegramUserNinth + "</a> ❇️ \n\n" +
-                        "\uD83D\uDD1F <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(9).getTelegramUserId() + "\">" + telegramUserTenth + "</a> ❇️ \n" +
+                        "\uD83D\uDD1F место за пользователе <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(9).getTelegramUserId() + "\">" + telegramUserTenth + "</a> ❇️ \n" +
                         "➖➖➖➖➖➖➖➖➖➖➖➖\n")
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
