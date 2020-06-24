@@ -37,8 +37,78 @@ public class TikTokMediaFileUploaderController {
                 .setReplyMarkup(keyboard);
     }
 
+    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить фото")
+    public SendMessage uploadPhotoBackup(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
+    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить видео")
+    public SendMessage uploadVideo(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
     @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить видео/фото(анонимно)")
     public SendMessage uploadPhotoAnonymous(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        UserContextHolder.currentContext().setAnon(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
+    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить фото(анонимно)")
+    public SendMessage uploadPhotoAnonymousBackup(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
+        keyboard.setOneTimeKeyboard(false);
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        keyboardRowLineOne.add("❌Отмена");
+        keyboardRows.add(keyboardRowLineOne);
+        keyboard.setKeyboard(keyboardRows);
+        UserContextHolder.currentContext().setRemain(true);
+        UserContextHolder.currentContext().setAnon(true);
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
+                .setReplyMarkup(keyboard);
+    }
+
+    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить видео(анонимно)")
+    public SendMessage uploadVideoAnonymousBackup(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
@@ -87,7 +157,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото(анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
+//        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
@@ -131,7 +201,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото(анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
+//        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
