@@ -31,8 +31,8 @@ public class MainTikTokMenuController {
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото(анонимно)");
-        keyboardRowLineThree.add("\uD83D\uDC8EРейтинг");
-        keyboardRowLineThree.add("\uD83C\uDF81Мои загрузки");
+        keyboardRowLineThree.add("\uD83D\uDC8EТОП");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
