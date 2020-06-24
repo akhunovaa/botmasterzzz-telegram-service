@@ -24,19 +24,19 @@ public class MainTikTokMenuController {
         keyboard.setOneTimeKeyboard(false);
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
+        KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
-        KeyboardRow keyboardRowLineThreeSub = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
-        keyboardRowLineThree.add("\uD83C\uDFACЗагрузить видео");
-        keyboardRowLineThree.add("\uD83C\uDFACЗагрузить фото");
-        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить видео(анонимно)");
-        keyboardRowLineThreeSub.add("\uD83C\uDFACЗагрузить фото(анонимно)");
+        keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото");
+        keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото(анонимно)");
+        keyboardRowLineThree.add("\uD83D\uDC8EРейтинг");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои загрузки");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineOne);
+        keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineThreeSub);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
 
@@ -50,7 +50,7 @@ public class MainTikTokMenuController {
                         "\uD83D\uDCE4 /upload для чтобы загрузить видео/фото\n" +
                         "\n" +
                         "или \n" +
-                        "Выберите раздел ниже: \uD83D\uDD3D")
+                        "<b>Выберите раздел ниже:</b> \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
 
