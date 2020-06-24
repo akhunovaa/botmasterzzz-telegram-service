@@ -1,12 +1,16 @@
 package com.botmasterzzz.telegram.dao.impl;
 
 import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
+import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
+import com.botmasterzzz.telegram.entity.TelegramRatingStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import org.hibernate.*;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -68,7 +72,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         criteria.add(Restrictions.eq("touchType", touchType));
         criteria.setMaxResults(1);
         try {
-            telegramMediaStatisticEntity  = (TelegramMediaStatisticEntity) criteria.uniqueResult();
+            telegramMediaStatisticEntity = (TelegramMediaStatisticEntity) criteria.uniqueResult();
         } catch (HibernateException e) {
             session.close();
         } finally {
@@ -105,5 +109,30 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         telegramUserMediaEntityList = criteria.list();
         session.close();
         return telegramUserMediaEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<TopRatingUsersDTO> topActiveUsersGet() {
+        List<TopRatingUsersDTO> telegramRatingStatisticEntityList;
+        Session session = sessionFactory.openSession();
+
+        Criteria criteria = session.createCriteria(TelegramRatingStatisticEntity.class);
+        criteria.createAlias("telegramBotUserEntity", "user");
+
+        ProjectionList projList = Projections.projectionList();
+        projList.add(Projections.count("touchType").as("countOfTouch"));
+        projList.add(Projections.groupProperty("user.id").as("userId"));
+        projList.add(Projections.groupProperty("user.telegramId").as("telegramUserId"));
+        projList.add(Projections.groupProperty("user.username").as("telegramUserName"));
+        projList.add(Projections.groupProperty("user.lastName").as("telegramFirstName"));
+        projList.add(Projections.groupProperty("user.firstName").as("telegramLastName"));
+        criteria.setProjection(projList);
+        criteria.setResultTransformer(Transformers.aliasToBean(TopRatingUsersDTO.class));
+        criteria.addOrder(Order.desc("countOfTouch"));
+        criteria.setMaxResults(10);
+        telegramRatingStatisticEntityList = criteria.list();
+        session.close();
+        return telegramRatingStatisticEntityList;
     }
 }

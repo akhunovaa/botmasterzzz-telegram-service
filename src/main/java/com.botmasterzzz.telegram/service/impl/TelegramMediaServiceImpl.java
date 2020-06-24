@@ -5,6 +5,7 @@ import com.botmasterzzz.bot.api.impl.objects.PhotoSize;
 import com.botmasterzzz.bot.api.impl.objects.Video;
 import com.botmasterzzz.telegram.dao.TelegramUserDAO;
 import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
+import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
@@ -111,5 +112,10 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     @Override
     public long countUserTouch(Long fileId, String touchType) {
         return telegramUserMediaDAO.countUserTouch(fileId, touchType);
+    }
+
+    @Override
+    public List<TopRatingUsersDTO> topActiveUsersGet() {
+        return telegramUserMediaDAO.topActiveUsersGet();
     }
 }
