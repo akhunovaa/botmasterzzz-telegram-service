@@ -3,11 +3,12 @@ package com.botmasterzzz.telegram.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "telegram_bot_users")
-public class TelegramBotUserEntity {
+public class TelegramBotUserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
