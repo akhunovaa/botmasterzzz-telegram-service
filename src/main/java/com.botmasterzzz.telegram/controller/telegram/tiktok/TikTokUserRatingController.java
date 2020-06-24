@@ -70,16 +70,16 @@ public class TikTokUserRatingController {
                 .setChatId(update.getMessage().getChatId()).enableHtml(true).setParseMode("HTML")
                 .setText("<b>ТОП</b> 1️⃣0️⃣ <b> активных пользователей:</b>\uD83D\uDC8E:\n" +
                         "➖➖➖➖➖➖➖➖➖➖➖➖\n" +
-                        "1️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(0).getTelegramUserId() + "\"><b>" + telegramUserFirst + "</b></a> \uD83E\uDD47 \n\n" +
-                        "2️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(1).getTelegramUserId() + "\"><b>" + telegramUseSecond + "</b></a> \uD83E\uDD48 \n\n" +
-                        "3️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(2).getTelegramUserId() + "\">" + telegramUserThird + "</a> \uD83E\uDD49 \n\n" +
-                        "4️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(3).getTelegramUserId() + "\">" + telegramUserFourth + "</a> \uD83C\uDFC5 \n\n" +
-                        "5️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(4).getTelegramUserId() + "\">" + telegramUserFifth + "</a> ❇️ \n\n" +
-                        "6️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(5).getTelegramUserId() + "\">" + telegramUserSixth + "</a> ❇️ \n\n" +
-                        "7️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(6).getTelegramUserId() + "\">" + telegramUserSeventh + "</a> ❇️ \n\n" +
-                        "8️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(7).getTelegramUserId() + "\">" + telegramUserEith + "</a> ❇️ \n\n" +
-                        "9️⃣  место за пользователем <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(8).getTelegramUserId() + "\">" + telegramUserNinth + "</a> ❇️ \n\n" +
-                        "\uD83D\uDD1F место за пользователе <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(9).getTelegramUserId() + "\">" + telegramUserTenth + "</a> ❇️ \n" +
+                        "1️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(0).getTelegramUserId() + "\"><b>" + telegramUserFirst + "</b></a> \uD83E\uDD47 \n\n" +
+                        "2️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(1).getTelegramUserId() + "\"><b>" + telegramUseSecond + "</b></a> \uD83E\uDD48 \n\n" +
+                        "3️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(2).getTelegramUserId() + "\">" + telegramUserThird + "</a> \uD83E\uDD49 \n\n" +
+                        "4️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(3).getTelegramUserId() + "\">" + telegramUserFourth + "</a> \uD83C\uDFC5 \n\n" +
+                        "5️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(4).getTelegramUserId() + "\">" + telegramUserFifth + "</a> ❇️ \n\n" +
+                        "6️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(5).getTelegramUserId() + "\">" + telegramUserSixth + "</a> ❇️ \n\n" +
+                        "7️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(6).getTelegramUserId() + "\">" + telegramUserSeventh + "</a> ❇️ \n\n" +
+                        "8️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(7).getTelegramUserId() + "\">" + telegramUserEith + "</a> ❇️ \n\n" +
+                        "9️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(8).getTelegramUserId() + "\">" + telegramUserNinth + "</a> ❇️ \n\n" +
+                        "\uD83D\uDD1F место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(9).getTelegramUserId() + "\">" + telegramUserTenth + "</a> ❇️ \n" +
                         "➖➖➖➖➖➖➖➖➖➖➖➖\n")
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
