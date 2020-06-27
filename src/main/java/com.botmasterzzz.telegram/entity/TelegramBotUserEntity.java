@@ -40,6 +40,9 @@ public class TelegramBotUserEntity implements Serializable {
     @Column(name = "is_blocked")
     private boolean isBlocked;
 
+    @Column(name = "is_admin")
+    private boolean isAdmin;
+
     @JsonIgnore
     @Column(name = "aud_when_create")
     private Timestamp audWhenCreate;
@@ -136,6 +139,14 @@ public class TelegramBotUserEntity implements Serializable {
         this.audWhenUpdate = audWhenUpdate;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     @Override
     public String toString() {
         return "TelegramBotUserEntity{" +
@@ -148,6 +159,7 @@ public class TelegramBotUserEntity implements Serializable {
                 ", languageCode='" + languageCode + '\'' +
                 ", note='" + note + '\'' +
                 ", isBlocked=" + isBlocked +
+                ", isAdmin=" + isAdmin +
                 ", audWhenCreate=" + audWhenCreate +
                 ", audWhenUpdate=" + audWhenUpdate +
                 '}';
