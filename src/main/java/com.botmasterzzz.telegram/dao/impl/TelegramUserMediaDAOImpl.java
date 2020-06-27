@@ -1,10 +1,12 @@
 package com.botmasterzzz.telegram.dao.impl;
 
 import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
+import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramRatingStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
+import com.botmasterzzz.telegram.entity.stat.TelegramUserMediaStatisticEntity;
 import org.hibernate.*;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
@@ -144,5 +146,53 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         telegramRatingStatisticEntityList = criteria.list();
         session.close();
         return telegramRatingStatisticEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId) {
+        List<OwnerStatisticDTO> ownerStatisticDTOList;
+        Session session = sessionFactory.openSession();
+
+        Criteria criteria = session.createCriteria(TelegramRatingStatisticEntity.class);
+        criteria.createAlias("telegramBotUserEntity", "user");
+        criteria.add(Restrictions.eq("user.telegramId", telegramUserId));
+
+        ProjectionList projList = Projections.projectionList();
+        projList.add(Projections.count("touchType").as("countOfTouch"));
+        projList.add(Projections.groupProperty("touchType").as("touchType"));
+
+        criteria.setProjection(projList);
+        criteria.setResultTransformer(Transformers.aliasToBean(OwnerStatisticDTO.class));
+        criteria.addOrder(Order.desc("countOfTouch"));
+        criteria.setMaxResults(3);
+        ownerStatisticDTOList = criteria.list();
+        session.close();
+        return ownerStatisticDTOList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<OwnerStatisticDTO> getSelfActivityStatistic(Long telegramUserId) {
+        List<OwnerStatisticDTO> ownerStatisticDTOList;
+        Session session = sessionFactory.openSession();
+
+        Criteria criteria = session.createCriteria(TelegramUserMediaStatisticEntity.class);
+        criteria.createAlias("telegramBotUserEntity", "user");
+        criteria.createAlias("telegramMedia4TopStatisticEntity", "statistic");
+        criteria.add(Restrictions.eq("user.telegramId", telegramUserId));
+        criteria.add(Restrictions.eq("statistic.telegramUserId", telegramUserId));
+
+        ProjectionList projList = Projections.projectionList();
+        projList.add(Projections.count("statistic.touchType").as("countOfTouch"));
+        projList.add(Projections.groupProperty("statistic.touchType").as("touchType"));
+
+        criteria.setProjection(projList);
+        criteria.setResultTransformer(Transformers.aliasToBean(OwnerStatisticDTO.class));
+        criteria.addOrder(Order.desc("countOfTouch"));
+        criteria.setMaxResults(3);
+        ownerStatisticDTOList = criteria.list();
+        session.close();
+        return ownerStatisticDTOList;
     }
 }
