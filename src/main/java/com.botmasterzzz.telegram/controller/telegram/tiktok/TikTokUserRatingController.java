@@ -179,7 +179,7 @@ public class TikTokUserRatingController {
         responseTextBuilder.append("<b>Моя статистика по лайкам/дизлайкам</b>\uD83E\uDDFE:\n");
         responseTextBuilder.append("\n");
         responseTextBuilder.append("Мои:\n");
-        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n");
+        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
         if (ownerStatisticDTOList.isEmpty()){
             responseTextBuilder.append("<b>Статистика отсутствует</b>\n");
         }
@@ -189,10 +189,10 @@ public class TikTokUserRatingController {
                     .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
         }
 
-        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
+        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
         ownerStatisticDTOList = telegramMediaService.getSelfActivityStatistic(requestedUserId);
         responseTextBuilder.append("Мне:\n");
-        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n");
+        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
         if (ownerStatisticDTOList.isEmpty()){
             responseTextBuilder.append("<b>Статистика отсутствует</b>\n");
         }
@@ -201,7 +201,7 @@ public class TikTokUserRatingController {
                     .append(ownerStatisticDTO.getTouchType()).append("</b>: ")
                     .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
         }
-        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n");
+        responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setChatId(update.getCallbackQuery().getMessage().getChatId());
         editMessageText.setText(responseTextBuilder.toString());
