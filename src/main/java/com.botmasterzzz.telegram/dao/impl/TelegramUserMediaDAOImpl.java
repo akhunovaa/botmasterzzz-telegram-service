@@ -43,6 +43,15 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         session.close();
     }
 
+    @Override
+    public void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(telegramUserMediaEntity);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public TelegramUserMediaEntity telegramUserMediaGet(Long id) {
@@ -104,6 +113,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         List<TelegramUserMediaEntity> telegramUserMediaEntityList;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("isDeleted", false));
         criteria.add(Restrictions.eq("fileType", mediaType));
         criteria.addOrder(Order.desc("audWhenCreate"));
         telegramUserMediaEntityList = criteria.list();

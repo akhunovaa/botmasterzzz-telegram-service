@@ -13,6 +13,8 @@ public interface TelegramUserMediaDAO {
 
     TelegramUserMediaEntity telegramUserMediaGet(Long id);
 
+    void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity);
+
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
 
     Optional<TelegramMediaStatisticEntity> findTouchTypeMedia(long telegramUserId, Long mediaFileId, String touchType);
