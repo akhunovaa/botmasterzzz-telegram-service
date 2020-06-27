@@ -68,7 +68,7 @@ public class TikTokUserRatingController {
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true).setParseMode("HTML")
-                .setText("<b>ТОП</b> 1️⃣0️⃣ <b> активных пользователей:</b>\uD83D\uDC8E:\n" +
+                .setText("<b>ТОП</b> 1️⃣0️⃣ <b> активных пользователей</b>\uD83D\uDC8E:\n" +
                         "➖➖➖➖➖➖➖➖➖➖➖➖\n" +
                         "1️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(0).getTelegramUserId() + "\"><b>" + telegramUserFirst + "</b></a> \uD83E\uDD47 \n\n" +
                         "2️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(1).getTelegramUserId() + "\"><b>" + telegramUseSecond + "</b></a> \uD83E\uDD48 \n\n" +
