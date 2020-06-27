@@ -3,6 +3,7 @@ package com.botmasterzzz.telegram.service;
 import com.botmasterzzz.bot.api.impl.objects.Document;
 import com.botmasterzzz.bot.api.impl.objects.PhotoSize;
 import com.botmasterzzz.bot.api.impl.objects.Video;
+import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
@@ -35,5 +36,9 @@ public interface TelegramMediaService {
     long countUserTouch(Long fileId, String touchType);
 
     List<TopRatingUsersDTO> topActiveUsersGet();
+
+    List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId);
+
+    List<OwnerStatisticDTO> getSelfActivityStatistic(Long telegramUserId);
 
 }

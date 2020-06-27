@@ -5,6 +5,7 @@ import com.botmasterzzz.bot.api.impl.objects.PhotoSize;
 import com.botmasterzzz.bot.api.impl.objects.Video;
 import com.botmasterzzz.telegram.dao.TelegramUserDAO;
 import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
+import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
@@ -123,5 +124,15 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     @Override
     public List<TopRatingUsersDTO> topActiveUsersGet() {
         return telegramUserMediaDAO.topActiveUsersGet();
+    }
+
+    @Override
+    public List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId) {
+        return telegramUserMediaDAO.getUsersActivityStatistic(telegramUserId);
+    }
+
+    @Override
+    public List<OwnerStatisticDTO> getSelfActivityStatistic(Long telegramUserId){
+        return telegramUserMediaDAO.getSelfActivityStatistic(telegramUserId);
     }
 }

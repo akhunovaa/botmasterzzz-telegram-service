@@ -1,5 +1,6 @@
 package com.botmasterzzz.telegram.dao;
 
+import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
@@ -24,5 +25,9 @@ public interface TelegramUserMediaDAO {
     void mediaTouchAdd(TelegramMediaStatisticEntity telegramMediaStatisticEntity);
 
     List<TopRatingUsersDTO> topActiveUsersGet();
+
+    List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId);
+
+    List<OwnerStatisticDTO> getSelfActivityStatistic(Long telegramUserId);
 
 }
