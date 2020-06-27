@@ -165,6 +165,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
         UserContextHolder.currentContext().setRemain(false);
+        UserContextHolder.currentContext().setAnon(false);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить \uD83D\uDCF9 фото/видео и оценивать \uD83D\uDCF8 фото/видео от других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
