@@ -38,7 +38,7 @@ public class TikTokMediaFileLoaderController {
     private Gson gson;
 
     @BotRequestMapping(value = "tiktok-\uD83C\uDD95Новое за сегодня")
-    public SendPhoto sendRandomlyMediaForToday(Update update) {
+    public PartialBotApiMethod sendRandomlyMediaForToday(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
         TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
@@ -98,20 +98,37 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-        SendPhoto sendPhoto = new SendPhoto();
-        sendPhoto.setChatId(chatId);
-        sendPhoto.setPhoto(fileIdx);
-        if (!isAnon){
-            sendPhoto.setCaption(caption + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+
+        if (telegramUserMediaEntity.getFileType() == 1){
+            SendPhoto sendPhoto = new SendPhoto();
+            sendPhoto.setChatId(chatId);
+            sendPhoto.setPhoto(fileIdx);
+            if (!isAnon){
+                sendPhoto.setCaption(caption + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            }else {
+                sendPhoto.setCaption(caption + "\nanonymous");
+            }
+            sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
+            sendPhoto.setParseMode("HTML");
+            sendPhoto.disableNotification();
+            logger.info("User: {}", requestedTelegramUser);
+            logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
+            return sendPhoto;
         }else {
-            sendPhoto.setCaption(caption + "\nanonymous");
+            SendVideo sendVideo = new SendVideo();
+            sendVideo.setChatId(chatId);
+            sendVideo.setVideo(fileIdx);
+            if (!isAnon){
+                sendVideo.setCaption(caption + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            }else {
+                sendVideo.setCaption(caption + "\nanonymous");
+            }
+            sendVideo.setReplyMarkup(inlineKeyboardMarkup);
+            sendVideo.setParseMode("HTML");
+            sendVideo.disableNotification();
+            logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
+            return sendVideo;
         }
-        sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
-        sendPhoto.setParseMode("HTML");
-        sendPhoto.disableNotification();
-        logger.info("User: {}", requestedTelegramUser);
-        logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
-        return sendPhoto;
     }
 
     @BotRequestMapping(value = "tiktok-\uD83D\uDCF2Фото")
