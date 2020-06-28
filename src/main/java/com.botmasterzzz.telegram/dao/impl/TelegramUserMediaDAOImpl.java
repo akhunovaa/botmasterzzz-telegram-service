@@ -16,6 +16,9 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,6 +121,22 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         criteria.add(Restrictions.eq("isDeleted", false));
         criteria.add(Restrictions.eq("fileType", mediaType));
         criteria.addOrder(Order.desc("audWhenCreate"));
+        telegramUserMediaEntityList = criteria.list();
+        session.close();
+        return telegramUserMediaEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<TelegramUserMediaEntity> telegramUserMediaListForToday() {
+        Date minDate = Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS));
+        Date maxDate = new Date();
+        List<TelegramUserMediaEntity> telegramUserMediaEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("isDeleted", false));
+        criteria.addOrder(Order.desc("audWhenCreate"));
+        criteria.add(Restrictions.between("audWhenCreate", minDate, maxDate));
         telegramUserMediaEntityList = criteria.list();
         session.close();
         return telegramUserMediaEntityList;

@@ -23,10 +23,12 @@ public class MainTikTokMenuController {
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
         List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRowLineTop = new KeyboardRow();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
+        keyboardRowLineOne.add("\uD83C\uDD95Новое за сегодня");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото");
@@ -34,6 +36,7 @@ public class MainTikTokMenuController {
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
 //        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
+        keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);

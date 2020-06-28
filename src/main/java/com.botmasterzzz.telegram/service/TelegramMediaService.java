@@ -23,6 +23,8 @@ public interface TelegramMediaService {
 
     void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity);
 
+    List<TelegramUserMediaEntity> telegramUserMediaListForToday();
+
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
 
     void telegramUserMediaTouchAdd(Long telegramUserId, Long fileId, String touchType);
