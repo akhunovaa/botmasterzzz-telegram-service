@@ -200,7 +200,6 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         criteria.createAlias("telegramBotUserEntity", "user");
         criteria.createAlias("telegramMedia4TopStatisticEntity", "statistic");
         criteria.add(Restrictions.eq("user.telegramId", telegramUserId));
-        criteria.add(Restrictions.eq("statistic.telegramUserId", telegramUserId));
 
         ProjectionList projList = Projections.projectionList();
         projList.add(Projections.count("statistic.touchType").as("countOfTouch"));
