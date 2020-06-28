@@ -28,7 +28,7 @@ public class MainTikTokMenuController {
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
-        keyboardRowLineOne.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить видео/фото");
