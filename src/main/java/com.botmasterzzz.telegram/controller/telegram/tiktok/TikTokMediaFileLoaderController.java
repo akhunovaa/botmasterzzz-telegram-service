@@ -114,7 +114,7 @@ public class TikTokMediaFileLoaderController {
             logger.info("User: {}", requestedTelegramUser);
             logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
             return sendPhoto;
-        }else {
+        }else if(telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0){
             SendVideo sendVideo = new SendVideo();
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
@@ -128,6 +128,20 @@ public class TikTokMediaFileLoaderController {
             sendVideo.disableNotification();
             logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
             return sendVideo;
+        }else {
+            SendDocument sendDocument = new SendDocument();
+            sendDocument.setChatId(chatId);
+            sendDocument.setDocument(fileIdx);
+            if (!isAnon){
+                sendDocument.setCaption("Видео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            }else {
+                sendDocument.setCaption("anonymous");
+            }
+            sendDocument.setReplyMarkup(inlineKeyboardMarkup);
+            sendDocument.setParseMode("HTML");
+            sendDocument.disableNotification();
+            logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
+            return sendDocument;
         }
     }
 
