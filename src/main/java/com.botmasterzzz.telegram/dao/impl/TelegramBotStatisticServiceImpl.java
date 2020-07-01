@@ -9,6 +9,7 @@ import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramInstanceEntity;
 import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         return telegramUserDAO.exists(TelegramBotUserEntity.class, telegramUserId);
     }
 
+    @Async
     @Override
     public void telegramUserAdd(User user) {
         TelegramBotUserEntity telegramBotUserEntity = new TelegramBotUserEntity();
@@ -66,6 +68,7 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
 
     }
 
+    @Async
     @Override
     public void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId, String callBackData) {
         TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity = new TelegramBotUsageStatisticEntity();
