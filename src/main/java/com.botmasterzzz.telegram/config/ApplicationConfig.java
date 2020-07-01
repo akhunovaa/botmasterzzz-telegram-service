@@ -3,12 +3,14 @@ package com.botmasterzzz.telegram.config;
 import com.botmasterzzz.bot.bot.DefaultBotOptions;
 import com.botmasterzzz.bot.generic.BotSession;
 import com.botmasterzzz.bot.updatesreceivers.DefaultBotSession;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.WebApplicationInitializer;
@@ -34,6 +36,7 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 @ComponentScan({"com.botmasterzzz.telegram"})
 @Profile("dev")
+@EnableKafka
 public class ApplicationConfig implements WebApplicationInitializer {
 
     private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
@@ -141,6 +144,11 @@ public class ApplicationConfig implements WebApplicationInitializer {
     @Bean
     public DefaultBotOptions botOptions() {
         return new DefaultBotOptions();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     @Bean
