@@ -115,12 +115,12 @@ public class TelegramBotMessengerController {
         try {
             File existdFile = new File(filePath);
             if (existdFile.exists()){
-                sendPhoto.setPhoto(new InputFile(existdFile, String.valueOf(answer.hashCode())));
+                sendPhoto.setPhotoInputFile(new InputFile(existdFile, String.valueOf(answer.hashCode())));
                 logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
             }else {
                 filePath = HelperUtil.saveImage(answer, filePath);
                 existdFile = new File(filePath);
-                sendPhoto.setPhoto(new InputFile(existdFile, String.valueOf(answer.hashCode())));
+                sendPhoto.setPhotoInputFile(new InputFile(existdFile, String.valueOf(answer.hashCode())));
             }
         } catch (IOException e) {
             logger.error("User id {} sent photo message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
@@ -164,12 +164,12 @@ public class TelegramBotMessengerController {
             String filePath = System.getProperty("java.io.tmpdir") + "/" + pictureToSend.hashCode();
             File existdFile = new File(filePath);
             if (existdFile.exists()){
-                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+                sendPhoto.setPhotoInputFile(new InputFile(existdFile, "image-one"));
                 logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
             }else {
                 pictureToSend = HelperUtil.saveImage(pictureToSend, String.valueOf(pictureToSend.hashCode()));
                 existdFile = new File(pictureToSend);
-                sendPhoto.setPhoto(new InputFile(existdFile, "image-one"));
+                sendPhoto.setPhotoInputFile(new InputFile(existdFile, "image-one"));
             }
         } catch (IOException e) {
             logger.error("User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend, e);

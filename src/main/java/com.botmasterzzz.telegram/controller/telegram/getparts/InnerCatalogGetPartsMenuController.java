@@ -102,7 +102,7 @@ public class InnerCatalogGetPartsMenuController {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("⚙ Фото #" + callBackData.getFileSelected() + "\n");
         File file1 = new File(fileName);
-        sendPhoto.setPhoto(new InputFile(file1, "image-one"));
+        sendPhoto.setPhotoInputFile(new InputFile(file1, "image-one"));
         sendPhoto.setCaption(stringBuilder.toString());
         sendPhoto.setChatId(update.getCallbackQuery().getMessage().getChatId());
         sendPhoto.disableNotification();
