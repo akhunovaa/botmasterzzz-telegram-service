@@ -18,7 +18,7 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public long telegramUserAdd(TelegramBotUserEntity telegramBotUserEntity) {
+    public void telegramUserAdd(TelegramBotUserEntity telegramBotUserEntity) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         try {
@@ -33,7 +33,6 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
         } finally {
             session.close();
         }
-        return telegramBotUserEntity.getId();
     }
 
     @Override

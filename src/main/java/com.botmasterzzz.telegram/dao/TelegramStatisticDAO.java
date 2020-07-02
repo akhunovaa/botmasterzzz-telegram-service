@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TelegramStatisticDAO {
 
-    long telegramStatisticAdd(TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity);
+    void telegramStatisticAdd(TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity);
 
     TelegramBotUsageStatisticEntity telegramStatisticGet(long id);
 
