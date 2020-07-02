@@ -167,6 +167,29 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         return telegramRatingStatisticEntityList;
     }
 
+    @Override
+    @SuppressWarnings({"deprecation", "unchecked"})
+    public List<TopRatingUsersDTO> topUsersGet() {
+        List<TopRatingUsersDTO> telegramRatingStatisticEntityList;
+        Session session = sessionFactory.openSession();
+
+        Criteria criteria = session.createCriteria(TelegramUserMediaStatisticEntity.class);
+        criteria.createAlias("telegramBotUserEntity", "user");
+        criteria.createAlias("telegramMedia4TopStatisticEntity", "statistic");
+
+        ProjectionList projList = Projections.projectionList();
+        projList.add(Projections.count("statistic.touchType").as("countOfTouch"));
+        projList.add(Projections.groupProperty("statistic.touchType").as("touchType"));
+
+        criteria.setProjection(projList);
+        criteria.setResultTransformer(Transformers.aliasToBean(OwnerStatisticDTO.class));
+        criteria.addOrder(Order.desc("countOfTouch"));
+        criteria.setMaxResults(10);
+        telegramRatingStatisticEntityList = criteria.list();
+        session.close();
+        return telegramRatingStatisticEntityList;
+    }
+
     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId) {

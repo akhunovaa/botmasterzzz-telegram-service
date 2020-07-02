@@ -129,6 +129,11 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     }
 
     @Override
+    public List<TopRatingUsersDTO> topUsersGet() {
+        return telegramUserMediaDAO.topUsersGet();
+    }
+
+    @Override
     public List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId) {
         return telegramUserMediaDAO.getUsersActivityStatistic(telegramUserId);
     }
