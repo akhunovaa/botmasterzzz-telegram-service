@@ -116,7 +116,7 @@ public class ApplicationConfig implements WebApplicationInitializer {
         localSessionFactoryBean.setPackagesToScan(PROPERTY_NAME_ENTITY_LOCATION);
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
-        properties.setProperty("hibernate.show_sql", "false");
+        properties.setProperty("hibernate.show_sql", "true");
         localSessionFactoryBean.setHibernateProperties(properties);
         return localSessionFactoryBean;
     }
