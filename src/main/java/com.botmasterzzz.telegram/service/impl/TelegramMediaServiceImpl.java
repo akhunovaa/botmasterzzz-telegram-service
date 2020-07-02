@@ -12,7 +12,6 @@ import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     @Autowired
     private TelegramUserDAO telegramUserDAO;
 
-    @Async
     @Override
     public void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon, String message) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
@@ -80,7 +78,6 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         return telegramUserMediaDAO.telegramUserMediaGet(id);
     }
 
-    @Async
     @Override
     public void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity) {
         telegramUserMediaDAO.telegramUserMediaUpdate(telegramUserMediaEntity);

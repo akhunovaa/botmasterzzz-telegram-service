@@ -28,7 +28,6 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         return telegramUserDAO.exists(TelegramBotUserEntity.class, telegramUserId);
     }
 
-    @Async
     @Override
     public void telegramUserAdd(User user) {
         TelegramBotUserEntity telegramBotUserEntity = new TelegramBotUserEntity();
@@ -68,7 +67,6 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
 
     }
 
-    @Async
     @Override
     public void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId, String callBackData) {
         TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity = new TelegramBotUsageStatisticEntity();
