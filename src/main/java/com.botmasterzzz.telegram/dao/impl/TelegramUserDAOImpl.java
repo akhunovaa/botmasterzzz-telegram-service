@@ -26,7 +26,7 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
             session.save(telegramBotUserEntity);
             tx.commit();
             System.out.println("User: '" + telegramBotUserEntity + "' successfully approved.");
-        } catch (HibernateException he) {
+        } catch (Exception he) {
             if (tx != null) {
                 tx.rollback();
             }
