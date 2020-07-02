@@ -123,14 +123,21 @@ public class KafkaTelegramConsumerImpl {
         if (update.hasCallbackQuery()) {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
             if (!userExists) {
+                LOGGER.debug("User does not exists: {}", update.getCallbackQuery().getFrom().getId());
                 telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
+                LOGGER.debug("User added: {}", update.getCallbackQuery().getFrom().getId());
             }
+            LOGGER.debug("User exists statistic add {}", update.getCallbackQuery().getFrom().getId());
             telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), instanceId, update.getCallbackQuery().getFrom().getId(), update.getCallbackQuery().getData());
         } else {
+
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
             if (!userExists) {
+                LOGGER.debug("User does not exists: {}", update.getMessage().getFrom().getId());
                 telegramBotStatisticService.telegramUserAdd(update.getMessage().getFrom());
+                LOGGER.debug("User added: {}", update.getMessage().getFrom().getId());
             }
+            LOGGER.debug("User exists statistic add: {}", update.getMessage().getFrom().getId());
             telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), instanceId, update.getMessage().getFrom().getId());
         }
     }
