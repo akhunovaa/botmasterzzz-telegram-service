@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: rusberbank.ru/botmasterzzz-telegram
   pullPolicy: IfNotPresent
-  appVersion: 125
+  appVersion: 126
 
 imagePullSecrets:
   - name: ourhubpwd
