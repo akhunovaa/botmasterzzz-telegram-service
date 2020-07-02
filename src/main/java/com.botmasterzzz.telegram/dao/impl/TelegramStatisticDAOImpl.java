@@ -24,7 +24,7 @@ public class TelegramStatisticDAOImpl implements TelegramStatisticDAO {
             session.save(telegramBotUsageStatisticEntity);
             tx.commit();
             System.out.println("User: '" + telegramBotUsageStatisticEntity + "' successfully approved.");
-        } catch (HibernateException he) {
+        } catch (Exception he) {
             if (tx != null) {
                 tx.rollback();
             }
