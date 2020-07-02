@@ -53,7 +53,7 @@ public class TikTokUserRatingController {
         InlineKeyboardButton rowRightInlineButton = new InlineKeyboardButton();
         CallBackData callBackDataForArrows = new CallBackData("owner-statistic");
         rowLeftInlineButton.setText("\uD83E\uDDFE Моя статистика");
-        CallBackData callBackData = new CallBackData("top-statistic");
+        CallBackData callBackData = new CallBackData("mass-top-statistic");
         rowLeftInlineButton.setText("\uD83E\uDDFE Общая статистика");
 
         rowLeftInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
@@ -150,7 +150,7 @@ public class TikTokUserRatingController {
                 .setReplyMarkup(inlineKeyboardMarkup).setMessageId(update.getCallbackQuery().getMessage().getMessageId());
     }
 
-    @BotRequestMapping(value = "tiktok-top-statistic")
+    @BotRequestMapping(value = "tiktok-mass-top-statistic")
     public EditMessageText sendTOPFromCommand(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         String name = null != update.getCallbackQuery().getFrom().getUserName() ? update.getCallbackQuery().getFrom().getUserName() : update.getCallbackQuery().getFrom().getFirstName();
