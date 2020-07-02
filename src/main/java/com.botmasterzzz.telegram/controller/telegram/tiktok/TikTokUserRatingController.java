@@ -54,7 +54,7 @@ public class TikTokUserRatingController {
         CallBackData callBackDataForArrows = new CallBackData("owner-statistic");
         rowLeftInlineButton.setText("\uD83E\uDDFE Моя статистика");
         CallBackData callBackData = new CallBackData("mass-top-statistic");
-        rowLeftInlineButton.setText("\uD83E\uDDFE Общая статистика");
+        rowRightInlineButton.setText("\uD83E\uDDFE Общая статистика");
 
         rowLeftInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
         rowRightInlineButton.setCallbackData(gson.toJson(callBackData));
@@ -176,7 +176,7 @@ public class TikTokUserRatingController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         List<TopRatingUsersDTO> telegramRatingStatisticEntityList = telegramMediaService.topUsersGet();
-        LOGGER.info("TOP active users requested: {}", name);
+        LOGGER.info("TOP users requested: {}", name);
         String telegramUserFirst = null != telegramRatingStatisticEntityList.get(0).getTelegramUserName() ? telegramRatingStatisticEntityList.get(0).getTelegramUserName() : telegramRatingStatisticEntityList.get(0).getTelegramFirstName();
         String telegramUseSecond = null != telegramRatingStatisticEntityList.get(1).getTelegramUserName() ? telegramRatingStatisticEntityList.get(1).getTelegramUserName() : telegramRatingStatisticEntityList.get(1).getTelegramFirstName();
         String telegramUserThird = null != telegramRatingStatisticEntityList.get(2).getTelegramUserName() ? telegramRatingStatisticEntityList.get(2).getTelegramUserName() : telegramRatingStatisticEntityList.get(2).getTelegramFirstName();
