@@ -84,11 +84,18 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
     @SuppressWarnings({"deprecation"})
     public boolean exists(Class<?> clazz, long idValue) {
         Session session = sessionFactory.openSession();
-        boolean exists =  session.createCriteria(clazz)
-                .add(Restrictions.eq("telegramId", idValue))
-                .setProjection(Projections.id())
-                .uniqueResult() != null;
-        session.close();
+        boolean exists = false;
+        try {
+            exists =  session.createCriteria(clazz)
+                    .add(Restrictions.eq("telegramId", idValue))
+                    .setProjection(Projections.id())
+                    .uniqueResult() != null;
+            session.close();
+        } catch (Exception he) {
+            session.close();
+        } finally {
+            session.close();
+        }
         return exists;
     }
 }
