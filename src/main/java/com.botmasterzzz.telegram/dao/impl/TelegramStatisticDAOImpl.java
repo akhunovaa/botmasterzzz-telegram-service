@@ -2,10 +2,7 @@ package com.botmasterzzz.telegram.dao.impl;
 
 import com.botmasterzzz.telegram.dao.TelegramStatisticDAO;
 import com.botmasterzzz.telegram.entity.TelegramBotUsageStatisticEntity;
-import org.hibernate.Criteria;
-import org.hibernate.QueryException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,10 +18,19 @@ public class TelegramStatisticDAOImpl implements TelegramStatisticDAO {
     @Override
     public long telegramStatisticAdd(TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity) {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(telegramBotUsageStatisticEntity);
-        session.getTransaction().commit();
-        session.close();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(telegramBotUsageStatisticEntity);
+            tx.commit();
+            System.out.println("User: '" + telegramBotUsageStatisticEntity + "' successfully approved.");
+        } catch (HibernateException he) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
         return telegramBotUsageStatisticEntity.getId();
     }
 

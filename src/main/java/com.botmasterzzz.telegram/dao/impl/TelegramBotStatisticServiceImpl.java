@@ -8,6 +8,8 @@ import com.botmasterzzz.telegram.entity.TelegramBotUsageStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramInstanceEntity;
 import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Service
 public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TelegramBotStatisticServiceImpl.class);
 
     @Autowired
     private TelegramStatisticDAO telegramStatisticDAO;
@@ -28,6 +32,7 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         return telegramUserDAO.exists(TelegramBotUserEntity.class, telegramUserId);
     }
 
+    @Async
     @Override
     public void telegramUserAdd(User user) {
         TelegramBotUserEntity telegramBotUserEntity = new TelegramBotUserEntity();
@@ -47,6 +52,7 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         return telegramUserDAO.getTelegramUserList();
     }
 
+    @Async
     @Override
     public void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId) {
         TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity = new TelegramBotUsageStatisticEntity();
@@ -62,11 +68,12 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
 
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
         telegramBotUsageStatisticEntity.setTelegramBotUserEntity(telegramBotUserEntity);
-
+        LOGGER.debug("telegramBotUserEntity GET {}", telegramBotUserEntity);
         telegramStatisticDAO.telegramStatisticAdd(telegramBotUsageStatisticEntity);
 
     }
 
+    @Async
     @Override
     public void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId, String callBackData) {
         TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity = new TelegramBotUsageStatisticEntity();

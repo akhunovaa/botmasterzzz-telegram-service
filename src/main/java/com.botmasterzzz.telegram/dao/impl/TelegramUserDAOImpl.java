@@ -3,10 +3,7 @@ package com.botmasterzzz.telegram.dao.impl;
 import com.botmasterzzz.telegram.dao.TelegramUserDAO;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramInstanceEntity;
-import org.hibernate.Criteria;
-import org.hibernate.QueryException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +20,19 @@ public class TelegramUserDAOImpl implements TelegramUserDAO {
     @Override
     public long telegramUserAdd(TelegramBotUserEntity telegramBotUserEntity) {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(telegramBotUserEntity);
-        session.getTransaction().commit();
-        session.close();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(telegramBotUserEntity);
+            tx.commit();
+            System.out.println("User: '" + telegramBotUserEntity + "' successfully approved.");
+        } catch (HibernateException he) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
         return telegramBotUserEntity.getId();
     }
 
