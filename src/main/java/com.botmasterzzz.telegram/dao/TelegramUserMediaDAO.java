@@ -28,6 +28,8 @@ public interface TelegramUserMediaDAO {
 
     List<TopRatingUsersDTO> topActiveUsersGet();
 
+    List<TopRatingUsersDTO> topUsersGet();
+
     List<OwnerStatisticDTO> getUsersActivityStatistic(Long telegramUserId);
 
     List<OwnerStatisticDTO> getSelfActivityStatistic(Long telegramUserId);
