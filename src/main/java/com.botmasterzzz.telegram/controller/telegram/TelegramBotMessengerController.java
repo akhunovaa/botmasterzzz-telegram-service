@@ -199,12 +199,12 @@ public class TelegramBotMessengerController {
         try {
             File existsFile = new File(filePath);
             if (existsFile.exists()){
-                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
+                sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
                 logger.info("SENT EXISTS file User id {} sent video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
             }else {
                 HttpDownloadUtility.downloadFile(answer, videoTemporaryName);
                 existsFile = new File(filePath);
-                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
+                sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
             }
         } catch (IOException e) {
             logger.error("User id {} sent video message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
@@ -249,12 +249,12 @@ public class TelegramBotMessengerController {
             String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
             File existsFile = new File(filePath);
             if (existsFile.exists()){
-                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
+                sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
                 logger.info("SENT EXISTS file User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend);
             }else {
                 HttpDownloadUtility.downloadFile(videoToSend, videoTemporaryName);
                 existsFile = new File(filePath);
-                sendVideo.setVideo(new InputFile(existsFile, videoTemporaryName));
+                sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
             }
         } catch (IOException e) {
             logger.error("User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend, e);
