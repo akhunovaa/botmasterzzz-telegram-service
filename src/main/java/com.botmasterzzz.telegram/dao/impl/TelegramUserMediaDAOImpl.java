@@ -179,10 +179,14 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
 
         ProjectionList projList = Projections.projectionList();
         projList.add(Projections.count("statistic.touchType").as("countOfTouch"));
-        projList.add(Projections.groupProperty("statistic.touchType").as("touchType"));
+        projList.add(Projections.groupProperty("user.id").as("userId"));
+        projList.add(Projections.groupProperty("user.telegramId").as("telegramUserId"));
+        projList.add(Projections.groupProperty("user.username").as("telegramUserName"));
+        projList.add(Projections.groupProperty("user.lastName").as("telegramLastName"));
+        projList.add(Projections.groupProperty("user.firstName").as("telegramFirstName"));
 
         criteria.setProjection(projList);
-        criteria.setResultTransformer(Transformers.aliasToBean(OwnerStatisticDTO.class));
+        criteria.setResultTransformer(Transformers.aliasToBean(TopRatingUsersDTO.class));
         criteria.addOrder(Order.desc("countOfTouch"));
         criteria.setMaxResults(10);
         telegramRatingStatisticEntityList = criteria.list();
