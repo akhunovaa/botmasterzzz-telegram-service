@@ -16,7 +16,7 @@ public class TelegramStatisticDAOImpl implements TelegramStatisticDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public long telegramStatisticAdd(TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity) {
+    public void telegramStatisticAdd(TelegramBotUsageStatisticEntity telegramBotUsageStatisticEntity) {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
         try {
@@ -31,7 +31,6 @@ public class TelegramStatisticDAOImpl implements TelegramStatisticDAO {
         } finally {
             session.close();
         }
-        return telegramBotUsageStatisticEntity.getId();
     }
 
     @Override

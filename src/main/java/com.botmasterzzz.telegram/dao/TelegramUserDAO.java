@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TelegramUserDAO {
 
-    long telegramUserAdd(TelegramBotUserEntity telegramBotUserEntity);
+    void telegramUserAdd(TelegramBotUserEntity telegramBotUserEntity);
 
     TelegramBotUserEntity telegramUserGet(long id);
 
