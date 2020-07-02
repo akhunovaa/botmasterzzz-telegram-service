@@ -163,16 +163,14 @@ public class TikTokUserRatingController {
         InlineKeyboardButton rowRightInlineButton = new InlineKeyboardButton();
         CallBackData callBackDataForArrows = new CallBackData("owner-statistic");
         rowLeftInlineButton.setText("\uD83E\uDDFE Моя статистика");
-//        rowRightInlineButton.setText(">");
+        CallBackData callBackData = new CallBackData("mass-top-statistic");
+        rowRightInlineButton.setText("\uD83E\uDDFE Общая статистика");
 
-//        callBackDataForArrows.setOffset(offset > 0 ? offset - 1 : 0);
         rowLeftInlineButton.setCallbackData(gson.toJson(callBackDataForArrows));
-
-//        callBackDataForArrows.setOffset(offset >= limit ? limit : offset + 1);
-        //rowRightInlineButton.setCallbackData("mass-statistic");
+        rowRightInlineButton.setCallbackData(gson.toJson(callBackData));
 
         inlineKeyboardButtonsFirstRow.add(rowLeftInlineButton);
-//        inlineKeyboardButtonsFirstRow.add(rowRightInlineButton);
+        inlineKeyboardButtonsFirstRow.add(rowRightInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         List<TopRatingUsersDTO> telegramRatingStatisticEntityList = telegramMediaService.topUsersGet();
@@ -190,7 +188,7 @@ public class TikTokUserRatingController {
 
         return new EditMessageText()
                 .setChatId(update.getCallbackQuery().getMessage().getChatId()).enableHtml(true).setParseMode("HTML")
-                .setText("<b>ТОП</b> 1️⃣0️⃣ <b> пользователей по полученным лайкам и вашим симпатиям </b>\uD83D\uDC8E:\n" +
+                .setText("<b>ТОП</b> 1️⃣0️⃣ <b> пользователей по полученным лайкам и симпатиям </b>\uD83D\uDC8E:\n" +
                         "➖➖➖➖➖➖➖➖➖➖➖➖\n" +
                         "1️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(0).getTelegramUserId() + "\"><b>" + telegramUserFirst + "</b></a> \uD83E\uDD47 \n\n" +
                         "2️⃣ место <a href=\"tg://user?id=" + telegramRatingStatisticEntityList.get(1).getTelegramUserId() + "\"><b>" + telegramUseSecond + "</b></a> \uD83E\uDD48 \n\n" +
