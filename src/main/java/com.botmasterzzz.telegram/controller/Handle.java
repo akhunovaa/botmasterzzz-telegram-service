@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class Handle {
 
-    private static final Logger logger = LoggerFactory.getLogger(BotApiMethodController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Handle.class);
 
     private static BotApiMethodContainer container = BotApiMethodContainer.getInstanse();
 
@@ -38,36 +38,37 @@ public class Handle {
         CallBackData callBackData;
         int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         BotApiMethodController controller;
-        if (update.hasCallbackQuery()){
+        if (update.hasCallbackQuery()) {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
-            if (!userExists){
+            if (!userExists) {
                 telegramBotStatisticService.telegramUserAdd(update.getCallbackQuery().getFrom());
             }
             telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), (long) instanceId, update.getCallbackQuery().getFrom().getId(), update.getCallbackQuery().getData());
-        }else {
+        } else {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
-            if (!userExists){
+            if (!userExists) {
                 telegramBotStatisticService.telegramUserAdd(update.getMessage().getFrom());
             }
+
             telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId, update.getMessage().getFrom().getId());
         }
-        switch (instanceId){
+        switch (instanceId) {
             case 31:
-                if (update.hasCallbackQuery()){
+                if (update.hasCallbackQuery()) {
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     UserContextHolder.currentContext().setCallBackData(callBackData);
                     message = callBackData.getPath();
                 }
                 boolean remain = UserContextHolder.currentContext().isRemain();
                 controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
-                if (remain && null != message && message.equals("❌Отмена")){
+                if (remain && null != message && message.equals("❌Отмена")) {
                     controller = container.getControllerMap().get("tiktok-" + message);
-                }else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())){
+                } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
                     controller = container.getControllerMap().get("tiktok-media-upload-error");
                 }
                 return controller;
             case 5:
-                if (update.hasCallbackQuery()){
+                if (update.hasCallbackQuery()) {
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     UserContextHolder.currentContext().setCallBackData(callBackData);
                     message = callBackData.getPath();
@@ -77,23 +78,24 @@ public class Handle {
         }
         int commandMessageType = 1;
         UserContextHolder.currentContext().setProjectCommandDTO(null);
+        UserContextHolder.currentContext().setInstanceId((long) instanceId);
         List<ProjectCommandDTO> projectCommandDTOList = UserContextHolder.currentContext().getProjectCommandDTOList();
         for (ProjectCommandDTO projectCommandDTO : projectCommandDTOList) {
-            if (update.hasMessage()){
-                if(projectCommandDTO.getCommand().equalsIgnoreCase(message)){
-                    commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
-                    logger.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
-                    UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
-                }
-            }else if (update.hasCallbackQuery()) {
+            if (update.hasMessage()) {
                 if (projectCommandDTO.getCommand().equalsIgnoreCase(message)) {
                     commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
-                    logger.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
+                    LOGGER.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
+                    UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
+                }
+            } else if (update.hasCallbackQuery()) {
+                if (projectCommandDTO.getCommand().equalsIgnoreCase(message)) {
+                    commandMessageType = Math.toIntExact(projectCommandDTO.getCommandType().getId());
+                    LOGGER.info("Command Message Type {} was formed to command {} with an answer {} ", commandMessageType, projectCommandDTO.getCommandName(), projectCommandDTO.getAnswer());
                     UserContextHolder.currentContext().setProjectCommandDTO(projectCommandDTO);
                 }
             }
         }
-        switch (commandMessageType){
+        switch (commandMessageType) {
             case 1:
                 controller = container.getControllerMap().get("text");
                 break;
@@ -117,6 +119,12 @@ public class Handle {
                 break;
             case 8:
                 controller = container.getControllerMap().get("random_video");
+                break;
+            case 9:
+                controller = container.getControllerMap().get("attribute_save");
+                break;
+            case 10:
+                controller = container.getControllerMap().get("attribute_get");
                 break;
             default:
                 controller = container.getControllerMap().get("text");

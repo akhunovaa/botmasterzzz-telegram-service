@@ -1,11 +1,10 @@
-package com.botmasterzzz.telegram.service;
+package com.botmasterzzz.telegram.dao;
 
 import com.botmasterzzz.telegram.entity.TelegramAttributesDataEntity;
 
-public interface DatabaseService {
+public interface TelegramAttributesDAO {
 
-    void telegramAttributeAdd(String name, String value, Long botInstanceId, Long userId);
+    void telegramAttributeAdd(TelegramAttributesDataEntity telegramAttributesDataEntity);
 
     TelegramAttributesDataEntity telegramAttributeGet(Long userId, Long instanceId, String attributeName);
-
 }
