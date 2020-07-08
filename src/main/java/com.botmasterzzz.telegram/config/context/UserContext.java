@@ -24,6 +24,7 @@ public class UserContext {
     private List<GetPartsDetailsEntity> getPartsDetailsEntityList;
     private Long instanceId;
     private boolean remain;
+    private String attributeName;
     private boolean anon;
     private long partId;
 
@@ -129,5 +130,13 @@ public class UserContext {
 
     public void setAnon(boolean anon) {
         this.anon = anon;
+    }
+
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
     }
 }

@@ -18,10 +18,13 @@ import com.botmasterzzz.telegram.config.container.BotInstanceContainer;
 import com.botmasterzzz.telegram.config.context.UserContext;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.botmasterzzz.telegram.entity.TelegramAttributesDataEntity;
+import com.botmasterzzz.telegram.service.DatabaseService;
 import com.botmasterzzz.telegram.util.HelperUtil;
 import com.botmasterzzz.telegram.util.HttpDownloadUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +37,9 @@ public class TelegramBotMessengerController {
 
     private static final Logger logger = LoggerFactory.getLogger(BotInstanceContainer.class);
 
+    @Autowired
+    private DatabaseService databaseService;
+
     @BotRequestMapping(value = "text")
     public BotApiMethod textMessage(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
@@ -45,9 +51,9 @@ public class TelegramBotMessengerController {
         String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
         logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
 //        if (update.hasMessage()){
-            return new SendMessage()
-                    .setChatId(chatId).enableHtml(true)
-                    .setText(answer);
+        return new SendMessage()
+                .setChatId(chatId).enableHtml(true)
+                .setText(answer);
 //        }else {
 //            return new EditMessageText()
 //                    .setChatId(chatId)
@@ -55,6 +61,53 @@ public class TelegramBotMessengerController {
 //                    .setText(answer);
 //        }
 
+    }
+
+    @BotRequestMapping(value = "attribute_save")
+    public BotApiMethod attributeSave(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+        String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getMessage().getText();
+        UserContext userContext = UserContextHolder.currentContext();
+        User user = userContext.getUser();
+        ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
+        boolean await =  UserContextHolder.currentContext().isRemain();
+        long instanceId =  UserContextHolder.currentContext().getInstanceId();
+        if (await){
+            String attributeName = UserContextHolder.currentContext().getAttributeName();
+            databaseService.telegramAttributeAdd(attributeName, message, instanceId, Long.valueOf(user.getId()));
+            UserContextHolder.currentContext().setRemain(false);
+        }else {
+            UserContextHolder.currentContext().setRemain(true);
+            UserContextHolder.currentContext().setAttributeName(answer);
+        }
+        logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
+        return new SendMessage()
+                .setChatId(chatId).enableHtml(true)
+                .setText(answer);
+    }
+
+    @BotRequestMapping(value = "attribute_get")
+    public BotApiMethod attributeGet(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+        String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getMessage().getText();
+        UserContext userContext = UserContextHolder.currentContext();
+        User user = userContext.getUser();
+        ProjectCommandDTO projectCommandDTO = userContext.getProjectCommandDTO();
+        String command = null != projectCommandDTO ? projectCommandDTO.getCommand() : "/неизвестная_команда";
+        String commandName = null != projectCommandDTO ? projectCommandDTO.getCommandName() : "Неизвестная команда";
+        //String answer = null != projectCommandDTO ? projectCommandDTO.getAnswer() : "";
+        long instanceId =  UserContextHolder.currentContext().getInstanceId();
+        String attributeName = UserContextHolder.currentContext().getAttributeName();
+        TelegramAttributesDataEntity telegramAttributesDataEntity = databaseService.telegramAttributeGet(Long.valueOf(user.getId()), instanceId, attributeName);
+        UserContextHolder.currentContext().setAttributeName(null);
+        boolean await =  UserContextHolder.currentContext().isRemain();
+        logger.info("User id {} sent message {} from command {} with a command name like {}", user.getId(), telegramAttributesDataEntity.getValue(), command, commandName);
+        return new SendMessage()
+                .setChatId(chatId).enableHtml(true)
+                .setText(telegramAttributesDataEntity.getValue());
     }
 
     @BotRequestMapping(value = "random_text")
@@ -85,11 +138,11 @@ public class TelegramBotMessengerController {
         int n = rnd.nextInt(choosenAnswer.length);
         String messageToSend = choosenAnswer[n];
         logger.info("User id {} sent random message {} from command {} with a command name like {} and message {}", user.getId(), answer, command, commandName, choosenAnswer[n]);
-        if (update.hasMessage()){
+        if (update.hasMessage()) {
             return new SendMessage()
                     .setChatId(chatId).enableHtml(true)
                     .setText(messageToSend).setReplyMarkup(inlineKeyboardMarkup);
-        }else {
+        } else {
             return new EditMessageText()
                     .setChatId(chatId)
                     .setMessageId(update.getCallbackQuery().getMessage().getMessageId())
@@ -114,10 +167,10 @@ public class TelegramBotMessengerController {
         String filePath = System.getProperty("java.io.tmpdir") + "/" + answer.hashCode();
         try {
             File existdFile = new File(filePath);
-            if (existdFile.exists()){
+            if (existdFile.exists()) {
                 sendPhoto.setPhotoInputFile(new InputFile(existdFile, String.valueOf(answer.hashCode())));
                 logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
-            }else {
+            } else {
                 filePath = HelperUtil.saveImage(answer, filePath);
                 existdFile = new File(filePath);
                 sendPhoto.setPhotoInputFile(new InputFile(existdFile, String.valueOf(answer.hashCode())));
@@ -163,10 +216,10 @@ public class TelegramBotMessengerController {
         try {
             String filePath = System.getProperty("java.io.tmpdir") + "/" + pictureToSend.hashCode();
             File existdFile = new File(filePath);
-            if (existdFile.exists()){
+            if (existdFile.exists()) {
                 sendPhoto.setPhotoInputFile(new InputFile(existdFile, "image-one"));
                 logger.info("SENT EXISTS file User id {} sent random photo message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, pictureToSend);
-            }else {
+            } else {
                 pictureToSend = HelperUtil.saveImage(pictureToSend, String.valueOf(pictureToSend.hashCode()));
                 existdFile = new File(pictureToSend);
                 sendPhoto.setPhotoInputFile(new InputFile(existdFile, "image-one"));
@@ -198,10 +251,10 @@ public class TelegramBotMessengerController {
         String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
         try {
             File existsFile = new File(filePath);
-            if (existsFile.exists()){
+            if (existsFile.exists()) {
                 sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
                 logger.info("SENT EXISTS file User id {} sent video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, filePath);
-            }else {
+            } else {
                 HttpDownloadUtility.downloadFile(answer, videoTemporaryName);
                 existsFile = new File(filePath);
                 sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
@@ -248,10 +301,10 @@ public class TelegramBotMessengerController {
         try {
             String filePath = System.getProperty("java.io.tmpdir") + "/" + videoTemporaryName;
             File existsFile = new File(filePath);
-            if (existsFile.exists()){
+            if (existsFile.exists()) {
                 sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
                 logger.info("SENT EXISTS file User id {} sent random video message {} from command {} with a command name like {} choosen {}", user.getId(), answer, command, commandName, videoToSend);
-            }else {
+            } else {
                 HttpDownloadUtility.downloadFile(videoToSend, videoTemporaryName);
                 existsFile = new File(filePath);
                 sendVideo.setVideoInputFile(new InputFile(existsFile, videoTemporaryName));
@@ -284,22 +337,22 @@ public class TelegramBotMessengerController {
                 InlineKeyboardButton firstInlineButton = new InlineKeyboardButton();
                 firstInlineButton.setText(sInnerCommandsForButton);
                 firstInlineButton.setCallbackData(sInnerCommandsForButton);
-                if (inlineKeyboardButtonsRow.size() <= 6){
+                if (inlineKeyboardButtonsRow.size() <= 6) {
                     inlineKeyboardButtonsRow.add(firstInlineButton);
                 }
             }
-            if (inlineKeyboardButtons.size() <= 6){
+            if (inlineKeyboardButtons.size() <= 6) {
                 inlineKeyboardButtons.add(inlineKeyboardButtonsRow);
             }
         }
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         logger.info("User id {} sent inlined buttons message {} from command {} with a command name like {}", user.getId(), answer, command, commandName);
-        if (update.hasMessage()){
+        if (update.hasMessage()) {
             return new SendMessage()
                     .setChatId(chatId).enableHtml(true)
                     .setReplyMarkup(inlineKeyboardMarkup)
                     .setText(answer);
-        }else {
+        } else {
             return new EditMessageText()
                     .setChatId(chatId)
                     .setReplyMarkup(inlineKeyboardMarkup)
@@ -326,11 +379,11 @@ public class TelegramBotMessengerController {
             KeyboardRow keyboardRowLine = new KeyboardRow();
             String[] innerCommandsForButton = iCommandName.trim().split("\\$");
             for (String xInnerCommandsForButton : innerCommandsForButton) {
-                if (keyboardRowLine.size() <= 6){
+                if (keyboardRowLine.size() <= 6) {
                     keyboardRowLine.add(xInnerCommandsForButton);
                 }
             }
-            if (keyboardRows.size() <= 6){
+            if (keyboardRows.size() <= 6) {
                 keyboardRows.add(keyboardRowLine);
             }
         }
