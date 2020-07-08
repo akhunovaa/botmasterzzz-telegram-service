@@ -103,6 +103,7 @@ public class KafkaTelegramConsumerImpl {
     private BotApiMethodController getHandle(Update update) {
         CallBackData callBackData;
         BotApiMethodController controller;
+        int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
         if (update.hasCallbackQuery()) {
             callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
@@ -110,12 +111,19 @@ public class KafkaTelegramConsumerImpl {
             message = callBackData.getPath();
         }
         boolean remain = UserContextHolder.currentContext().isRemain();
-        controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
-        if (remain && null != message && message.equals("❌Отмена")) {
-            controller = container.getControllerMap().get("tiktok-" + message);
-        } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
-            controller = container.getControllerMap().get("tiktok-media-upload-error");
+        switch (instanceId){
+            case 33:
+                controller = container.getControllerMap().get("taxi-" + message);
+                break;
+            default:
+                controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
+                if (remain && null != message && message.equals("❌Отмена")) {
+                    controller = container.getControllerMap().get("tiktok-" + message);
+                } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
+                    controller = container.getControllerMap().get("tiktok-media-upload-error");
+                }
         }
+
         return controller;
     }
 
