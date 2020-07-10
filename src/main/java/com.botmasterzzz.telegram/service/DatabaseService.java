@@ -11,4 +11,6 @@ public interface DatabaseService {
     void telegramMediaLogAdd(String note, Long mediaId, Long telegramUserId);
 
     Long getCountOfLoggedToMedia(Long mediaFileId);
+
+    Long getCountOfLoggedToUser(Long telegramUserId);
 }

@@ -11,6 +11,7 @@ import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
+import com.botmasterzzz.telegram.service.DatabaseService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.google.gson.Gson;
@@ -28,16 +29,18 @@ public class TikTokUserRatingController {
 
     private final TelegramMediaService telegramMediaService;
 
+    private final DatabaseService databaseService;
 
     private final TelegramUserService telegramUserService;
 
     private final Gson gson;
 
     @Autowired
-    public TikTokUserRatingController(TelegramMediaService telegramMediaService, TelegramUserService telegramUserService, Gson gson) {
+    public TikTokUserRatingController(TelegramMediaService telegramMediaService, TelegramUserService telegramUserService, Gson gson, DatabaseService databaseService) {
         this.telegramMediaService = telegramMediaService;
         this.telegramUserService = telegramUserService;
         this.gson = gson;
+        this.databaseService = databaseService;
     }
 
     @BotRequestMapping(value = "tiktok-\uD83D\uDC8EТОП")
@@ -217,6 +220,7 @@ public class TikTokUserRatingController {
 
 
         List<OwnerStatisticDTO> ownerStatisticDTOList = telegramMediaService.getUsersActivityStatistic(requestedUserId);
+        Long countOfLoggedToUser = databaseService.getCountOfLoggedToUser(requestedUserId);
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
@@ -240,7 +244,7 @@ public class TikTokUserRatingController {
         responseTextBuilder.append("\n");
         responseTextBuilder.append("Мои:\n");
         responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
-        if (ownerStatisticDTOList.isEmpty()){
+        if (ownerStatisticDTOList.isEmpty()) {
             responseTextBuilder.append("<b>Статистика отсутствует</b>\n");
         }
         for (OwnerStatisticDTO ownerStatisticDTO : ownerStatisticDTOList) {
@@ -253,7 +257,7 @@ public class TikTokUserRatingController {
         ownerStatisticDTOList = telegramMediaService.getSelfActivityStatistic(requestedUserId);
         responseTextBuilder.append("Мне:\n");
         responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
-        if (ownerStatisticDTOList.isEmpty()){
+        if (ownerStatisticDTOList.isEmpty()) {
             responseTextBuilder.append("<b>Статистика отсутствует</b>\n");
         }
         for (OwnerStatisticDTO ownerStatisticDTO : ownerStatisticDTOList) {
@@ -262,6 +266,7 @@ public class TikTokUserRatingController {
                     .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
         }
         responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+        responseTextBuilder.append("Кол-во просмотренных записей \uD83D\uDC41: ").append(countOfLoggedToUser);
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setChatId(update.getCallbackQuery().getMessage().getChatId());
         editMessageText.setText(responseTextBuilder.toString());
