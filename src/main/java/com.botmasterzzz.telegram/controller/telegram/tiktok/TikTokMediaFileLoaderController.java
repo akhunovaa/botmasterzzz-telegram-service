@@ -13,12 +13,12 @@ import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
+import com.botmasterzzz.telegram.service.DatabaseService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +28,20 @@ public class TikTokMediaFileLoaderController {
 
     private static final Logger logger = LoggerFactory.getLogger(TikTokMediaFileLoaderController.class);
 
-    @Autowired
-    private TelegramMediaService telegramMediaService;
+    private final TelegramMediaService telegramMediaService;
 
-    @Autowired
-    private TelegramUserService telegramUserService;
+    private final DatabaseService databaseService;
 
-    @Autowired
-    private Gson gson;
+    private final TelegramUserService telegramUserService;
+
+    private final Gson gson;
+
+    public TikTokMediaFileLoaderController(TelegramMediaService telegramMediaService, DatabaseService databaseService, TelegramUserService telegramUserService, Gson gson) {
+        this.telegramMediaService = telegramMediaService;
+        this.databaseService = databaseService;
+        this.telegramUserService = telegramUserService;
+        this.gson = gson;
+    }
 
     @BotRequestMapping(value = "tiktok-\uD83C\uDD95Новое за сегодня")
     public PartialBotApiMethod sendRandomlyMediaForToday(Update update) {
@@ -62,6 +68,11 @@ public class TikTokMediaFileLoaderController {
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+
+        String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+        databaseService.telegramMediaLogAdd(logNote, fileId, telegramUserId);
+        logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
+
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
@@ -170,6 +181,11 @@ public class TikTokMediaFileLoaderController {
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+
+        String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+        databaseService.telegramMediaLogAdd(logNote, fileId, telegramUserId);
+        logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
+
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
@@ -247,6 +263,11 @@ public class TikTokMediaFileLoaderController {
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+
+        String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+        databaseService.telegramMediaLogAdd(logNote, fileId, telegramUserId);
+        logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
+
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
@@ -327,6 +348,10 @@ public class TikTokMediaFileLoaderController {
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+
+        String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+        databaseService.telegramMediaLogAdd(logNote, fileId, telegramUserId);
+        logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
 
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
@@ -422,6 +447,10 @@ public class TikTokMediaFileLoaderController {
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
+
+        String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+        databaseService.telegramMediaLogAdd(logNote, fileId, telegramUserId);
+        logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
 
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");

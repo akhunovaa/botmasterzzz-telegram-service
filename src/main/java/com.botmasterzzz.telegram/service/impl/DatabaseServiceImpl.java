@@ -1,11 +1,7 @@
 package com.botmasterzzz.telegram.service.impl;
 
-import com.botmasterzzz.telegram.dao.TelegramAttributesDAO;
-import com.botmasterzzz.telegram.dao.TelegramInstanceDAO;
-import com.botmasterzzz.telegram.dao.TelegramUserDAO;
-import com.botmasterzzz.telegram.entity.TelegramAttributesDataEntity;
-import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
-import com.botmasterzzz.telegram.entity.TelegramInstanceEntity;
+import com.botmasterzzz.telegram.dao.*;
+import com.botmasterzzz.telegram.entity.*;
 import com.botmasterzzz.telegram.service.DatabaseService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -19,10 +15,16 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     private final TelegramInstanceDAO telegramInstanceDAO;
 
-    public DatabaseServiceImpl(TelegramAttributesDAO attributesDAO, TelegramUserDAO telegramUserDAO, TelegramInstanceDAO telegramInstanceDAO) {
+    private final TelegramMediaLogDAO telegramMediaLogDAO;
+
+    private final TelegramUserMediaDAO telegramUserMediaDAO;
+
+    public DatabaseServiceImpl(TelegramAttributesDAO attributesDAO, TelegramUserDAO telegramUserDAO, TelegramInstanceDAO telegramInstanceDAO, TelegramMediaLogDAO telegramMediaLogDAO, TelegramUserMediaDAO telegramUserMediaDAO) {
         this.attributesDAO = attributesDAO;
         this.telegramUserDAO = telegramUserDAO;
         this.telegramInstanceDAO = telegramInstanceDAO;
+        this.telegramMediaLogDAO = telegramMediaLogDAO;
+        this.telegramUserMediaDAO = telegramUserMediaDAO;
     }
 
     @Async
@@ -41,5 +43,16 @@ public class DatabaseServiceImpl implements DatabaseService {
     @Override
     public TelegramAttributesDataEntity telegramAttributeGet(Long userId, Long instanceId, String attributeName) {
         return attributesDAO.telegramAttributeGet(userId, instanceId, attributeName);
+    }
+
+    @Async
+    @Override
+    public void telegramMediaLogAdd(String note, Long mediaId, Long telegramUserId) {
+        TelegramUserMediaEntity userMediaEntity = telegramUserMediaDAO.telegramUserMediaGet(mediaId);
+        TelegramMediaLogEntity telegramMediaLogEntity = new TelegramMediaLogEntity();
+        telegramMediaLogEntity.setNote("telegramMediaLogAdd");
+        telegramMediaLogEntity.setTelegramUserId(telegramUserId);
+        telegramMediaLogEntity.setTelegramUserMediaEntity(userMediaEntity);
+        telegramMediaLogDAO.mediaLogAdd(telegramMediaLogEntity);
     }
 }

@@ -8,4 +8,5 @@ public interface DatabaseService {
 
     TelegramAttributesDataEntity telegramAttributeGet(Long userId, Long instanceId, String attributeName);
 
+    void telegramMediaLogAdd(String note, Long mediaId, Long telegramUserId);
 }
