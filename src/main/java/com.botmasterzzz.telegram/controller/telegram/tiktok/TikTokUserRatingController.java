@@ -221,6 +221,7 @@ public class TikTokUserRatingController {
 
         List<OwnerStatisticDTO> ownerStatisticDTOList = telegramMediaService.getUsersActivityStatistic(requestedUserId);
         Long countOfLoggedToUser = databaseService.getCountOfLoggedToUser(requestedUserId);
+        Long countOfLoggedToUsersMedia = databaseService.getUsersCountOfMediaLog(requestedUserId);
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
@@ -266,7 +267,8 @@ public class TikTokUserRatingController {
                     .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
         }
         responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
-        responseTextBuilder.append("Кол-во просмотренных записей \uD83D\uDC41: ").append(countOfLoggedToUser);
+        responseTextBuilder.append("Кол-во просмотров мною: \uD83D\uDC41: ").append(countOfLoggedToUser);
+        responseTextBuilder.append("Кол-во просмотров моих записей \uD83D\uDC41: ").append(countOfLoggedToUsersMedia);
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setChatId(update.getCallbackQuery().getMessage().getChatId());
         editMessageText.setText(responseTextBuilder.toString());
