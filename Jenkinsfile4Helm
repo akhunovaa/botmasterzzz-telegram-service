@@ -9,6 +9,8 @@ pipeline {
         helmFilesDirectoryName = "helm/botmasterzzz-telegram"
         remoteWorkSpace = "/home/jenkins/workspace"
         KUBECONFIG = "/home/jenkins/.kube/config"
+
+        profile4install = get_profile()
     }
 
     agent any
@@ -24,7 +26,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Clean Build'
-                sh 'mvn clean compile -P dev'
+                sh "mvn clean compile -P $profile4install"
             }
         }
 
@@ -39,7 +41,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'Packaging'
-                sh 'mvn clean package -P dev'
+                sh "mvn clean package -P $profile4install"
             }
         }
 
@@ -98,5 +100,20 @@ pipeline {
                 sh 'printenv'
             }
         }
+    }
+}
+
+
+def get_profile() {
+    def stend = "${env.UPGRADE_NAMESPACE}"
+    switch (stend) {
+        case 'dev':
+            return 'dev'
+        case 'master':
+            return 'master'
+        case 'prom':
+            return 'prod'
+        default:
+            return 'dev'
     }
 }
