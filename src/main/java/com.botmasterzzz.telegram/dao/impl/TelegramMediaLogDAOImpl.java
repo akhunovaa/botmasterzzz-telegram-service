@@ -2,10 +2,17 @@ package com.botmasterzzz.telegram.dao.impl;
 
 import com.botmasterzzz.telegram.dao.TelegramMediaLogDAO;
 import com.botmasterzzz.telegram.entity.TelegramMediaLogEntity;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class TelegramMediaLogDAOImpl implements TelegramMediaLogDAO {
@@ -31,5 +38,18 @@ public class TelegramMediaLogDAOImpl implements TelegramMediaLogDAO {
         } finally {
             session.close();
         }
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation"})
+    public long getCountOfMediaLog(Long mediaId) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramMediaLogEntity.class);
+        criteria.createAlias("telegramUserMediaEntity", "media");
+        criteria.add( Restrictions.eq("media.id", mediaId));
+        criteria.setProjection(Projections.rowCount());
+        Long mediaCount = (Long) criteria.uniqueResult();
+        session.close();
+        return mediaCount;
     }
 }
