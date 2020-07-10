@@ -10,4 +10,6 @@ public interface TelegramMediaLogDAO {
 
     long getCountOfMediaLogToUser(Long telegramUserId);
 
+    long getUsersCountOfMediaLog(Long telegramUserId);
+
 }

@@ -6,13 +6,9 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class TelegramMediaLogDAOImpl implements TelegramMediaLogDAO {
@@ -59,6 +55,19 @@ public class TelegramMediaLogDAOImpl implements TelegramMediaLogDAO {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TelegramMediaLogEntity.class);
         criteria.add( Restrictions.eq("telegramUserId", telegramUserId));
+        criteria.setProjection(Projections.rowCount());
+        Long mediaCount = (Long) criteria.uniqueResult();
+        session.close();
+        return mediaCount;
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation"})
+    public long getUsersCountOfMediaLog(Long telegramUserId) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramMediaLogEntity.class);
+        criteria.createAlias("telegramUserMediaEntity.telegramBotUserEntity", "user");
+        criteria.add(Restrictions.eq("user.telegramId", telegramUserId));
         criteria.setProjection(Projections.rowCount());
         Long mediaCount = (Long) criteria.uniqueResult();
         session.close();

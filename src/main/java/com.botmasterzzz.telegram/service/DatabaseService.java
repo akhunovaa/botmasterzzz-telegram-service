@@ -13,4 +13,6 @@ public interface DatabaseService {
     Long getCountOfLoggedToMedia(Long mediaFileId);
 
     Long getCountOfLoggedToUser(Long telegramUserId);
+
+    Long getUsersCountOfMediaLog(Long telegramUserId);
 }
