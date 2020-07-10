@@ -267,8 +267,8 @@ public class TikTokUserRatingController {
                     .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
         }
         responseTextBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
-        responseTextBuilder.append("Сколько записей просмотрено мною\uD83D\uDC41: ").append(countOfLoggedToUser);
-        responseTextBuilder.append("\nКол-во просмотров моих записей\uD83D\uDC41: ").append(countOfLoggedToUsersMedia);
+        responseTextBuilder.append("\nПросмотрено мною\uD83D\uDC41: ").append(countOfLoggedToUser);
+        responseTextBuilder.append("\nПросмотрено моих\uD83D\uDC41: ").append(countOfLoggedToUsersMedia);
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setChatId(update.getCallbackQuery().getMessage().getChatId());
         editMessageText.setText(responseTextBuilder.toString());
