@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1_bot_instance_constraint_drop" failOnError="false" author="azat.akhunov@protonmail.com" runOnChange="true">
+        <dropNotNullConstraint columnDataType="bigint"
+                               columnName="project_id"
+                               schemaName="public"
+                               tableName="bot_instance"/>
+    </changeSet>
+
+</databaseChangeLog>
