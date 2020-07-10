@@ -55,4 +55,9 @@ public class DatabaseServiceImpl implements DatabaseService {
         telegramMediaLogEntity.setTelegramUserMediaEntity(userMediaEntity);
         telegramMediaLogDAO.mediaLogAdd(telegramMediaLogEntity);
     }
+
+    @Override
+    public Long getCountOfLoggedToMedia(Long mediaFileId) {
+        return telegramMediaLogDAO.getCountOfMediaLog(mediaFileId);
+    }
 }

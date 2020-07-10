@@ -76,6 +76,7 @@ public class TikTokMediaFileLoaderController {
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
+        long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -115,9 +116,9 @@ public class TikTokMediaFileLoaderController {
             sendPhoto.setChatId(chatId);
             sendPhoto.setPhoto(fileIdx);
             if (!isAnon){
-                sendPhoto.setCaption(caption + "\n\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendPhoto.setCaption(caption + "\n\nanonymous");
+                sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
             sendPhoto.setParseMode("HTML");
@@ -130,9 +131,9 @@ public class TikTokMediaFileLoaderController {
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption(caption + "\n\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendVideo.setCaption(caption + "\n\nanonymous");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
@@ -144,9 +145,9 @@ public class TikTokMediaFileLoaderController {
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
             if (!isAnon){
-                sendDocument.setCaption("\n\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendDocument.setCaption("\n\nanonymous");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");
@@ -189,6 +190,7 @@ public class TikTokMediaFileLoaderController {
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
+        long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -226,9 +228,9 @@ public class TikTokMediaFileLoaderController {
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
         if (!isAnon){
-            sendPhoto.setCaption(caption + "\n\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
         }else {
-            sendPhoto.setCaption(caption + "\n\nanonymous");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
         }
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         sendPhoto.setParseMode("HTML");
@@ -271,6 +273,7 @@ public class TikTokMediaFileLoaderController {
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
+        long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -307,9 +310,9 @@ public class TikTokMediaFileLoaderController {
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
         if (!isAnon){
-            sendPhoto.setCaption(caption + "\n\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
         }else {
-            sendPhoto.setCaption(caption + "\n\nanonymous");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
         }
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         sendPhoto.setParseMode("HTML");
@@ -356,6 +359,7 @@ public class TikTokMediaFileLoaderController {
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
+        long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️️ " + hearCount);
@@ -392,9 +396,9 @@ public class TikTokMediaFileLoaderController {
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption(caption + "\n\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendVideo.setCaption(caption + "\n\nanonymous");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
@@ -406,9 +410,9 @@ public class TikTokMediaFileLoaderController {
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
             if (!isAnon){
-                sendDocument.setCaption("\nvВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendDocument.setCaption("\n\nanonymous");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");
@@ -455,6 +459,7 @@ public class TikTokMediaFileLoaderController {
         long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
+        long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️️ " + hearCount);
@@ -492,9 +497,9 @@ public class TikTokMediaFileLoaderController {
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption(caption + "\n\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendVideo.setCaption(caption + "\n\nanonymous");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
@@ -506,9 +511,9 @@ public class TikTokMediaFileLoaderController {
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
             if (!isAnon){
-                sendDocument.setCaption("\n\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendDocument.setCaption("\n\nanonymous");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");

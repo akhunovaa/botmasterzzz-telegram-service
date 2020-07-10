@@ -6,4 +6,6 @@ public interface TelegramMediaLogDAO {
 
     void mediaLogAdd(TelegramMediaLogEntity telegramMediaLogEntity);
 
+    long getCountOfMediaLog(Long mediaId);
+
 }
