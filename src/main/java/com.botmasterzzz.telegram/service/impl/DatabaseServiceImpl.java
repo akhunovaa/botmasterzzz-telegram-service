@@ -50,7 +50,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     public void telegramMediaLogAdd(String note, Long mediaId, Long telegramUserId) {
         TelegramUserMediaEntity userMediaEntity = telegramUserMediaDAO.telegramUserMediaGet(mediaId);
         TelegramMediaLogEntity telegramMediaLogEntity = new TelegramMediaLogEntity();
-        telegramMediaLogEntity.setNote("telegramMediaLogAdd");
+        telegramMediaLogEntity.setNote(note);
         telegramMediaLogEntity.setTelegramUserId(telegramUserId);
         telegramMediaLogEntity.setTelegramUserMediaEntity(userMediaEntity);
         telegramMediaLogDAO.mediaLogAdd(telegramMediaLogEntity);
