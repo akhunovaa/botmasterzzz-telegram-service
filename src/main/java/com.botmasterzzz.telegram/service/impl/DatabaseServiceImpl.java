@@ -6,10 +6,14 @@ import com.botmasterzzz.telegram.service.DatabaseService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DatabaseServiceImpl implements DatabaseService {
 
     private final TelegramAttributesDAO attributesDAO;
+
+    private final MediaCommentsDataDAO mediaCommentsDataDAO;
 
     private final TelegramUserDAO telegramUserDAO;
 
@@ -19,12 +23,13 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     private final TelegramUserMediaDAO telegramUserMediaDAO;
 
-    public DatabaseServiceImpl(TelegramAttributesDAO attributesDAO, TelegramUserDAO telegramUserDAO, TelegramInstanceDAO telegramInstanceDAO, TelegramMediaLogDAO telegramMediaLogDAO, TelegramUserMediaDAO telegramUserMediaDAO) {
+    public DatabaseServiceImpl(TelegramAttributesDAO attributesDAO, TelegramUserDAO telegramUserDAO, TelegramInstanceDAO telegramInstanceDAO, TelegramMediaLogDAO telegramMediaLogDAO, TelegramUserMediaDAO telegramUserMediaDAO, MediaCommentsDataDAO mediaCommentsDataDAO) {
         this.attributesDAO = attributesDAO;
         this.telegramUserDAO = telegramUserDAO;
         this.telegramInstanceDAO = telegramInstanceDAO;
         this.telegramMediaLogDAO = telegramMediaLogDAO;
         this.telegramUserMediaDAO = telegramUserMediaDAO;
+        this.mediaCommentsDataDAO = mediaCommentsDataDAO;
     }
 
     @Async
@@ -69,5 +74,21 @@ public class DatabaseServiceImpl implements DatabaseService {
     @Override
     public Long getUsersCountOfMediaLog(Long telegramUserId) {
         return telegramMediaLogDAO.getUsersCountOfMediaLog(telegramUserId);
+    }
+
+    @Override
+    public void mediaCommentAdd(String comment, Long mediaFileId, Long telegramUserId) {
+        TelegramUserMediaEntity userMediaEntity = telegramUserMediaDAO.telegramUserMediaGet(mediaFileId);
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
+        MediaCommentsDataEntity mediaCommentsDataEntity = new MediaCommentsDataEntity();
+        mediaCommentsDataEntity.setTelegramUserMediaEntity(userMediaEntity);
+        mediaCommentsDataEntity.setData(comment);
+        mediaCommentsDataEntity.setTelegramBotUserEntity(telegramBotUserEntity);
+        mediaCommentsDataDAO.commentAdd(mediaCommentsDataEntity);
+    }
+
+    @Override
+    public List<MediaCommentsDataEntity> getCommentsForMedia(Long mediaFileId, int offset, int limit){
+        return mediaCommentsDataDAO.getCommentsForMedia(mediaFileId, offset, limit);
     }
 }

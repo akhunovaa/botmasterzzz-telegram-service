@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,8 @@ public class TikTokMediaFileLoaderController {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsCommentRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsDeleteRow = new ArrayList<>();
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
@@ -96,12 +98,19 @@ public class TikTokMediaFileLoaderController {
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
+        InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+        inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+
         if (isRequestedUserAdmin){
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
             deleteInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
-            inlineKeyboardButtonsSecondRow.add(deleteInlineButton);
-            inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+            inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
         }
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
@@ -110,15 +119,15 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-
+        String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
         if (telegramUserMediaEntity.getFileType() == 1){
             SendPhoto sendPhoto = new SendPhoto();
             sendPhoto.setChatId(chatId);
             sendPhoto.setPhoto(fileIdx);
             if (!isAnon){
-                sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
             }else {
-                sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+                sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }
             sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
             sendPhoto.setParseMode("HTML");
@@ -131,7 +140,7 @@ public class TikTokMediaFileLoaderController {
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
             }else {
                 sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
             }
@@ -147,7 +156,7 @@ public class TikTokMediaFileLoaderController {
             if (!isAnon){
                 sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
             }else {
-                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");
@@ -178,7 +187,8 @@ public class TikTokMediaFileLoaderController {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsCommentRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsDeleteRow = new ArrayList<>();
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
@@ -210,12 +220,19 @@ public class TikTokMediaFileLoaderController {
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
+        InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+        inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+
         if (isRequestedUserAdmin){
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
             deleteInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
-            inlineKeyboardButtonsSecondRow.add(deleteInlineButton);
-            inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+            inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
         }
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
@@ -224,13 +241,14 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
+        String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
         if (!isAnon){
-            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
         }else {
-            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
         }
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         sendPhoto.setParseMode("HTML");
@@ -261,7 +279,8 @@ public class TikTokMediaFileLoaderController {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsCommentRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsDeleteRow = new ArrayList<>();
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
@@ -292,12 +311,19 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
+        InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+        inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+
         if (isRequestedUserAdmin){
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
             deleteInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
-            inlineKeyboardButtonsSecondRow.add(deleteInlineButton);
-            inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+            inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
         }
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
@@ -306,13 +332,14 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
+        String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
         if (!isAnon){
-            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nФотография от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
         }else {
-            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+            sendPhoto.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
         }
         sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
         sendPhoto.setParseMode("HTML");
@@ -347,7 +374,8 @@ public class TikTokMediaFileLoaderController {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsCommentRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsDeleteRow = new ArrayList<>();
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
@@ -378,27 +406,35 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
+        InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+        inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+
         if (isRequestedUserAdmin){
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
             deleteInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
-            inlineKeyboardButtonsSecondRow.add(deleteInlineButton);
-            inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+            inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
         }
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         logger.info("User: {}", requestedTelegramUser);
         boolean isAnon = telegramUserMediaEntity.isAnon();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
+        String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
         String fileIdx = telegramUserMediaEntity.getFileId();
         if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
             SendVideo sendVideo = new SendVideo();
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
             }else {
-                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
@@ -410,9 +446,9 @@ public class TikTokMediaFileLoaderController {
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
             if (!isAnon){
-                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
             }else {
-                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");
@@ -447,7 +483,8 @@ public class TikTokMediaFileLoaderController {
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonsSecondRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsCommentRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonsDeleteRow = new ArrayList<>();
 
         Long telegramUserId = telegramBotUserEntity.getTelegramId();
         Long fileId = telegramUserMediaEntity.getId();
@@ -478,18 +515,26 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
+        InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+        inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+
+        inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+
         if (isRequestedUserAdmin){
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
             deleteInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
-            inlineKeyboardButtonsSecondRow.add(deleteInlineButton);
-            inlineKeyboardButtons.add(inlineKeyboardButtonsSecondRow);
+            inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
         }
 
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         boolean isAnon = telegramUserMediaEntity.isAnon();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
+        String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
         String fileIdx = telegramUserMediaEntity.getFileId();
         logger.info("User: {}", requestedTelegramUser);
         if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
@@ -497,9 +542,9 @@ public class TikTokMediaFileLoaderController {
             sendVideo.setChatId(chatId);
             sendVideo.setVideo(fileIdx);
             if (!isAnon){
-                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>\" + commentTimestamp + \"</i>\"");
             }else {
-                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+                sendVideo.setCaption(caption + "\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }
             sendVideo.setReplyMarkup(inlineKeyboardMarkup);
             sendVideo.setParseMode("HTML");
@@ -511,9 +556,9 @@ public class TikTokMediaFileLoaderController {
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
             if (!isAnon){
-                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
             }else {
-                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }
             sendDocument.setReplyMarkup(inlineKeyboardMarkup);
             sendDocument.setParseMode("HTML");

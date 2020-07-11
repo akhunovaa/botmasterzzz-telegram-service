@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.WebApplicationInitializer;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
@@ -98,6 +100,11 @@ public class ApplicationConfig implements WebApplicationInitializer {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
+    }
+
+    @Bean
+    public Executor taskExecutor() {
+        return new SimpleAsyncTaskExecutor();
     }
 
 }

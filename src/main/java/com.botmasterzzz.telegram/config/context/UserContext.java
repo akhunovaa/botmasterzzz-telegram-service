@@ -24,6 +24,7 @@ public class UserContext {
     private List<GetPartsDetailsEntity> getPartsDetailsEntityList;
     private Long instanceId;
     private boolean remain;
+    private boolean commentRemain;
     private String attributeName;
     private boolean anon;
     private long partId;
@@ -138,5 +139,13 @@ public class UserContext {
 
     public void setAttributeName(String attributeName) {
         this.attributeName = attributeName;
+    }
+
+    public boolean isCommentRemain() {
+        return commentRemain;
+    }
+
+    public void setCommentRemain(boolean commentRemain) {
+        this.commentRemain = commentRemain;
     }
 }
