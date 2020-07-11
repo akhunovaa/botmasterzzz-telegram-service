@@ -1,6 +1,9 @@
 package com.botmasterzzz.telegram.service;
 
+import com.botmasterzzz.telegram.entity.MediaCommentsDataEntity;
 import com.botmasterzzz.telegram.entity.TelegramAttributesDataEntity;
+
+import java.util.List;
 
 public interface DatabaseService {
 
@@ -15,4 +18,8 @@ public interface DatabaseService {
     Long getCountOfLoggedToUser(Long telegramUserId);
 
     Long getUsersCountOfMediaLog(Long telegramUserId);
+
+    void mediaCommentAdd(String comment, Long mediaFileId, Long telegramUserId);
+
+    List<MediaCommentsDataEntity> getCommentsForMedia(Long mediaFileId, int offset, int limit);
 }

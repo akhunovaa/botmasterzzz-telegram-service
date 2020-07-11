@@ -111,6 +111,7 @@ public class KafkaTelegramConsumerImpl {
             message = callBackData.getPath();
         }
         boolean remain = UserContextHolder.currentContext().isRemain();
+        boolean commentAwait = UserContextHolder.currentContext().isCommentRemain();
         switch (instanceId){
             case 33:
                 controller = container.getControllerMap().get("taxi-" + message);
@@ -121,6 +122,8 @@ public class KafkaTelegramConsumerImpl {
                     controller = container.getControllerMap().get("tiktok-" + message);
                 } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
                     controller = container.getControllerMap().get("tiktok-media-upload-error");
+                }else if (commentAwait){
+                    controller = container.getControllerMap().get("tiktok-comment-upload");
                 }
         }
 
