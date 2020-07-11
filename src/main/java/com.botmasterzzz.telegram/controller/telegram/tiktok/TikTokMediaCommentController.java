@@ -87,7 +87,7 @@ public class TikTokMediaCommentController {
             TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
             String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
             String commentData = mediaCommentsDataEntity.getData();
-            String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate());
+            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate());
             stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
             stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
@@ -161,7 +161,7 @@ public class TikTokMediaCommentController {
             TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
             String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
             String commentData = mediaCommentsDataEntity.getData();
-            String commentTimestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate());
+            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate());
             stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
             stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
