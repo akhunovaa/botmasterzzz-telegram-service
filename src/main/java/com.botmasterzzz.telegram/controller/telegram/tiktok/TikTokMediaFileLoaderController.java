@@ -79,6 +79,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
+        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -99,7 +100,7 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
         commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
         inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
@@ -201,6 +202,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
+        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -221,7 +223,7 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
         commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
         inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
@@ -293,6 +295,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
+        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -312,7 +315,7 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
         commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
         inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
@@ -388,6 +391,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
+        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️️ " + hearCount);
@@ -407,7 +411,7 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
         commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
         inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
@@ -497,6 +501,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
+        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️️ " + hearCount);
@@ -516,7 +521,7 @@ public class TikTokMediaFileLoaderController {
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-        commentInlineButton.setText("\uD83D\uDCDD Обсудить");
+        commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
         commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
         inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
