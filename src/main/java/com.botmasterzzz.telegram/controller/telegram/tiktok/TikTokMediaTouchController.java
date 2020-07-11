@@ -46,7 +46,7 @@ public class TikTokMediaTouchController {
     @BotRequestMapping(value = "tiktok-heart")
     public EditMessageReplyMarkup heartTouch(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
-        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        Long requestedUserId = Long.valueOf(update.getCallbackQuery().getFrom().getId());
         TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
         boolean isRequestedUserAdmin = requestedTelegramUser.isAdmin();
 
@@ -93,6 +93,7 @@ public class TikTokMediaTouchController {
         inlineKeyboardButtonsFirstRow.add(heartInlineButton);
         inlineKeyboardButtonsFirstRow.add(likeInlineButton);
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
+        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
 
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
         commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
@@ -109,7 +110,7 @@ public class TikTokMediaTouchController {
             inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
         }
 
-        inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         EditMessageReplyMarkup editMessageReplyMarkup = new EditMessageReplyMarkup();
@@ -123,7 +124,7 @@ public class TikTokMediaTouchController {
     @BotRequestMapping(value = "tiktok-like")
     public EditMessageReplyMarkup likeTouch(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
-        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        Long requestedUserId = Long.valueOf(update.getCallbackQuery().getFrom().getId());
         TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
         boolean isRequestedUserAdmin = requestedTelegramUser.isAdmin();
 
@@ -171,6 +172,7 @@ public class TikTokMediaTouchController {
         inlineKeyboardButtonsFirstRow.add(likeInlineButton);
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+
         InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
         commentInlineButton.setText("\uD83D\uDCDD Обсудить (\uD83D\uDCE8" + discussCount + ")") ;
         commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
@@ -199,7 +201,7 @@ public class TikTokMediaTouchController {
     @BotRequestMapping(value = "tiktok-dislike")
     public EditMessageReplyMarkup dislikeTouch(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
-        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        Long requestedUserId = Long.valueOf(update.getCallbackQuery().getFrom().getId());
         TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
         boolean isRequestedUserAdmin = requestedTelegramUser.isAdmin();
 
