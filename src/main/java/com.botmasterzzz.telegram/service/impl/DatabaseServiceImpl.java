@@ -67,6 +67,11 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
+    public Long getCountOfDiscuss(Long mediaFileId) {
+        return telegramMediaLogDAO.getCountOfDiscuss(mediaFileId);
+    }
+
+    @Override
     public Long getCountOfLoggedToUser(Long telegramUserId) {
         return telegramMediaLogDAO.getCountOfMediaLogToUser(telegramUserId);
     }

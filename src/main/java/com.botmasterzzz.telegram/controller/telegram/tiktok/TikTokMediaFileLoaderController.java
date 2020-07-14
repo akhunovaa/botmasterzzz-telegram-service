@@ -79,7 +79,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
-        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
+        long discussCount = databaseService.getCountOfDiscuss(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -202,7 +202,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
-        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
+        long discussCount = databaseService.getCountOfDiscuss(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -295,7 +295,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
-        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
+        long discussCount = databaseService.getCountOfDiscuss(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️ " + hearCount);
@@ -391,7 +391,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
-        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
+        long discussCount = databaseService.getCountOfDiscuss(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️️ " + hearCount);
@@ -501,7 +501,7 @@ public class TikTokMediaFileLoaderController {
         long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
         long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");
         long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
-        long discussCount = databaseService.getCommentsForMedia(fileId, 0, 10000).size();
+        long discussCount = databaseService.getCountOfDiscuss(fileId);
 
         InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
         heartInlineButton.setText("❤️️ " + hearCount);
