@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @BotController
 public class TikTokMediaFileLoaderController {
@@ -120,7 +121,7 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
+        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
         if (telegramUserMediaEntity.getFileType() == 1){
             SendPhoto sendPhoto = new SendPhoto();
             sendPhoto.setChatId(chatId);
@@ -243,7 +244,7 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
+        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
@@ -335,7 +336,7 @@ public class TikTokMediaFileLoaderController {
 
         String fileIdx = telegramUserMediaEntity.getFileId();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
+        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
         SendPhoto sendPhoto = new SendPhoto();
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(fileIdx);
@@ -429,7 +430,7 @@ public class TikTokMediaFileLoaderController {
         logger.info("User: {}", requestedTelegramUser);
         boolean isAnon = telegramUserMediaEntity.isAnon();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
+        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
         String fileIdx = telegramUserMediaEntity.getFileId();
         if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
             SendVideo sendVideo = new SendVideo();
@@ -539,7 +540,7 @@ public class TikTokMediaFileLoaderController {
 
         boolean isAnon = telegramUserMediaEntity.isAnon();
         String caption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "";
-        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate());
+        String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
         String fileIdx = telegramUserMediaEntity.getFileId();
         logger.info("User: {}", requestedTelegramUser);
         if (telegramUserMediaEntity.getHeight() > 0 && telegramUserMediaEntity.getWidth() > 0) {
