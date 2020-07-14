@@ -1,6 +1,7 @@
 package com.botmasterzzz.telegram.dao.impl;
 
 import com.botmasterzzz.telegram.dao.TelegramMediaLogDAO;
+import com.botmasterzzz.telegram.entity.MediaCommentsDataEntity;
 import com.botmasterzzz.telegram.entity.TelegramMediaLogEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -41,6 +42,19 @@ public class TelegramMediaLogDAOImpl implements TelegramMediaLogDAO {
     public long getCountOfMediaLog(Long mediaId) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TelegramMediaLogEntity.class);
+        criteria.createAlias("telegramUserMediaEntity", "media");
+        criteria.add( Restrictions.eq("media.id", mediaId));
+        criteria.setProjection(Projections.rowCount());
+        Long mediaCount = (Long) criteria.uniqueResult();
+        session.close();
+        return mediaCount;
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation"})
+    public long getCountOfDiscuss(Long mediaId) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(MediaCommentsDataEntity.class);
         criteria.createAlias("telegramUserMediaEntity", "media");
         criteria.add( Restrictions.eq("media.id", mediaId));
         criteria.setProjection(Projections.rowCount());
