@@ -120,7 +120,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
         criteria.add(Restrictions.eq("isDeleted", false));
         criteria.add(Restrictions.eq("fileType", mediaType));
-        criteria.addOrder(Order.desc("audWhenCreate"));
+        criteria.addOrder(Order.asc("audWhenCreate"));
         telegramUserMediaEntityList = criteria.list();
         session.close();
         return telegramUserMediaEntityList;
@@ -135,7 +135,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
         criteria.add(Restrictions.eq("isDeleted", false));
-        criteria.addOrder(Order.desc("audWhenCreate"));
+        criteria.addOrder(Order.asc("audWhenCreate"));
         criteria.add(Restrictions.between("audWhenCreate", minDate, maxDate));
         telegramUserMediaEntityList = criteria.list();
         session.close();
