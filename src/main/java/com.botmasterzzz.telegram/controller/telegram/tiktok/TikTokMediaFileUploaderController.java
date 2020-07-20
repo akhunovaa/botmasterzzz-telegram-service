@@ -47,7 +47,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setRemain(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>youtube.com/watch?v=icZotxynzJI</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI</code>):\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -185,7 +185,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setAnon(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>youtube.com/watch?v=icZotxynzJI</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI</code>):\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -243,7 +243,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setAnon(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>youtube.com/watch?v=icZotxynzJI</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI</code>):\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -261,7 +261,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setAnon(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>youtube.com/watch?v=icZotxynzJI</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI</code>):\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -278,7 +278,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setRemain(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>youtube.com/watch?v=icZotxynzJI</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI</code>):\n")
                 .setReplyMarkup(keyboard);
     }
 
