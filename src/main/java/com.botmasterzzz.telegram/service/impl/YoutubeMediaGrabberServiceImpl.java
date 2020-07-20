@@ -41,7 +41,7 @@ public class YoutubeMediaGrabberServiceImpl implements YoutubeMediaGrabberServic
 
             File outputDir = new File(path);
             int last = videoWithAudioFormats.size() - 1;
-            Format format = videoWithAudioFormats.get(last);
+            Format format = videoWithAudioFormats.get(0);
             receivedMediaFile.setTitle(video.details().title());
             receivedMediaFile.setDescription(video.details().description());
             receivedMediaFile.setFile(video.download(format, outputDir, videoId, true));
