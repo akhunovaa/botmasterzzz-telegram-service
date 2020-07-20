@@ -26,6 +26,12 @@
                 <log.level>INFO</log.level>
                 <allow.origin>true</allow.origin>
             </properties>
+            <repositories>
+                <repository>
+                    <id>jitpack.io</id>
+                    <url>https://jitpack.io</url>
+                </repository>
+            </repositories>
         </profile>
         <profile>
             <id>local</id>
@@ -38,6 +44,12 @@
                 <log.level>INFO</log.level>
                 <allow.origin>true</allow.origin>
             </properties>
+            <repositories>
+                <repository>
+                    <id>jitpack.io</id>
+                    <url>https://jitpack.io</url>
+                </repository>
+            </repositories>
         </profile>
         <profile>
             <id>prod</id>
@@ -50,6 +62,12 @@
                 <log.level>INFO</log.level>
                 <allow.origin>false</allow.origin>
             </properties>
+            <repositories>
+                <repository>
+                    <id>jitpack.io</id>
+                    <url>https://jitpack.io</url>
+                </repository>
+            </repositories>
         </profile>
     </profiles>
 
@@ -96,6 +114,8 @@
         <httpcompontents.version>4.5.3</httpcompontents.version>
         <sonar.maven.version>3.6.0.1398</sonar.maven.version>
         <spring-kafka.version>2.5.1.RELEASE</spring-kafka.version>
+        <java-youtube-downloader.version>2.2.1</java-youtube-downloader.version>
+        <maven-download-plugin.version>1.6.0</maven-download-plugin.version>
 
         <jasyp.version>1.7</jasyp.version>
     </properties>
@@ -488,6 +508,18 @@
             <artifactId>jasypt</artifactId>
             <version>${jasyp.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.maven-download-plugin</groupId>
+            <artifactId>maven-download-plugin</artifactId>
+            <version>${maven-download-plugin.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.sealedtx</groupId>
+            <artifactId>java-youtube-downloader</artifactId>
+            <version>${java-youtube-downloader.version}</version>
         </dependency>
 
     </dependencies>

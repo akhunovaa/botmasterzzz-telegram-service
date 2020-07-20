@@ -77,6 +77,24 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
 
     @SuppressWarnings("deprecation")
     @Override
+    public TelegramUserMediaEntity telegramUserMediaGet(String filePath) {
+        TelegramUserMediaEntity telegramUserMediaEntity = null;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("filePath", filePath));
+        criteria.setMaxResults(1);
+        try {
+            telegramUserMediaEntity = (TelegramUserMediaEntity) criteria.list().get(0);
+        } catch (QueryException | IndexOutOfBoundsException e) {
+            session.close();
+        } finally {
+            session.close();
+        }
+        return telegramUserMediaEntity;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
     public Optional<TelegramMediaStatisticEntity> findTouchTypeMedia(long telegramUserId, Long mediaFileId, String touchType) {
         TelegramMediaStatisticEntity telegramMediaStatisticEntity = null;
         Session session = sessionFactory.openSession();

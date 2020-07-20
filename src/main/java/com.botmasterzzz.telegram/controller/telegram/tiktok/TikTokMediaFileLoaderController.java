@@ -156,7 +156,7 @@ public class TikTokMediaFileLoaderController {
             sendDocument.setChatId(chatId);
             sendDocument.setDocument(fileIdx);
             if (!isAnon){
-                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a>");
+                sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nВидео от пользователя <a href=\"tg://user?id=" + telegramBotUserEntity.getTelegramId() + "\">" + telegramUser + "</a> ⌚<i>" + commentTimestamp + "</i>");
             }else {
                 sendDocument.setCaption("\n\n\uD83D\uDC41 " + countOfMediaLogged + "\nanonymous ⌚<i>" + commentTimestamp + "</i>");
             }

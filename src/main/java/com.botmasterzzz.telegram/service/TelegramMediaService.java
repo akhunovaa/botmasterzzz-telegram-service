@@ -19,7 +19,11 @@ public interface TelegramMediaService {
 
     void telegramUserMediaAdd(Document document, Long telegramUserId, boolean isAnon, String message);
 
+    void telegramUserMediaAdd(String path, Long telegramUserId, boolean isAnon, String message);
+
     TelegramUserMediaEntity telegramUserMediaGet(Long id);
+
+    void telegramUserMediaUpdate(String filePath, String fileId);
 
     void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity);
 

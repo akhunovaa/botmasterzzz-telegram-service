@@ -6,8 +6,10 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.ReplyKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
+import com.botmasterzzz.telegram.service.YoutubeMediaGrabberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,10 @@ import java.util.List;
 @BotController
 public class MainTikTokMenuController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MainTikTokMenuController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainTikTokMenuController.class);
+
+    @Autowired
+    private YoutubeMediaGrabberService youtubeMediaGrabberService;
 
     @BotRequestMapping(value = "tiktok-/start")
     public SendMessage start(Update update) {
@@ -81,6 +86,28 @@ public class MainTikTokMenuController {
     @BotRequestMapping(value = "tiktok-\uD83D\uDCD2Контакты")
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>Адрес:</b>\n");
+        stringBuilder.append("г. Москва Варшавское шоссе д.2\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("<b>Номер телефона:</b>\n");
+        stringBuilder.append("+7(926)545-14-52\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("<b>Телеграмм:</b>\n");
+        stringBuilder.append("@leon4uk\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("<b>Разработан при помощи:</b>\n");
+        stringBuilder.append("https://botmasterzzz.com\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString());
+    }
+
+    @BotRequestMapping(value = "tiktok-youtube")
+    public SendMessage youtube(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        youtubeMediaGrabberService.downloadVideo("LbY3DdzV0rA");
         stringBuilder.append("<b>Адрес:</b>\n");
         stringBuilder.append("г. Москва Варшавское шоссе д.2\n");
         stringBuilder.append("\n");
