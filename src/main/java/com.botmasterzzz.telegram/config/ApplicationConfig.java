@@ -2,6 +2,7 @@ package com.botmasterzzz.telegram.config;
 
 import com.botmasterzzz.bot.bot.DefaultBotOptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.kiulian.downloader.YoutubeDownloader;
 import com.google.gson.Gson;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
@@ -105,6 +106,15 @@ public class ApplicationConfig implements WebApplicationInitializer {
     @Bean
     public Executor taskExecutor() {
         return new SimpleAsyncTaskExecutor();
+    }
+
+    @Bean
+    public YoutubeDownloader youtubeDownloader() {
+        YoutubeDownloader youtubeDownloader = new YoutubeDownloader();
+        youtubeDownloader.addCipherFunctionPattern(2, "\\b([a-zA-Z0-9$]{2})\\s*=\\s*function\\(\\s*a\\s*\\)\\s*\\{\\s*a\\s*=\\s*a\\.split\\(\\s*\"\"\\s*\\)");
+        youtubeDownloader.setParserRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36");
+        youtubeDownloader.setParserRetryOnFailure(1);
+        return youtubeDownloader;
     }
 
 }

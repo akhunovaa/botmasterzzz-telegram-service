@@ -6,6 +6,7 @@ import com.botmasterzzz.bot.api.impl.methods.send.SendPhoto;
 import com.botmasterzzz.bot.api.impl.methods.send.SendVideo;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageReplyMarkup;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageText;
+import com.botmasterzzz.bot.api.impl.objects.Message;
 import com.botmasterzzz.bot.api.impl.objects.OutgoingMessage;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
@@ -14,6 +15,7 @@ import com.botmasterzzz.telegram.controller.BotApiMethodController;
 import com.botmasterzzz.telegram.controller.Handle;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
+import com.botmasterzzz.telegram.service.TelegramMediaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -27,6 +29,10 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 @Service
 public class KafkaTelegramConsumerImpl {
 
@@ -38,6 +44,10 @@ public class KafkaTelegramConsumerImpl {
     private final Handle handle;
     private final Gson gson;
     private final TelegramBotStatisticService telegramBotStatisticService;
+
+    @Autowired
+    private TelegramMediaService telegramMediaService;
+
 
     private final KafkaTemplate<Long, OutgoingMessage> kafkaMessageTemplate;
 
@@ -63,6 +73,13 @@ public class KafkaTelegramConsumerImpl {
         BotApiMethodController methodController = getHandle(update);
         PartialBotApiMethod apiMethod = methodController.process(update);
         dataSend(key, apiMethod);
+    }
+
+    @KafkaListener(id = "telegram-message-service", topics = {"telegram-callback-message"}, containerFactory = "singleMessageFactory")
+    public void consumeMessage(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, Message message) {
+        LOGGER.info("{} => consumed {}", key, message.toString());
+        String mediaFileId = message.getVideo().getFileId();
+        telegramMediaService.telegramUserMediaUpdate(key, mediaFileId);
     }
 
     private void dataSend(Long key, PartialBotApiMethod apiMethod) {
@@ -94,8 +111,8 @@ public class KafkaTelegramConsumerImpl {
                 outgoingMessage.setTypeMessage("SendMessage");
                 kafkaMessageTemplate.send(topicName, key, outgoingMessage);
             }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            LOGGER.error("Exception in send to kafka", exception);
         }
 
     }
@@ -120,6 +137,9 @@ public class KafkaTelegramConsumerImpl {
                 controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
                 if (remain && null != message && message.equals("❌Отмена")) {
                     controller = container.getControllerMap().get("tiktok-" + message);
+                } else if (remain && null != message && message.contains("/watch?v=")) {
+                    controller = container.getControllerMap().get("tiktok-media-upload-link");
+                    break;
                 } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
                     controller = container.getControllerMap().get("tiktok-media-upload-error");
                 }else if (commentAwait){

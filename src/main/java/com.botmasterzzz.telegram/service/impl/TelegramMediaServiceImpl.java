@@ -12,6 +12,7 @@ import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     @Autowired
     private TelegramUserDAO telegramUserDAO;
 
+    @Async
     @Override
     public void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon, String message) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
@@ -43,6 +45,7 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
     }
 
+    @Async
     @Override
     public void telegramUserMediaAdd(Video video, Long telegramUserId, boolean isAnon, String message) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
@@ -58,6 +61,7 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
     }
 
+    @Async
     @Override
     public void telegramUserMediaAdd(Document document, Long telegramUserId, boolean isAnon, String message) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
@@ -73,9 +77,32 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
         telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
     }
 
+    @Async
+    @Override
+    public void telegramUserMediaAdd(String path, Long telegramUserId, boolean isAnon, String message) {
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
+        TelegramUserMediaEntity telegramUserMediaEntity = new TelegramUserMediaEntity();
+        telegramUserMediaEntity.setFilePath(path);
+        telegramUserMediaEntity.setWidth(150);
+        telegramUserMediaEntity.setHeight(150);
+        telegramUserMediaEntity.setFileType(2);
+        telegramUserMediaEntity.setAnon(isAnon);
+        telegramUserMediaEntity.setMessage(message);
+        telegramUserMediaEntity.setTelegramBotUserEntity(telegramBotUserEntity);
+        telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
+    }
+
     @Override
     public TelegramUserMediaEntity telegramUserMediaGet(Long id) {
         return telegramUserMediaDAO.telegramUserMediaGet(id);
+    }
+
+    @Async
+    @Override
+    public void telegramUserMediaUpdate(String filePath, String fileId) {
+        TelegramUserMediaEntity telegramUserMediaEntity = telegramUserMediaDAO.telegramUserMediaGet(filePath);
+        telegramUserMediaEntity.setFileId(fileId);
+        telegramUserMediaDAO.telegramUserMediaUpdate(telegramUserMediaEntity);
     }
 
     @Override

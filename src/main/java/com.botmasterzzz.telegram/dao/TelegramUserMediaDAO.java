@@ -14,6 +14,8 @@ public interface TelegramUserMediaDAO {
 
     TelegramUserMediaEntity telegramUserMediaGet(Long id);
 
+    TelegramUserMediaEntity telegramUserMediaGet(String filePath);
+
     void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity);
 
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
