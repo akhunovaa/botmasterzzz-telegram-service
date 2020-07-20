@@ -1,9 +1,9 @@
 package com.botmasterzzz.telegram.service;
 
-import java.io.File;
+import com.botmasterzzz.telegram.dto.ReceivedMediaFile;
 
 public interface YoutubeMediaGrabberService {
 
-    File downloadVideo(String videoId);
+    ReceivedMediaFile downloadVideo(String videoId);
 
 }
