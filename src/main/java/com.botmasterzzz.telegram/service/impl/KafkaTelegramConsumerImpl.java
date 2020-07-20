@@ -16,7 +16,6 @@ import com.botmasterzzz.telegram.controller.Handle;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -29,16 +28,14 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 @Service
 public class KafkaTelegramConsumerImpl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTelegramConsumerImpl.class);
 
-    private static BotApiMethodContainer container = BotApiMethodContainer.getInstanse();
+    private static final BotApiMethodContainer container = BotApiMethodContainer.getInstanse();
 
     private final ObjectMapper objectMapper;
     private final Handle handle;
@@ -129,7 +126,7 @@ public class KafkaTelegramConsumerImpl {
         }
         boolean remain = UserContextHolder.currentContext().isRemain();
         boolean commentAwait = UserContextHolder.currentContext().isCommentRemain();
-        switch (instanceId){
+        switch (instanceId) {
             case 33:
                 controller = container.getControllerMap().get("taxi-" + message);
                 break;
@@ -137,12 +134,12 @@ public class KafkaTelegramConsumerImpl {
                 controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
                 if (remain && null != message && message.equals("❌Отмена")) {
                     controller = container.getControllerMap().get("tiktok-" + message);
-                } else if (remain && null != message && message.contains("/watch?v=")) {
+                } else if (remain && null != message && (message.contains("/watch?v=") || message.contains("https://youtu.be/"))) {
                     controller = container.getControllerMap().get("tiktok-media-upload-link");
                     break;
                 } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
                     controller = container.getControllerMap().get("tiktok-media-upload-error");
-                }else if (commentAwait){
+                } else if (commentAwait) {
                     controller = container.getControllerMap().get("tiktok-comment-upload");
                 }
         }

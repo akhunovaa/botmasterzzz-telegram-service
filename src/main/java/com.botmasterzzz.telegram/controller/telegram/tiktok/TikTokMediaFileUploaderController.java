@@ -380,7 +380,12 @@ public class TikTokMediaFileUploaderController {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         String text = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getMessage().getText();
-        String videoId = text.substring(text.indexOf("v=") + 2);
+        String videoId;
+        if (text.contains("youtu.be")){
+            videoId = text.substring(text.indexOf("v=") + 2);
+        }else {
+            videoId = text.substring(text.indexOf("be/") + 2);
+        }
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
         keyboard.setOneTimeKeyboard(false);
         List<KeyboardRow> keyboardRows = new ArrayList<>();
