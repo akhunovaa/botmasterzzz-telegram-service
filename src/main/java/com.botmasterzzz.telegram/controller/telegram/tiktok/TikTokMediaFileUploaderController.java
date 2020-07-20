@@ -9,6 +9,7 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
+import com.botmasterzzz.telegram.dto.ReceivedMediaFile;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import com.botmasterzzz.telegram.service.YoutubeMediaGrabberService;
 import org.slf4j.Logger;
@@ -402,20 +403,19 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
         boolean isAnon = UserContextHolder.currentContext().isAnon();
-        Message message = update.getMessage();
         Long telegramUserId = Long.valueOf(update.getMessage().getFrom().getId());
-        String caption = message.getCaption();
-        File receivedMediaFile = youtubeMediaGrabberService.downloadVideo(videoId);
+        ReceivedMediaFile receivedMediaFile = youtubeMediaGrabberService.downloadVideo(videoId);
+        String caption = "<b>" + receivedMediaFile.getTitle() + "</b>\n" + receivedMediaFile.getDescription();
         String filePath = path + "/" + videoId + ".mp4";
         telegramMediaService.telegramUserMediaAdd(filePath, telegramUserId, isAnon, caption);
         LOGGER.info("User id {} sent video message {}", chatId, videoId);
         UserContextHolder.currentContext().setRemain(false);
         UserContextHolder.currentContext().setAnon(false);
         return new SendVideo()
-                .setVideo(receivedMediaFile.getAbsolutePath())
+                .setVideo(receivedMediaFile.getFile().getAbsolutePath())
                 .setChatId(update.getMessage().getChatId())
                 .setParseMode("HTML")
-                .setCaption("<b>" + name + "</b>, мы получили и загрузили Ваш медиа файл.\n")
+                .setCaption("<b>" + name + "</b>, мы получили и загрузили Ваш медиа файл.\n" + caption)
                 .setReplyMarkup(keyboard);
     }
 }

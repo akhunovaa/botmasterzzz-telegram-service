@@ -14,6 +14,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
@@ -29,6 +30,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
     private SessionFactory sessionFactory;
 
 
+    @Async
     @Override
     public Long telegramUserMediaAdd(TelegramUserMediaEntity telegramUserMediaEntity) {
         Session session = sessionFactory.openSession();

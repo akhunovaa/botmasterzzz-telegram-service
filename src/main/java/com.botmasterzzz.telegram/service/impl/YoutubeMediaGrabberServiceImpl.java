@@ -1,5 +1,6 @@
 package com.botmasterzzz.telegram.service.impl;
 
+import com.botmasterzzz.telegram.dto.ReceivedMediaFile;
 import com.botmasterzzz.telegram.service.YoutubeMediaGrabberService;
 import com.github.kiulian.downloader.YoutubeDownloader;
 import com.github.kiulian.downloader.YoutubeException;
@@ -31,7 +32,8 @@ public class YoutubeMediaGrabberServiceImpl implements YoutubeMediaGrabberServic
     }
 
     @Override
-    public File downloadVideo(String videoId) {
+    public ReceivedMediaFile downloadVideo(String videoId) {
+        ReceivedMediaFile receivedMediaFile = new ReceivedMediaFile();
         YoutubeVideo video;
         try {
             video = youtubeDownloader.getVideo(videoId);
@@ -40,7 +42,10 @@ public class YoutubeMediaGrabberServiceImpl implements YoutubeMediaGrabberServic
             File outputDir = new File(path);
             int last = videoWithAudioFormats.size() - 1;
             Format format = videoWithAudioFormats.get(last);
-            return video.download(format, outputDir, videoId, true);
+            receivedMediaFile.setTitle(video.details().title());
+            receivedMediaFile.setDescription(video.details().description());
+            receivedMediaFile.setFile(video.download(format, outputDir, videoId, true));
+            return receivedMediaFile;
         } catch (YoutubeException | IOException exception) {
             LOGGER.error("Youtube media getter error occurs", exception);
         }
