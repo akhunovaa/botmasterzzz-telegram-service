@@ -111,6 +111,7 @@ public class ApplicationConfig implements WebApplicationInitializer {
     @Bean
     public YoutubeDownloader youtubeDownloader() {
         YoutubeDownloader youtubeDownloader = new YoutubeDownloader();
+        youtubeDownloader.addCipherFunctionPattern(2, "\\b([a-zA-Z0-9$]{2})\\s*=\\s*function\\(\\s*a\\s*\\)\\s*\\{\\s*a\\s*=\\s*a\\.split\\(\\s*\"\"\\s*\\)");
         youtubeDownloader.setParserRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36");
         youtubeDownloader.setParserRetryOnFailure(10);
         return youtubeDownloader;
