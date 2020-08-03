@@ -27,7 +27,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     @Value("${multipart.file.upload.path}")
     private String path;
 
-    private static final String FILE_PATH = "/home/repository/get_parts/"; ///repository/get_parts/images
+    private static final String FILE_PATH = "/home/repository/get_parts/images/"; ///repository/get_parts/images
 
     @Autowired
     private Gson gson;
