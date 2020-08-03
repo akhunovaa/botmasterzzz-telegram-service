@@ -167,7 +167,6 @@ public class MainTaxiMenuController {
         stringBuilder.append("4 пассажира 2600 руб\n");
         stringBuilder.append("-------------\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
@@ -184,7 +183,6 @@ public class MainTaxiMenuController {
         stringBuilder.append("4 пассажира 2800 руб\n");
         stringBuilder.append("-------------\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
@@ -201,7 +199,6 @@ public class MainTaxiMenuController {
         stringBuilder.append("4 пассажира 2800 руб\n");
         stringBuilder.append("-------------\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());

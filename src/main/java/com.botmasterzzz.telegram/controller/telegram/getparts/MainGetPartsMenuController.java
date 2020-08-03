@@ -33,27 +33,25 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>Добро пожаловать!</b>\n");
         stringBuilder.append("Приветствуем Вас у себя в онлайн магазине Get Parts, ").append(name).append("! \n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())
                 .setReplyMarkup(keyboard);
     }
 
-//    @BotRequestMapping(value = "getparts-\uD83D\uDDA5Главное меню")
-//    public SendMessage main(Update update) {
-//        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
-//        ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("<b>Добро пожаловать!</b>\n");
-//        stringBuilder.append("Приветствуем Вас у себя в онлайн магазине Get Parts, ").append(name).append("! \n");
-//        stringBuilder.append("\n");
-//        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
-//        return new SendMessage()
-//                .setChatId(update.getMessage().getChatId()).enableHtml(true)
-//                .setText(stringBuilder.toString())
-//                .setReplyMarkup(keyboard);
-//    }
+    @BotRequestMapping(value = "getparts-\uD83D\uDDA5Главное меню")
+    public SendMessage main(Update update) {
+        String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
+        ReplyKeyboardMarkup keyboard = getMainPageKeyboard();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>Добро пожаловать!</b>\n");
+        stringBuilder.append("Приветствуем Вас у себя в онлайн магазине Get Parts, ").append(name).append("! \n");
+        stringBuilder.append("\n");
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString())
+                .setReplyMarkup(keyboard);
+    }
 
     @BotRequestMapping(value = "getparts-\uD83D\uDCC4Новости")
     public SendMessage news(Update update) {
@@ -67,7 +65,6 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>Онлайн каталог.</b>\n");
         stringBuilder.append("Разработан онлайн каталог и поиск по автозапчастям. Для вашего удобства так же включена возможность просмотра фотографии с автозапчастям.");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())
@@ -91,7 +88,6 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>Достоинства:</b> Очень внимательное отношение к выбору нужных запчастей. Грамотность менеджеров.\n");
         stringBuilder.append("<b>Комментарий:</b> Всё супер. Рекомендую всем.\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())
@@ -114,7 +110,6 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>Разработан при помощи:</b>\n");
         stringBuilder.append("https://botmasterzzz.com\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())
@@ -146,7 +141,6 @@ public class MainGetPartsMenuController {
         stringBuilder.append("<b>Поиск</b>\n");
         stringBuilder.append("Для поиска введите наименование автозапчасти. Поиск ведется по акртикулу, наименованию и по наименованию категории.\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())

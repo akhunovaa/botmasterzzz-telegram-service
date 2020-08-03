@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 @BotController
@@ -97,6 +98,9 @@ public class InnerCatalogGetPartsMenuController {
         long partId = UserContextHolder.currentContext().getPartId();
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
         String fileName = "/home/repository/get_parts/images/" + partId + "/" + callBackData.getFileSelected() + "-image.jpg";
+        logger.info("Photo location: {}", Arrays.toString(new File("/home/repository/get_parts").list()));
+        logger.info("Photo location: {}", Arrays.toString(new File("/home/repository/get_parts/images").list()));
+        logger.info("Photo location: {}", Arrays.toString(new File("/home/repository/get_parts/images/" + partId + "/").list()));
         logger.info("Image for inner load from file  path: {}", fileName);
         SendPhoto sendPhoto = new SendPhoto();
         StringBuilder stringBuilder = new StringBuilder();

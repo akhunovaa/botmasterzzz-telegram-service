@@ -77,7 +77,6 @@ public class MainTikTokMenuController {
         stringBuilder.append("\uD83C\uDFACЗагрузить фото\n");
         stringBuilder.append("Здесь вы можете загрузить видео или фото.\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
@@ -98,7 +97,6 @@ public class MainTikTokMenuController {
         stringBuilder.append("<b>Разработан при помощи:</b>\n");
         stringBuilder.append("https://botmasterzzz.com\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
@@ -120,7 +118,6 @@ public class MainTikTokMenuController {
         stringBuilder.append("<b>Разработан при помощи:</b>\n");
         stringBuilder.append("https://botmasterzzz.com\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
