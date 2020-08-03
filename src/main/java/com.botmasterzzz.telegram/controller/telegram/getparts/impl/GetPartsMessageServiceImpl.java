@@ -27,7 +27,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     @Value("${multipart.file.upload.path}")
     private String path;
 
-    private static final String FILE_PATH = "/home/repository/get_parts/images/";
+    private static final String FILE_PATH = "/home/repository/get_parts/"; ///repository/get_parts/images
 
     @Autowired
     private Gson gson;
@@ -155,13 +155,14 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
     public InlineKeyboardMarkup getPartsPhotoButton(long partId, int offset, int limit) {
         String path = FILE_PATH + partId;
         logger.info("Images load from file  path: {}", path);
-        logger.info("Location load: {}", Arrays.toString(new String[]{Arrays.toString(new File(FILE_PATH).listFiles())}));
-        logger.info("Location load: {}", Arrays.toString(new String[]{Arrays.toString(new File("/home").listFiles())}));
-        logger.info("Location load: {}", Arrays.toString(new String[]{Arrays.toString(new File("/home/repository").listFiles())}));
-        logger.info("Location load: {}", Arrays.toString(new String[]{Arrays.toString(new File("/home/repository/get_parts").listFiles())}));
-        logger.info("Location load: {}", Arrays.toString(new String[]{Arrays.toString(new File("/home/repository/get_parts/images").listFiles())}));
-        logger.info("Location load: {}", Arrays.toString(new File(path).list()));
-        logger.info("Location load: {}", Arrays.toString(new File("/home").list()));
+        logger.info("Location load: 1 {}", Arrays.toString(new String[]{Arrays.toString(new File("/repository/get_parts/images").listFiles())}));
+        logger.info("Location load: 2 {}", Arrays.toString(new String[]{Arrays.toString(new File(FILE_PATH).listFiles())}));
+        logger.info("Location load: 3 {}", Arrays.toString(new String[]{Arrays.toString(new File("/home").listFiles())}));
+        logger.info("Location load: 4 {}", Arrays.toString(new String[]{Arrays.toString(new File("/home/repository").listFiles())}));
+        logger.info("Location load: 5 {}", Arrays.toString(new String[]{Arrays.toString(new File("/home/repository/get_parts").listFiles())}));
+        logger.info("Location load: 6 {}", Arrays.toString(new String[]{Arrays.toString(new File("/home/repository/get_parts/images").listFiles())}));
+        logger.info("Location load: 7 {}", Arrays.toString(new File(path).list()));
+        logger.info("Location load: 8 {}", Arrays.toString(new File("/home").list()));
         File file = new File(path);
         String[] files = file.list();
         int fileCount = null != files ? files.length : 0;
@@ -237,7 +238,7 @@ public class GetPartsMessageServiceImpl implements GetPartsMessageService {
         List<GetPartsEntity> getPartsEntityList = getPartsDAO.getGetPartsEntityList();
         List<GetPartsEntity> getPartsEntityNewList = new ArrayList<>();
         for (GetPartsEntity getPartsEntity : getPartsEntityList) {
-            if (getPartsEntity.getGetPartsDetailsEntity().getCatName().equals(catName)){
+            if (getPartsEntity.getGetPartsDetailsEntity() != null && getPartsEntity.getGetPartsDetailsEntity().getCatName() != null && getPartsEntity.getGetPartsDetailsEntity().getCatName().equals(catName)){
                 getPartsEntityNewList.add(getPartsEntity);
             }
         }
