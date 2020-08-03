@@ -94,7 +94,6 @@ public class MainGkhMenuController {
         stringBuilder.append("\uD83D\uDCF0<b>Новости</b>\n");
         stringBuilder.append("Здесь вы можете узнать последние новости и быть в курсе последних событий.\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
@@ -115,7 +114,6 @@ public class MainGkhMenuController {
         stringBuilder.append("<b>Разработан при помощи:</b>\n");
         stringBuilder.append("https://botmasterzzz.com\n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());
@@ -136,7 +134,6 @@ public class MainGkhMenuController {
         stringBuilder.append("<b>Показания счетчиков!</b>\n");
         stringBuilder.append("Добавили возможность передачи показаний для счетчиков ГВС/ХВС, электроэнергии и показаний по газу! \n");
         stringBuilder.append("\n");
-        stringBuilder.append("Выберите раздел: \uD83D\uDD3D");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());

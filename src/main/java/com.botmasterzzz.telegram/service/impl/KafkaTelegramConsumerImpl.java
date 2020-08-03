@@ -127,6 +127,15 @@ public class KafkaTelegramConsumerImpl {
         boolean remain = UserContextHolder.currentContext().isRemain();
         boolean commentAwait = UserContextHolder.currentContext().isCommentRemain();
         switch (instanceId) {
+            case 1:
+                if (update.hasCallbackQuery()){
+                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    UserContextHolder.currentContext().setCallBackData(callBackData);
+                    message = callBackData.getPath();
+                }
+                remain = UserContextHolder.currentContext().isRemain();
+                controller = !remain ? container.getControllerMap().get("getparts-" + message) : container.getControllerMap().get("getparts-SECRET-FIND") ;
+                break;
             case 33:
                 controller = container.getControllerMap().get("taxi-" + message);
                 break;
