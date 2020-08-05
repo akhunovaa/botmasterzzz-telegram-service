@@ -5,6 +5,7 @@ import com.botmasterzzz.bot.api.impl.objects.PhotoSize;
 import com.botmasterzzz.bot.api.impl.objects.Video;
 import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
+import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 
@@ -28,6 +29,10 @@ public interface TelegramMediaService {
     void telegramUserMediaUpdate(TelegramUserMediaEntity telegramUserMediaEntity);
 
     List<TelegramUserMediaEntity> telegramUserMediaListForToday();
+
+    List<TelegramUserMediaEntity> telegramUserMediaListForYesterday();
+
+    List<TelegramUserMediaEntity> telegramUserPersonalMediaList(TelegramBotUserEntity requestedTelegramUser);
 
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
 

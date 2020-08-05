@@ -52,6 +52,19 @@ public class TelegramMediaLogDAOImpl implements TelegramMediaLogDAO {
 
     @Override
     @SuppressWarnings({"deprecation"})
+    public long getCountOfDistinctLoggedToMedia(Long mediaId) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramMediaLogEntity.class);
+        criteria.createAlias("telegramUserMediaEntity", "media");
+        criteria.add( Restrictions.eq("media.id", mediaId));
+        criteria.setProjection(Projections.countDistinct("telegramUserMediaEntity"));
+        Long mediaCount = (Long) criteria.uniqueResult();
+        session.close();
+        return mediaCount;
+    }
+
+    @Override
+    @SuppressWarnings({"deprecation"})
     public long getCountOfDiscuss(Long mediaId) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(MediaCommentsDataEntity.class);

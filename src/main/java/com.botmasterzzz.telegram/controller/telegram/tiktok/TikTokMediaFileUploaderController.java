@@ -48,7 +48,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setRemain(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(пример для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI\nhttps://youtu.be/MqNHFkhA1y8</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -64,12 +64,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
@@ -104,12 +105,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
@@ -144,12 +146,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
@@ -186,7 +189,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setAnon(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(пример для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI\nhttps://youtu.be/MqNHFkhA1y8</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -202,12 +205,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
@@ -244,7 +248,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setAnon(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(пример для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI\nhttps://youtu.be/MqNHFkhA1y8</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -262,7 +266,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setAnon(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(пример для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI\nhttps://youtu.be/MqNHFkhA1y8</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -279,7 +283,7 @@ public class TikTokMediaFileUploaderController {
         UserContextHolder.currentContext().setRemain(true);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText("<b>" + name + "</b>, отправьте боту видео или фото\n(пример для YouTube ссылок <code>https://youtube.com/watch?v=icZotxynzJI\nhttps://youtu.be/MqNHFkhA1y8</code>):\n")
+                .setText("<b>" + name + "</b>, отправьте боту видео или фото:\n")
                 .setReplyMarkup(keyboard);
     }
 
@@ -295,12 +299,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
@@ -343,12 +348,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои видео/фото");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
@@ -395,11 +401,13 @@ public class TikTokMediaFileUploaderController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);

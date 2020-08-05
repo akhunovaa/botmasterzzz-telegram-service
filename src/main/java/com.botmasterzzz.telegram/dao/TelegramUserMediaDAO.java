@@ -2,6 +2,7 @@ package com.botmasterzzz.telegram.dao;
 
 import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
+import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 
@@ -21,6 +22,10 @@ public interface TelegramUserMediaDAO {
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
 
     List<TelegramUserMediaEntity> telegramUserMediaListForToday();
+
+    List<TelegramUserMediaEntity> telegramUserMediaListForYesterday();
+
+    List<TelegramUserMediaEntity> telegramUserPersonalMediaList(TelegramBotUserEntity requestedTelegramUser);
 
     Optional<TelegramMediaStatisticEntity> findTouchTypeMedia(long telegramUserId, Long mediaFileId, String touchType);
 

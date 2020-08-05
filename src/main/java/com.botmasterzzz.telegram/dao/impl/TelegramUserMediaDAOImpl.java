@@ -3,6 +3,7 @@ package com.botmasterzzz.telegram.dao.impl;
 import com.botmasterzzz.telegram.dao.TelegramUserMediaDAO;
 import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.dto.TopRatingUsersDTO;
+import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramMediaStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramRatingStatisticEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -159,6 +161,42 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         criteria.add(Restrictions.isNotNull("fileId"));
         criteria.addOrder(Order.asc("audWhenCreate"));
         criteria.add(Restrictions.between("audWhenCreate", minDate, maxDate));
+        telegramUserMediaEntityList = criteria.list();
+        session.close();
+        return telegramUserMediaEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<TelegramUserMediaEntity> telegramUserMediaListForYesterday() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS)));
+        cal.add(Calendar.DATE, -2);
+        Date minDate = cal.getTime();
+        cal.add(Calendar.DATE, -1);
+        Date maxDate = cal.getTime();
+        List<TelegramUserMediaEntity> telegramUserMediaEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("isDeleted", false));
+        criteria.add(Restrictions.isNotNull("fileId"));
+        criteria.addOrder(Order.asc("audWhenCreate"));
+        criteria.add(Restrictions.between("audWhenCreate", minDate, maxDate));
+        telegramUserMediaEntityList = criteria.list();
+        session.close();
+        return telegramUserMediaEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<TelegramUserMediaEntity> telegramUserPersonalMediaList(TelegramBotUserEntity requestedTelegramUser) {
+        List<TelegramUserMediaEntity> telegramUserMediaEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("isDeleted", false));
+        criteria.add(Restrictions.eq("telegramBotUserEntity", requestedTelegramUser));
+        criteria.add(Restrictions.isNotNull("fileId"));
+        criteria.addOrder(Order.asc("audWhenCreate"));
         telegramUserMediaEntityList = criteria.list();
         session.close();
         return telegramUserMediaEntityList;
