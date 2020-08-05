@@ -136,7 +136,6 @@ public class TikTokMediaPersonalFileLoaderController {
                 sendPhoto.setCaption(captionBuilder.toString());
                 sendPhoto.setReplyMarkup(inlineKeyboardMarkup);
                 sendPhoto.setParseMode("HTML");
-                sendPhoto.disableNotification();
                 logger.info("User: {}", requestedTelegramUser);
                 logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
                 return sendPhoto;
@@ -147,7 +146,6 @@ public class TikTokMediaPersonalFileLoaderController {
                 sendVideo.setCaption(captionBuilder.toString());
                 sendVideo.setReplyMarkup(inlineKeyboardMarkup);
                 sendVideo.setParseMode("HTML");
-                sendVideo.disableNotification();
                 logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
                 return sendVideo;
             } else {
@@ -157,7 +155,6 @@ public class TikTokMediaPersonalFileLoaderController {
                 sendDocument.setCaption(captionBuilder.toString());
                 sendDocument.setReplyMarkup(inlineKeyboardMarkup);
                 sendDocument.setParseMode("HTML");
-                sendDocument.disableNotification();
                 logger.info("User id {} sent media message {} ", telegramUserMediaEntity.getTelegramBotUserEntity().getId(), telegramUserMediaEntity);
                 return sendDocument;
             }

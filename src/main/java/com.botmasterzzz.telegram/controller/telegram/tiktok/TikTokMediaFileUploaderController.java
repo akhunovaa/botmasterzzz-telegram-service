@@ -83,7 +83,7 @@ public class TikTokMediaFileUploaderController {
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "\n" +
-                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() + "\n" +
+                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() +
                         "\n" +
                         "❗️/start для перехода на главное меню\n" +
                         "\uD83D\uDCF9 /video для получения случайного видео от бота\n" +
@@ -124,7 +124,7 @@ public class TikTokMediaFileUploaderController {
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "\n" +
-                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() + "\n" +
+                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() +
                         "\n" +
                         "❗️/start для перехода на главное меню\n" +
                         "\uD83D\uDCF9 /video для получения случайного видео от бота\n" +
@@ -165,7 +165,7 @@ public class TikTokMediaFileUploaderController {
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "\n" +
-                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() + "\n" +
+                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() +
                         "\n" +
                         "❗️/start для перехода на главное меню\n" +
                         "\uD83D\uDCF9 /video для получения случайного видео от бота\n" +
@@ -224,7 +224,7 @@ public class TikTokMediaFileUploaderController {
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "\n" +
-                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() + "\n" +
+                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() +
                         "\n" +
                         "❗️/start для перехода на главное меню\n" +
                         "\uD83D\uDCF9 /video для получения случайного видео от бота\n" +
@@ -319,7 +319,7 @@ public class TikTokMediaFileUploaderController {
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
                         "\n" +
-                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() + "\n" +
+                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() +
                         "\n" +
                         "❗️/start для перехода на главное меню\n" +
                         "\uD83D\uDCF9 /video для получения случайного видео от бота\n" +
