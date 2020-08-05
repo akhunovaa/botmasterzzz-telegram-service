@@ -106,7 +106,7 @@ public class TikTokMediaPersonalFileLoaderController {
             inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
             inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
             String mediaTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
-            String mediaCaption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "&lt;отсутствует&gt;";
+            String mediaCaption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "&lt;описание отсутствует&gt;";
             StringBuilder captionBuilder = new StringBuilder();
             captionBuilder.append("<b>Описание</b>\n");
             captionBuilder.append(mediaCaption).append("\n");
@@ -160,7 +160,7 @@ public class TikTokMediaPersonalFileLoaderController {
             }
         } else {
             return new SendMessage()
-                    .setChatId(update.getCallbackQuery().getMessage().getChatId()).enableHtml(true)
+                    .setChatId(update.getMessage().getChatId()).enableHtml(true)
                     .setText("<b>" + name + "</b>, у Вас нет загруженных медиа-файлов.\n");
         }
     }
@@ -230,7 +230,7 @@ public class TikTokMediaPersonalFileLoaderController {
             inlineKeyboardButtonsDeleteRow.add(deleteInlineButton);
             inlineKeyboardButtons.add(inlineKeyboardButtonsDeleteRow);
             String mediaTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(telegramUserMediaEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
-            String mediaCaption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "&lt;отсутствует&gt;";
+            String mediaCaption = null != telegramUserMediaEntity.getMessage() ? telegramUserMediaEntity.getMessage() : "&lt;описание отсутствует&gt;";
             StringBuilder captionBuilder = new StringBuilder();
             captionBuilder.append("<b>Описание</b>\n");
             captionBuilder.append(mediaCaption).append("\n");

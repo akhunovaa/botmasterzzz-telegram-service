@@ -28,6 +28,7 @@ public class UserContext {
     private String attributeName;
     private boolean anon;
     private long partId;
+    private long forUserId;
 
     public void setUser(User user) {
         this.user = user;
@@ -147,5 +148,13 @@ public class UserContext {
 
     public void setCommentRemain(boolean commentRemain) {
         this.commentRemain = commentRemain;
+    }
+
+    public long getForUserId() {
+        return forUserId;
+    }
+
+    public void setForUserId(long forUserId) {
+        this.forUserId = forUserId;
     }
 }

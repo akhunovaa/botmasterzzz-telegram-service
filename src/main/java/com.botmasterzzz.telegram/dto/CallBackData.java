@@ -10,6 +10,8 @@ public class CallBackData {
     private String ca;
     private Integer offset;
     private Integer limit;
+    private Integer l;
+    private Integer o;
     private Integer productId;
     private Integer fileCount;
     private Integer fileSelected;
@@ -121,6 +123,22 @@ public class CallBackData {
         this.fileId = fileId;
     }
 
+    public Integer getL() {
+        return l;
+    }
+
+    public void setL(Integer l) {
+        this.l = l;
+    }
+
+    public Integer getO() {
+        return o;
+    }
+
+    public void setO(Integer o) {
+        this.o = o;
+    }
+
     @Override
     public String toString() {
         return "CallBackData{" +
@@ -130,6 +148,8 @@ public class CallBackData {
                 ", ca='" + ca + '\'' +
                 ", offset=" + offset +
                 ", limit=" + limit +
+                ", l=" + l +
+                ", o=" + o +
                 ", productId=" + productId +
                 ", fileCount=" + fileCount +
                 ", fileSelected=" + fileSelected +
