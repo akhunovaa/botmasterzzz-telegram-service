@@ -173,7 +173,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         cal.setTime(Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS)));
         cal.add(Calendar.DATE, -2);
         Date minDate = cal.getTime();
-        cal.add(Calendar.DATE, -1);
+        cal.add(Calendar.DATE, +1);
         Date maxDate = cal.getTime();
         List<TelegramUserMediaEntity> telegramUserMediaEntityList;
         Session session = sessionFactory.openSession();
