@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @BotController
 public class TikTokMediaCommentController {
@@ -87,7 +88,7 @@ public class TikTokMediaCommentController {
             TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
             String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
             String commentData = mediaCommentsDataEntity.getData();
-            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate());
+            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
             stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
             stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
@@ -161,7 +162,7 @@ public class TikTokMediaCommentController {
             TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
             String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
             String commentData = mediaCommentsDataEntity.getData();
-            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate());
+            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
             stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
             stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
