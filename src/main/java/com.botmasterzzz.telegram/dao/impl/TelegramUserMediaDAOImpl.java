@@ -195,6 +195,7 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
         criteria.add(Restrictions.eq("isDeleted", false));
         criteria.add(Restrictions.eq("telegramBotUserEntity", requestedTelegramUser));
+        criteria.add(Restrictions.eq("isAnon", false));
         criteria.add(Restrictions.isNotNull("fileId"));
         criteria.addOrder(Order.asc("audWhenCreate"));
         telegramUserMediaEntityList = criteria.list();

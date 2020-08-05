@@ -63,15 +63,9 @@ public class TikTokMediaProfileFileLoaderController {
 
         List<TelegramUserMediaEntity> telegramUserMediaEntityList = telegramMediaService.telegramUserPersonalMediaList(mediaForTelegramUser);
         TelegramUserMediaEntity telegramUserMediaEntity;
-        int idx = 0;
+
         if (!telegramUserMediaEntityList.isEmpty()) {
-            telegramUserMediaEntity = telegramUserMediaEntityList.get(idx);
-            boolean isAnon = telegramUserMediaEntity.isAnon();
-            while (isAnon){
-                idx++;
-                telegramUserMediaEntity = telegramUserMediaEntityList.get(idx);
-                isAnon = telegramUserMediaEntity.isAnon();
-            }
+            telegramUserMediaEntity = telegramUserMediaEntityList.get(0);
             InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
             List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
@@ -90,7 +84,7 @@ public class TikTokMediaProfileFileLoaderController {
             long countOfMediaLogged = databaseService.getCountOfLoggedToMedia(fileId);
             //long countOfMediaDistinctLogged = databaseService.getCountOfDistinctLoggedToMedia(fileId);
             long discussCount = databaseService.getCountOfDiscuss(fileId);
-            int offset = idx;
+            int offset = 0;
 
             InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
             heartInlineButton.setText("❤️ " + hearCount);
@@ -214,12 +208,6 @@ public class TikTokMediaProfileFileLoaderController {
 
         if (!telegramUserMediaEntityList.isEmpty()) {
             telegramUserMediaEntity = telegramUserMediaEntityList.get(offset);
-            boolean isAnon = telegramUserMediaEntity.isAnon();
-            while (isAnon){
-                offset++;
-                telegramUserMediaEntity = telegramUserMediaEntityList.get(offset);
-                isAnon = telegramUserMediaEntity.isAnon();
-            }
             InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
             List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
