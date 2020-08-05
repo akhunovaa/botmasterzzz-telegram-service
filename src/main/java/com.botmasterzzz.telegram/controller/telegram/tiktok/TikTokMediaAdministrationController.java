@@ -55,7 +55,7 @@ public class TikTokMediaAdministrationController {
         editMessageReplyMarkup.setChatId(chatId);
 
         TelegramUserMediaEntity telegramUserMediaEntity;
-        if (isRequestedUserAdmin){
+//        if (isRequestedUserAdmin){
             telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
             telegramUserMediaEntity.setDeleted(true);
             telegramMediaService.telegramUserMediaUpdate(telegramUserMediaEntity);
@@ -64,13 +64,13 @@ public class TikTokMediaAdministrationController {
             restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restore", telegramUserId, fileId)));
             inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
             logger.info("User id {} requested to delete a media resource: {}", requestedUserId, telegramUserMediaEntity);
-        }else {
-            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
-            restoreInlineButton.setText("⚠️ Недостаточно прав");
-            restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restricted", telegramUserId, fileId)));
-            inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
-            logger.info("User id {} restricted to delete a media resource {}", requestedUserId, messageId);
-        }
+//        }else {
+//            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
+//            restoreInlineButton.setText("⚠️ Недостаточно прав");
+//            restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restricted", telegramUserId, fileId)));
+//            inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
+//            logger.info("User id {} restricted to delete a media resource {}", requestedUserId, messageId);
+//        }
         editMessageReplyMarkup.setMessageId(messageId);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
@@ -99,7 +99,7 @@ public class TikTokMediaAdministrationController {
         editMessageReplyMarkup.setChatId(chatId);
 
         TelegramUserMediaEntity telegramUserMediaEntity;
-        if (isRequestedUserAdmin){
+//        if (isRequestedUserAdmin){
             telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
             telegramUserMediaEntity.setDeleted(false);
             telegramMediaService.telegramUserMediaUpdate(telegramUserMediaEntity);
@@ -108,13 +108,13 @@ public class TikTokMediaAdministrationController {
             restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
             inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
             logger.info("User id {} requested to restore a media resource: {}", requestedUserId, telegramUserMediaEntity);
-        }else {
-            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
-            restoreInlineButton.setText("⚠️ Недостаточно прав");
-            restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restricted", telegramUserId, fileId)));
-            inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
-            logger.info("User id {} restricted to restore a media resource {}", requestedUserId, messageId);
-        }
+//        }else {
+//            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
+//            restoreInlineButton.setText("⚠️ Недостаточно прав");
+//            restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restricted", telegramUserId, fileId)));
+//            inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
+//            logger.info("User id {} restricted to restore a media resource {}", requestedUserId, messageId);
+//        }
         editMessageReplyMarkup.setMessageId(messageId);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);

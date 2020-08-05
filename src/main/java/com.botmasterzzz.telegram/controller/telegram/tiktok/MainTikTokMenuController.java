@@ -34,12 +34,13 @@ public class MainTikTokMenuController {
         KeyboardRow keyboardRowLineThree = new KeyboardRow();
         KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83C\uDD95Новое за сегодня");
+        keyboardRowLineTop.add("\uD83C\uDF88Новое за вчера");
         keyboardRowLineOne.add("\uD83D\uDCF2Видео");
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
         keyboardRowLineThree.add("\uD83D\uDC8EТОП");
-//        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
+        keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
         keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);

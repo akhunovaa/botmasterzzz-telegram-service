@@ -116,6 +116,16 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     }
 
     @Override
+    public List<TelegramUserMediaEntity> telegramUserMediaListForYesterday() {
+        return telegramUserMediaDAO.telegramUserMediaListForYesterday();
+    }
+
+    @Override
+    public List<TelegramUserMediaEntity> telegramUserPersonalMediaList(TelegramBotUserEntity requestedTelegramUser) {
+        return telegramUserMediaDAO.telegramUserPersonalMediaList(requestedTelegramUser);
+    }
+
+    @Override
     public List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType) {
         return telegramUserMediaDAO.telegramUserMediaList(mediaType);
     }
