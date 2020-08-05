@@ -91,12 +91,14 @@ public class TikTokMediaPersonalFileLoaderController {
             inlineKeyboardButtonsFirstRow.add(leftArrowButton);
             inlineKeyboardButtonsFirstRow.add(rightArrowButton);
             inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
-            InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-            commentInlineButton.setText("\uD83D\uDCDD Посмотреть обсуждения");
-            commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
-            inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
-            inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+            if (discussCount > 0){
+                InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+                commentInlineButton.setText("\uD83D\uDCDD Посмотреть обсуждения");
+                commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+                inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+            }
 
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
@@ -216,12 +218,14 @@ public class TikTokMediaPersonalFileLoaderController {
             inlineKeyboardButtonsFirstRow.add(leftArrowButton);
             inlineKeyboardButtonsFirstRow.add(rightArrowButton);
             inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
-            InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
-            commentInlineButton.setText("\uD83D\uDCDD Посмотреть обсуждения");
-            commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
-            inlineKeyboardButtonsCommentRow.add(commentInlineButton);
 
-            inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+            if (discussCount > 0){
+                InlineKeyboardButton commentInlineButton = new InlineKeyboardButton();
+                commentInlineButton.setText("\uD83D\uDCDD Посмотреть обсуждения");
+                commentInlineButton.setCallbackData(gson.toJson(new CallBackData("comment", telegramUserId, fileId)));
+                inlineKeyboardButtonsCommentRow.add(commentInlineButton);
+                inlineKeyboardButtons.add(inlineKeyboardButtonsCommentRow);
+            }
 
             InlineKeyboardButton deleteInlineButton = new InlineKeyboardButton();
             deleteInlineButton.setText("❌ Удалить");
