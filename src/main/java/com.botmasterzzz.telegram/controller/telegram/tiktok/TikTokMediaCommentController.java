@@ -11,8 +11,10 @@ import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.entity.MediaCommentsDataEntity;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
+import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import com.botmasterzzz.telegram.service.DatabaseService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
+import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +31,17 @@ public class TikTokMediaCommentController {
 
     private final TelegramMediaService telegramMediaService;
 
+    private final TelegramUserService telegramUserService;
+
     private final DatabaseService databaseService;
 
     private final Gson gson;
 
-    public TikTokMediaCommentController(TelegramMediaService telegramMediaService, Gson gson, DatabaseService databaseService) {
+    public TikTokMediaCommentController(TelegramMediaService telegramMediaService, Gson gson, DatabaseService databaseService, TelegramUserService telegramUserService) {
         this.telegramMediaService = telegramMediaService;
         this.gson = gson;
         this.databaseService = databaseService;
+        this.telegramUserService = telegramUserService;
     }
 
     @BotRequestMapping(value = "tiktok-comment")
@@ -200,7 +205,11 @@ public class TikTokMediaCommentController {
     }
 
     @BotRequestMapping(value = "tiktok-comment-upload")
-    public SendMessage uploadWait(Update update) {
+    public List<SendMessage> uploadWait(Update update) {
+        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
+        List<SendMessage> mailingData = new ArrayList<>();
+
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
         message = message.replace("<", "&lt;").replace(">", "&gt;");
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
@@ -209,8 +218,27 @@ public class TikTokMediaCommentController {
         if (message.length() < 250) {
             databaseService.mediaCommentAdd(message, fileId, telegramUserId);
         }
+        TelegramUserMediaEntity telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserMediaEntity.getTelegramBotUserEntity();
         UserContextHolder.currentContext().setCommentRemain(false);
-        return comment(update);
+        mailingData.add(comment(update));
+        String name = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
+
+        String fileType = telegramUserMediaEntity.getFileType() == 1 ? " вашу фотографию" : " ваше видео";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>").append(name).append("</b>, ");
+        stringBuilder.append(fileType).append("  прокомментировали. Для того чтобы посмотреть комментарий, необходимо перейти в раздел обсуждений нажав на кнопку \uD83C\uDF81<b>Мои медиа</b>.");
+
+        if (!requestedUserId.equals(telegramBotUserEntity.getTelegramId())){
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(telegramUserMediaEntity.getTelegramBotUserEntity().getTelegramId());
+            sendMessage.setText(stringBuilder.toString());
+            sendMessage.enableHtml(true);
+            sendMessage.setParseMode("HTML");
+            mailingData.add(sendMessage);
+        }
+        logger.info("User id {} comment added {}",requestedTelegramUser, message);
+        return mailingData;
     }
 
 
