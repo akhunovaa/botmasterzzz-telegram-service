@@ -28,7 +28,7 @@ public class Handle {
     @Autowired
     private TelegramBotStatisticService telegramBotStatisticService;
 
-    public PartialBotApiMethod handleMessage(Update update) {
+    public List<PartialBotApiMethod> handleMessage(Update update) {
         BotApiMethodController methodController = getHandle(update);
         return methodController.process(update);
     }

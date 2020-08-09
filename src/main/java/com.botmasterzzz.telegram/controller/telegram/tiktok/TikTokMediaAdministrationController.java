@@ -1,5 +1,6 @@
 package com.botmasterzzz.telegram.controller.telegram.tiktok;
 
+import com.botmasterzzz.bot.api.impl.methods.send.SendMessage;
 import com.botmasterzzz.bot.api.impl.methods.update.EditMessageReplyMarkup;
 import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
@@ -120,6 +121,35 @@ public class TikTokMediaAdministrationController {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
         editMessageReplyMarkup.setReplyMarkup(inlineKeyboardMarkup);
         return editMessageReplyMarkup;
+    }
+
+    @BotRequestMapping(value = "tiktok-/rassylka")
+    public List<SendMessage> help(Update update) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("1️⃣");
+
+        SendMessage sendMessage1 = new SendMessage();
+        sendMessage1.setChatId(update.getMessage().getChatId());
+        sendMessage1.setText(stringBuilder.toString());
+        sendMessage1.enableHtml(true);
+
+        SendMessage sendMessage2 = new SendMessage();
+        stringBuilder.append("1️⃣1️⃣");
+        sendMessage2.setChatId(update.getMessage().getChatId());
+        sendMessage2.setText(stringBuilder.toString());
+        sendMessage2.enableHtml(true);
+
+        SendMessage sendMessage3 = new SendMessage();
+        stringBuilder.append("1️⃣1️⃣1️⃣");
+        sendMessage3.setChatId(update.getMessage().getChatId());
+        sendMessage3.setText(stringBuilder.toString());
+        sendMessage3.enableHtml(true);
+
+        List<SendMessage> testData = new ArrayList<>();
+        testData.add(sendMessage1);
+        testData.add(sendMessage2);
+        testData.add(sendMessage3);
+        return testData;
     }
 
 }

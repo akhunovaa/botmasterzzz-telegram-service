@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class BotApiMethodController {
 
@@ -19,13 +22,13 @@ public abstract class BotApiMethodController {
     public BotApiMethodController(Object bean, Method method) {
         this.bean = bean;
         this.method = method;
-        processUpdate = this::processSingle;
+        processUpdate = typeListReturnDetect() ? this::processList : this::processSingle;
     }
 
     public abstract boolean successUpdatePredicate(Update update);
 
-    public PartialBotApiMethod process(Update update) {
-        PartialBotApiMethod process = null;
+    public List<PartialBotApiMethod> process(Update update) {
+        List<PartialBotApiMethod> process = null;
         try {
             process = processUpdate.accept(update);
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -34,12 +37,27 @@ public abstract class BotApiMethodController {
         return process;
     }
 
-    private PartialBotApiMethod processSingle(Update update) throws InvocationTargetException, IllegalAccessException {
-        PartialBotApiMethod partialBotApiMethod = (PartialBotApiMethod) method.invoke(bean, update);
-        return partialBotApiMethod;
+    public boolean typeListReturnDetect() {
+        return List.class.equals(method.getReturnType());
+    }
+
+//    private PartialBotApiMethod processSingle(Update update) throws InvocationTargetException, IllegalAccessException {
+//        PartialBotApiMethod partialBotApiMethod = (PartialBotApiMethod) method.invoke(bean, update);
+//        return partialBotApiMethod;
+//    }
+
+    private List<PartialBotApiMethod> processSingle(Update update) throws InvocationTargetException, IllegalAccessException {
+        PartialBotApiMethod botApiMethod = (PartialBotApiMethod) method.invoke(bean, update);
+        return botApiMethod != null ? Collections.singletonList(botApiMethod) : new ArrayList<>(0);
+    }
+
+
+    public List<PartialBotApiMethod> processList(Update update) throws InvocationTargetException, IllegalAccessException {
+        List<PartialBotApiMethod> botApiMethods = (List<PartialBotApiMethod>) method.invoke(bean, update);
+        return botApiMethods != null ? botApiMethods : new ArrayList<>(0);
     }
 
     private interface Process {
-        PartialBotApiMethod accept(Update update) throws InvocationTargetException, IllegalAccessException;
+        List<PartialBotApiMethod> accept(Update update) throws InvocationTargetException, IllegalAccessException;
     }
 }
