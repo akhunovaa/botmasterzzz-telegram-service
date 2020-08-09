@@ -9,8 +9,10 @@ import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
+import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
+import com.botmasterzzz.telegram.service.DatabaseService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.google.gson.Gson;
@@ -31,6 +33,9 @@ public class TikTokMediaAdministrationController {
 
     @Autowired
     private TelegramUserService telegramUserService;
+
+    @Autowired
+    private DatabaseService databaseService;
 
     @Autowired
     private Gson gson;
@@ -57,14 +62,14 @@ public class TikTokMediaAdministrationController {
 
         TelegramUserMediaEntity telegramUserMediaEntity;
 //        if (isRequestedUserAdmin){
-            telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
-            telegramUserMediaEntity.setDeleted(true);
-            telegramMediaService.telegramUserMediaUpdate(telegramUserMediaEntity);
-            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
-            restoreInlineButton.setText("⚠️ Восстановить");
-            restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restore", telegramUserId, fileId)));
-            inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
-            logger.info("User id {} requested to delete a media resource: {}", requestedUserId, telegramUserMediaEntity);
+        telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
+        telegramUserMediaEntity.setDeleted(true);
+        telegramMediaService.telegramUserMediaUpdate(telegramUserMediaEntity);
+        InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
+        restoreInlineButton.setText("⚠️ Восстановить");
+        restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("restore", telegramUserId, fileId)));
+        inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
+        logger.info("User id {} requested to delete a media resource: {}", requestedUserId, telegramUserMediaEntity);
 //        }else {
 //            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
 //            restoreInlineButton.setText("⚠️ Недостаточно прав");
@@ -101,14 +106,14 @@ public class TikTokMediaAdministrationController {
 
         TelegramUserMediaEntity telegramUserMediaEntity;
 //        if (isRequestedUserAdmin){
-            telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
-            telegramUserMediaEntity.setDeleted(false);
-            telegramMediaService.telegramUserMediaUpdate(telegramUserMediaEntity);
-            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
-            restoreInlineButton.setText("❌ Удалить");
-            restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
-            inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
-            logger.info("User id {} requested to restore a media resource: {}", requestedUserId, telegramUserMediaEntity);
+        telegramUserMediaEntity = telegramMediaService.telegramUserMediaGet(fileId);
+        telegramUserMediaEntity.setDeleted(false);
+        telegramMediaService.telegramUserMediaUpdate(telegramUserMediaEntity);
+        InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
+        restoreInlineButton.setText("❌ Удалить");
+        restoreInlineButton.setCallbackData(gson.toJson(new CallBackData("delete", telegramUserId, fileId)));
+        inlineKeyboardButtonsFirstRow.add(restoreInlineButton);
+        logger.info("User id {} requested to restore a media resource: {}", requestedUserId, telegramUserMediaEntity);
 //        }else {
 //            InlineKeyboardButton restoreInlineButton = new InlineKeyboardButton();
 //            restoreInlineButton.setText("⚠️ Недостаточно прав");
@@ -124,32 +129,80 @@ public class TikTokMediaAdministrationController {
     }
 
     @BotRequestMapping(value = "tiktok-/rassylka")
-    public List<SendMessage> help(Update update) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("1️⃣");
+    public List<SendMessage> mailingSend(Update update) {
+        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
+        boolean isRequestedUserAdmin = requestedTelegramUser.isAdmin();
+        List<SendMessage> mailingData = new ArrayList<>();
+        if (!isRequestedUserAdmin) {
+            SendMessage restrictedWarningMessage = new SendMessage();
+            restrictedWarningMessage.setChatId(update.getMessage().getChatId());
+            restrictedWarningMessage.setText("⚠️ Недостаточно прав");
+            restrictedWarningMessage.enableHtml(true);
+            logger.info("User id {} restricted to MAKE A MAILING", requestedTelegramUser);
+            mailingData.add(restrictedWarningMessage);
+            return mailingData;
+        }
+        logger.info("User id {} requested to MAKE a MAILING", requestedTelegramUser);
+        List<TelegramBotUserEntity> telegramBotUserEntityList = telegramUserService.getTelegramUserList();
+        for (TelegramBotUserEntity telegramBotUserEntity : telegramBotUserEntityList) {
+            Long telegramUserId = telegramBotUserEntity.getTelegramId();
+            List<OwnerStatisticDTO> ownerStatisticDTOList = telegramMediaService.getUsersActivityStatistic(telegramUserId);
+            Long countOfLoggedToUser = databaseService.getCountOfLoggedToUser(telegramUserId);
+            Long countOfLoggedToUsersMedia = databaseService.getUsersCountOfMediaLog(telegramUserId);
 
-        SendMessage sendMessage1 = new SendMessage();
-        sendMessage1.setChatId(update.getMessage().getChatId());
-        sendMessage1.setText(stringBuilder.toString());
-        sendMessage1.enableHtml(true);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("<b>Друзья, у нас отличные новости!</b>\uD83D\uDD25 \n");
+            stringBuilder.append("Мы долго трудились для вас и выпустили массовое обновление.\n");
+            stringBuilder.append("\n");
+            stringBuilder.append("Оно включает в себя следующие обновления:\n");
+            stringBuilder.append("-Возможность отображать новые фото/видео, загруженные за сегодня\n");
+            stringBuilder.append("-В меню бота была добавлена кнопка  <b>\uD83C\uDF88Новое за вчера</b>");
+            stringBuilder.append(" благодаря которой можно пролистать и увидеть новинки предыдущего дня\n");
+            stringBuilder.append("-На каждом посте теперь будет отображаться количество просмотров\n");
+            stringBuilder.append("-Добавили возможность оставлять под своим постом текст c описанием. Для этого при отправке фото/видео добавьте нужный текст\n");
+            stringBuilder.append("-Расширили блок \uD83D\uDC8E<b>ТОП</b>. Теперь вы можете смотреть статистику по своей активности и своим постам и количеству просмотров\n");
+            stringBuilder.append("-Самое вкусное - теперь у каждого есть возможность оставлять комментарии под понравившимся ему постом\n");
+            stringBuilder.append("-Добавили новую кнопку <b>\uD83C\uDF81Мои медиа</b> с помощью которой сможете просмотреть все загруженные Вами медиа файлы, где помимо Вам будет предоставлена и вся статистика\n");
+            stringBuilder.append("\n");
+            stringBuilder.append("❗️Для того, чтобы начать пользоваться всеми дополнительными прелестями просто отправьте боту команду <b>/start</b>\n");
+            stringBuilder.append("\n");
+            stringBuilder.append("<b>Ваша статистика по лайкам/дизлайкам</b>\uD83E\uDDFE \n");
+            stringBuilder.append("Ваша общая активность:\n");
+            stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+            if (ownerStatisticDTOList.isEmpty()) {
+                stringBuilder.append("<b>Статистика по вам отсутствует</b>\n");
+            }
+            for (OwnerStatisticDTO ownerStatisticDTO : ownerStatisticDTOList) {
+                stringBuilder.append("<b>")
+                        .append(ownerStatisticDTO.getTouchType()).append("</b>: ")
+                        .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
+            }
+            stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+            stringBuilder.append("За время вашего отсутствия Вам поставили:\n");
+            stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+            if (ownerStatisticDTOList.isEmpty()) {
+                stringBuilder.append("<b>Статистика по вам отсутствует</b>\n");
+            }
+            for (OwnerStatisticDTO ownerStatisticDTO : ownerStatisticDTOList) {
+                stringBuilder.append("<b>")
+                        .append(ownerStatisticDTO.getTouchType()).append("</b>: ")
+                        .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
+            }
+            stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+            stringBuilder.append("Вами просмотрено <b>").append(countOfLoggedToUser).append("</b> постов\n");
+            stringBuilder.append("Ваши посты просмотрели <b>").append(countOfLoggedToUsersMedia).append("</b> раз\n");
 
-        SendMessage sendMessage2 = new SendMessage();
-        stringBuilder.append("1️⃣1️⃣");
-        sendMessage2.setChatId(update.getMessage().getChatId());
-        sendMessage2.setText(stringBuilder.toString());
-        sendMessage2.enableHtml(true);
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(telegramUserId);
+            sendMessage.setText(stringBuilder.toString());
+            sendMessage.enableHtml(true);
+            sendMessage.setParseMode("HTML");
 
-        SendMessage sendMessage3 = new SendMessage();
-        stringBuilder.append("1️⃣1️⃣1️⃣");
-        sendMessage3.setChatId(update.getMessage().getChatId());
-        sendMessage3.setText(stringBuilder.toString());
-        sendMessage3.enableHtml(true);
-
-        List<SendMessage> testData = new ArrayList<>();
-        testData.add(sendMessage1);
-        testData.add(sendMessage2);
-        testData.add(sendMessage3);
-        return testData;
+            mailingData.add(sendMessage);
+            logger.info("Message {} to user {} MAILING sent", stringBuilder.toString(), telegramBotUserEntity);
+        }
+        return mailingData;
     }
 
 }

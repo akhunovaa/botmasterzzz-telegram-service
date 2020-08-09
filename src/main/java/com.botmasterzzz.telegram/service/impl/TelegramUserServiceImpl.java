@@ -6,6 +6,8 @@ import com.botmasterzzz.telegram.service.TelegramUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TelegramUserServiceImpl implements TelegramUserService {
 
@@ -20,5 +22,10 @@ public class TelegramUserServiceImpl implements TelegramUserService {
     @Override
     public TelegramBotUserEntity getTelegramUser(Long telegramUserId) {
         return telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
+    }
+
+    @Override
+    public List<TelegramBotUserEntity> getTelegramUserList() {
+        return telegramUserDAO.getTelegramUserList();
     }
 }
