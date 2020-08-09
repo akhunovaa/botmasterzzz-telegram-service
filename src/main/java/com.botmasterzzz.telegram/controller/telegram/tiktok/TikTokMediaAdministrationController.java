@@ -202,6 +202,7 @@ public class TikTokMediaAdministrationController {
             sendMessage.setText(stringBuilder.toString());
             sendMessage.enableHtml(true);
             sendMessage.setParseMode("HTML");
+            sendMessage.disableNotification();
 
             mailingData.add(sendMessage);
             logger.info("Message {} to user {} MAILING sent", stringBuilder.toString(), telegramBotUserEntity);
