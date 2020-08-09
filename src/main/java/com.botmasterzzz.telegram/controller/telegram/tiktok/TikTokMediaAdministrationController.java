@@ -13,6 +13,7 @@ import com.botmasterzzz.telegram.dto.OwnerStatisticDTO;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import com.botmasterzzz.telegram.service.DatabaseService;
+import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
 import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.google.gson.Gson;
@@ -30,6 +31,9 @@ public class TikTokMediaAdministrationController {
 
     @Autowired
     private TelegramMediaService telegramMediaService;
+
+    @Autowired
+    private TelegramBotStatisticService telegramBotStatisticService;
 
     @Autowired
     private TelegramUserService telegramUserService;
@@ -201,7 +205,10 @@ public class TikTokMediaAdministrationController {
 
             mailingData.add(sendMessage);
             logger.info("Message {} to user {} MAILING sent", stringBuilder.toString(), telegramBotUserEntity);
+            telegramBotStatisticService.telegramStatisticAdd(stringBuilder.toString(),telegramUserId);
         }
+
+
         return mailingData;
     }
 
