@@ -183,6 +183,7 @@ public class TikTokMediaAdministrationController {
                         .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
             }
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+            ownerStatisticDTOList = telegramMediaService.getSelfActivityStatistic(telegramUserId);
             stringBuilder.append("За время вашего отсутствия Вам поставили:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             if (ownerStatisticDTOList.isEmpty()) {
