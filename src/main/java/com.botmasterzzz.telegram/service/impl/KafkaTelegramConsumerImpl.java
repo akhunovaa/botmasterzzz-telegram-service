@@ -29,6 +29,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class KafkaTelegramConsumerImpl {
@@ -68,8 +69,8 @@ public class KafkaTelegramConsumerImpl {
         UserContextHolder.setupContext(update);
         UserContextHolder.currentContext().setInstanceId(key);
         BotApiMethodController methodController = getHandle(update);
-        PartialBotApiMethod apiMethod = methodController.process(update);
-        dataSend(key, apiMethod);
+        List<PartialBotApiMethod> apiMethods = methodController.process(update);
+        apiMethods.parallelStream().forEach(apiMethod -> dataSend(key, apiMethod));
     }
 
     @KafkaListener(id = "telegram-message-service", topics = {"telegram-callback-message"}, containerFactory = "singleMessageFactory")

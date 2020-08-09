@@ -18,6 +18,7 @@ import com.botmasterzzz.telegram.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class Telegram extends TelegramLongPollingBot {
@@ -47,16 +48,30 @@ public class Telegram extends TelegramLongPollingBot {
         UserContextHolder.currentContext().setProjectCommandDTOList(this.projectCommandDTOList);
         UserContextHolder.currentContext().setInstanceId(this.instanceId);
         Handle handle = BeanUtil.getBean(Handle.class);
-        PartialBotApiMethod partialBotApiMethod = handle.handleMessage(update);
+        List<PartialBotApiMethod> partialBotApiMethod = handle.handleMessage(update);
+        Class genericClass = null;
+        Iterator it = partialBotApiMethod.iterator();
+        if (it.hasNext()) {
+            genericClass = it.next().getClass();
+        }
+
         try {
-            if (partialBotApiMethod instanceof SendPhoto){
-                executePhoto((SendPhoto) partialBotApiMethod);
-            }else if(partialBotApiMethod instanceof SendVideo){
-                executeVideo((SendVideo) partialBotApiMethod);
-            }else if(partialBotApiMethod instanceof SendDocument){
-                executeDocument((SendDocument) partialBotApiMethod);
-            }else {
-                execute((BotApiMethod)partialBotApiMethod);
+            if (genericClass == SendPhoto.class) {
+                for (PartialBotApiMethod botApiMethod : partialBotApiMethod) {
+                    executePhoto((SendPhoto) botApiMethod);
+                }
+            } else if (genericClass == SendVideo.class) {
+                for (PartialBotApiMethod botApiMethod : partialBotApiMethod) {
+                    executeVideo((SendVideo) botApiMethod);
+                }
+            } else if (genericClass == SendDocument.class) {
+                for (PartialBotApiMethod botApiMethod : partialBotApiMethod) {
+                    executeDocument((SendDocument) botApiMethod);
+                }
+            } else {
+                for (PartialBotApiMethod botApiMethod : partialBotApiMethod) {
+                    execute(botApiMethod);
+                }
             }
         } catch (TelegramApiException e) {
             logger.error("ERROR TelegramApiException", e);
