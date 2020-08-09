@@ -70,7 +70,7 @@ public class Telegram extends TelegramLongPollingBot {
                 }
             } else {
                 for (PartialBotApiMethod botApiMethod : partialBotApiMethod) {
-                    execute(botApiMethod);
+                    execute((BotApiMethod) botApiMethod);
                 }
             }
         } catch (TelegramApiException e) {
