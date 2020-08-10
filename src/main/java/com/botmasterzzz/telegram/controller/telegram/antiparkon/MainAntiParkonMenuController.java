@@ -33,12 +33,12 @@ public class MainAntiParkonMenuController {
         keyboardRowLineOne.add("\uD83D\uDD0E Поиск");
         keyboardRowLineTwo.add("\uD83D\uDCE8 Отзывы");
         keyboardRowLineTwo.add("❓Помощь");
-        keyboardRowLineFourth.add("\uD83D\uDCD2 Контакты");
+        //keyboardRowLineFourth.add("\uD83D\uDCD2 Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
 //        keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineFourth);
+        //keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
 
         return new SendMessage()
@@ -50,7 +50,6 @@ public class MainAntiParkonMenuController {
                         "\uD83D\uDD0E Поиск для поиска необходимого номера по базе данных\n" +
                         "\uD83D\uDC8E Отзывы по нашему боту\n" +
                         "❓Помощь для получения справки\n" +
-                        "\uD83D\uDCD2Контакты для обратной связи\n" +
                         "\n")
                 .setReplyMarkup(keyboard);
     }
@@ -65,17 +64,17 @@ public class MainAntiParkonMenuController {
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
 //        KeyboardRow keyboardRowLineThree = new KeyboardRow();
-        KeyboardRow keyboardRowLineFourth = new KeyboardRow();
+        //KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineTop.add("\uD83D\uDCF2 Главное меню");
         keyboardRowLineOne.add("\uD83D\uDD0E Поиск");
         keyboardRowLineTwo.add("\uD83D\uDCE8 Отзывы");
         keyboardRowLineTwo.add("❓Помощь");
-        keyboardRowLineFourth.add("\uD83D\uDCD2 Контакты");
+        //keyboardRowLineFourth.add("\uD83D\uDCD2 Контакты");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
 //        keyboardRows.add(keyboardRowLineThree);
-        keyboardRows.add(keyboardRowLineFourth);
+        //keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
 
         return new SendMessage()
@@ -87,7 +86,6 @@ public class MainAntiParkonMenuController {
                         "\uD83D\uDD0E Поиск для поиска необходимого номера по базе данных\n" +
                         "\uD83D\uDC8E Отзывы для отзывов по нашему боту\n" +
                         "❓Помощь для получения справки\n" +
-                        "\uD83D\uDCD2 Контакты для обратной связи\n" +
                         "\n")
                 .setReplyMarkup(keyboard);
     }
@@ -103,9 +101,6 @@ public class MainAntiParkonMenuController {
         stringBuilder.append("\n");
         stringBuilder.append("\uD83D\uDC8E <b>Отзывы</b>\n");
         stringBuilder.append("Раздел с отзывами от реальных пользователей.\n");
-        stringBuilder.append("\n");
-        stringBuilder.append("\uD83D\uDCD2<b>Контакты</b>\n");
-        stringBuilder.append("Для связи с нами используйте эту кнопку.\n");
         stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
@@ -133,7 +128,7 @@ public class MainAntiParkonMenuController {
                 .setText(stringBuilder.toString());
     }
 
-    @BotRequestMapping(value = "parkon-\uD83D\uDCD2 Контакты")
+    @BotRequestMapping(value = "parkon-\uD83D\uDCD2 **8*")
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
