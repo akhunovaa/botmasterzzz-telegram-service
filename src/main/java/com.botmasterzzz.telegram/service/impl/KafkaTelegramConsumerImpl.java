@@ -140,6 +140,9 @@ public class KafkaTelegramConsumerImpl {
             case 33:
                 controller = container.getControllerMap().get("taxi-" + message);
                 break;
+            case 35:
+                controller = container.getControllerMap().get("parkon-" + message);
+                break;
             default:
                 controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
                 if (remain && null != message && message.equals("❌Отмена")) {
