@@ -87,7 +87,7 @@ public class MainTikTokMenuController {
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("г. Москва Варшавское шоссе д.2\n");
+        stringBuilder.append("г. Москва, Варшавское шоссе д.2\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Номер телефона:</b>\n");
         stringBuilder.append("+7(926)545-14-52\n");
@@ -96,6 +96,7 @@ public class MainTikTokMenuController {
         stringBuilder.append("@leon4uk\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Разработан при помощи:</b>\n");
+        stringBuilder.append("http://botmasterzzz.ru\n");
         stringBuilder.append("https://botmasterzzz.com\n");
         stringBuilder.append("\n");
         return new SendMessage()
