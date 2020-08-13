@@ -43,6 +43,9 @@ public class TelegramBotUserEntity implements Serializable {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
+    @Column(name = "referral_id")
+    private Long referralId;
+
     @JsonIgnore
     @Column(name = "aud_when_create")
     private Timestamp audWhenCreate;
@@ -147,6 +150,14 @@ public class TelegramBotUserEntity implements Serializable {
         isAdmin = admin;
     }
 
+    public Long getReferralId() {
+        return referralId;
+    }
+
+    public void setReferralId(Long referralId) {
+        this.referralId = referralId;
+    }
+
     @Override
     public String toString() {
         return "TelegramBotUserEntity{" +
@@ -160,6 +171,7 @@ public class TelegramBotUserEntity implements Serializable {
                 ", note='" + note + '\'' +
                 ", isBlocked=" + isBlocked +
                 ", isAdmin=" + isAdmin +
+                ", referralId=" + referralId +
                 ", audWhenCreate=" + audWhenCreate +
                 ", audWhenUpdate=" + audWhenUpdate +
                 '}';

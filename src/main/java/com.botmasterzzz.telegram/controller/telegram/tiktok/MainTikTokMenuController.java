@@ -6,6 +6,8 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.ReplyKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
+import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
+import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.botmasterzzz.telegram.service.YoutubeMediaGrabberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ public class MainTikTokMenuController {
 
     @Autowired
     private YoutubeMediaGrabberService youtubeMediaGrabberService;
+
+    @Autowired
+    private TelegramUserService telegramUserService;;
 
     @BotRequestMapping(value = "tiktok-/start")
     public SendMessage start(Update update) {
@@ -39,9 +44,10 @@ public class MainTikTokMenuController {
         keyboardRowLineOne.add("\uD83D\uDCF2Фото");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить");
         keyboardRowLineTwo.add("\uD83C\uDFACЗагрузить (анонимно)");
-        keyboardRowLineThree.add("\uD83D\uDC8EТОП");
+        keyboardRowLineThree.add("\uD83E\uDD1DМои друзья");
         keyboardRowLineThree.add("\uD83C\uDF81Мои медиа");
-        keyboardRowLineFourth.add("\uD83D\uDCD2Контакты");
+        keyboardRowLineFourth.add("\uD83D\uDC8EТОП");
+        keyboardRowLineFourth.add("ℹ️Информация");
         keyboardRows.add(keyboardRowLineTop);
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
@@ -83,14 +89,11 @@ public class MainTikTokMenuController {
                 .setText(stringBuilder.toString());
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83D\uDCD2Контакты")
+    @BotRequestMapping(value = "tiktok-ℹ️Информация")
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("г. Москва, Варшавское шоссе д.2\n");
-        stringBuilder.append("\n");
-        stringBuilder.append("<b>Номер телефона:</b>\n");
-        stringBuilder.append("+7(926)545-14-52\n");
+        stringBuilder.append("г. Москва, Варшавское шоссе\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Телеграмм:</b>\n");
         stringBuilder.append("@leon4uk\n");
@@ -104,15 +107,49 @@ public class MainTikTokMenuController {
                 .setText(stringBuilder.toString());
     }
 
+    @BotRequestMapping(value = "tiktok-\uD83E\uDD1DМои друзья")
+    public SendMessage friends(Update update) {
+        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+        TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
+        TelegramBotUserEntity referralUser = null;
+        if(null != requestedTelegramUser.getReferralId()){
+            referralUser = telegramUserService.getTelegramUser(requestedTelegramUser.getReferralId());
+        }
+        String referralName;
+        if (null != referralUser){
+            referralName = null != referralUser.getUsername() ? referralUser.getUsername(): referralUser.getFirstName();
+        }else {
+            referralName = "Незнакомец";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\uD83D\uDCA3 <b>Партнёрская акция</b>\uD83D\uDCA3 \n");
+
+        stringBuilder.append("\n");
+        stringBuilder.append("➖➖➖➖➖➖➖➖➖➖\n");
+        if (null != referralUser){
+            stringBuilder.append("\uD83D\uDC64 Вас привел: ")
+                    .append("<a href=\"tg://user?id=")
+                    .append(referralUser.getTelegramId())
+                    .append("\"><b>").append(referralName).append("</b></a> \n");
+        }else {
+            stringBuilder.append("\uD83D\uDC64 Вас привел: ").append(referralName).append("\n");
+        }
+        stringBuilder.append("➖➖➖➖➖➖➖➖➖➖\n");
+        stringBuilder.append("\uD83D\uDD17 <b>Ваша партнёрская ссылка:</b>\n");
+        stringBuilder.append("https://t.me/tiktiktokrobot?start=").append(requestedUserId).append("\n");
+        stringBuilder.append("\n");
+        return new SendMessage()
+                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setText(stringBuilder.toString()).enableHtml(true).setParseMode("HTML");
+    }
+
     @BotRequestMapping(value = "tiktok-youtube")
     public SendMessage youtube(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         youtubeMediaGrabberService.downloadVideo("LbY3DdzV0rA");
         stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("г. Москва Варшавское шоссе д.2\n");
-        stringBuilder.append("\n");
-        stringBuilder.append("<b>Номер телефона:</b>\n");
-        stringBuilder.append("+7(926)545-14-52\n");
+        stringBuilder.append("г. Москва Варшавское шоссе\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Телеграмм:</b>\n");
         stringBuilder.append("@leon4uk\n");

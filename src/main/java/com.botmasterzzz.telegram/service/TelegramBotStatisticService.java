@@ -13,6 +13,8 @@ public interface TelegramBotStatisticService {
 
     void telegramUserAdd(User user);
 
+    void telegramUserAdd(User user, Long referralId);
+
     List<TelegramBotUserEntity> getTelegramUserList();
 
     void telegramStatisticAdd(Message message, Long botInstance, long telegramUserId);

@@ -47,6 +47,22 @@ public class TelegramBotStatisticServiceImpl implements TelegramBotStatisticServ
         telegramUserDAO.telegramUserAdd(telegramBotUserEntity);
     }
 
+    @Async
+    @Override
+    public void telegramUserAdd(User user, Long referralId) {
+        TelegramBotUserEntity telegramBotUserEntity = new TelegramBotUserEntity();
+        telegramBotUserEntity.setBlocked(false);
+        telegramBotUserEntity.setBot(false);
+        telegramBotUserEntity.setFirstName(user.getFirstName());
+        telegramBotUserEntity.setLastName(user.getLastName());
+        telegramBotUserEntity.setUsername(user.getUserName());
+        telegramBotUserEntity.setLanguageCode(user.getLanguageCode());
+        telegramBotUserEntity.setTelegramId(Long.valueOf(user.getId()));
+        telegramBotUserEntity.setReferralId(referralId);
+        telegramBotUserEntity.setNote("TelegramBotStatisticService added with referralId");
+        telegramUserDAO.telegramUserAdd(telegramBotUserEntity);
+    }
+
     @Override
     public List<TelegramBotUserEntity> getTelegramUserList() {
         return telegramUserDAO.getTelegramUserList();
