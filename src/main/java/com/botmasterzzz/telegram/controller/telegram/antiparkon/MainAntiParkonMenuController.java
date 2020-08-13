@@ -8,7 +8,6 @@ import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,10 +131,7 @@ public class MainAntiParkonMenuController {
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
-        stringBuilder.append("г. Москва, Варшавское шоссе д.2\n");
-        stringBuilder.append("\n");
-        stringBuilder.append("<b>Номер телефона:</b>\n");
-        stringBuilder.append("+7(926)545-14-52\n");
+        stringBuilder.append("г. Москва, Варшавское шоссе\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>Телеграмм:</b>\n");
         stringBuilder.append("@leon4uk\n");

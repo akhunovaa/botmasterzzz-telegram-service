@@ -31,6 +31,7 @@ public class UserContext {
     private boolean anon;
     private long partId;
     private long forUserId;
+    private Long referralId;
 
     public void setUser(User user) {
         this.user = user;
@@ -174,5 +175,13 @@ public class UserContext {
 
     public void setOffs(int offs) {
         this.offs = offs;
+    }
+
+    public Long getReferralId() {
+        return referralId;
+    }
+
+    public void setReferralId(Long referralId) {
+        this.referralId = referralId;
     }
 }

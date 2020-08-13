@@ -12,7 +12,6 @@ import com.botmasterzzz.bot.api.impl.objects.Update;
 import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.controller.BotApiMethodController;
-import com.botmasterzzz.telegram.controller.Handle;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
 import com.botmasterzzz.telegram.service.TelegramMediaService;
@@ -39,7 +38,6 @@ public class KafkaTelegramConsumerImpl {
     private static final BotApiMethodContainer container = BotApiMethodContainer.getInstanse();
 
     private final ObjectMapper objectMapper;
-    private final Handle handle;
     private final Gson gson;
     private final TelegramBotStatisticService telegramBotStatisticService;
 
@@ -54,9 +52,8 @@ public class KafkaTelegramConsumerImpl {
     private String topicName;
 
     @Autowired
-    public KafkaTelegramConsumerImpl(ObjectMapper objectMapper, Handle handle, Gson gson, TelegramBotStatisticService telegramBotStatisticService, KafkaTemplate<Long, OutgoingMessage> kafkaMessageTemplate) {
+    public KafkaTelegramConsumerImpl(ObjectMapper objectMapper, Gson gson, TelegramBotStatisticService telegramBotStatisticService, KafkaTemplate<Long, OutgoingMessage> kafkaMessageTemplate) {
         this.objectMapper = objectMapper;
-        this.handle = handle;
         this.gson = gson;
         this.telegramBotStatisticService = telegramBotStatisticService;
         this.kafkaMessageTemplate = kafkaMessageTemplate;
@@ -65,10 +62,10 @@ public class KafkaTelegramConsumerImpl {
     @KafkaListener(id = "telegram-instance-service", topics = {"telegram-income-messages"}, containerFactory = "singleFactory")
     public void consume(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) Long key, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, Update update) {
         LOGGER.info("{} => consumed {}", key, update.toString());
-        dataWrite(key, update);
         UserContextHolder.setupContext(update);
         UserContextHolder.currentContext().setInstanceId(key);
         BotApiMethodController methodController = getHandle(update);
+        dataWrite(key, update);
         List<PartialBotApiMethod> apiMethods = methodController.process(update);
         apiMethods.parallelStream().forEach(apiMethod -> dataSend(key, apiMethod));
     }
@@ -120,6 +117,11 @@ public class KafkaTelegramConsumerImpl {
         BotApiMethodController controller;
         int instanceId = Math.toIntExact(UserContextHolder.currentContext().getInstanceId());
         String message = update.hasMessage() ? update.getMessage().getText() : update.getCallbackQuery().getData();
+        if (null != message && message.contains("/start") && message.split(" ").length > 1){
+            Long referralId = Long.valueOf(message.split(" ")[1]);
+            UserContextHolder.currentContext().setReferralId(referralId);
+            message = message.split(" ")[0];
+        }
         if (update.hasCallbackQuery()) {
             callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
             UserContextHolder.currentContext().setCallBackData(callBackData);
@@ -160,6 +162,7 @@ public class KafkaTelegramConsumerImpl {
     }
 
     private void dataWrite(Long instanceId, Update update) {
+
         if (update.hasCallbackQuery()) {
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getCallbackQuery().getFrom().getId());
             if (!userExists) {
@@ -170,11 +173,11 @@ public class KafkaTelegramConsumerImpl {
             LOGGER.info("User exists statistic add {}", update.getCallbackQuery().getFrom().getId());
             telegramBotStatisticService.telegramStatisticAdd(update.getCallbackQuery().getMessage(), instanceId, update.getCallbackQuery().getFrom().getId(), update.getCallbackQuery().getData());
         } else {
-
             boolean userExists = telegramBotStatisticService.telegramUserExists(update.getMessage().getFrom().getId());
             if (!userExists) {
-                LOGGER.info("User does not exists: {}", update.getMessage().getFrom().getId());
-                telegramBotStatisticService.telegramUserAdd(update.getMessage().getFrom());
+                Long referralId = UserContextHolder.currentContext().getReferralId();
+                LOGGER.info("User does not exists: {} and referralId {}", update.getMessage().getFrom().getId(), referralId);
+                telegramBotStatisticService.telegramUserAdd(update.getMessage().getFrom(), referralId);
                 LOGGER.info("User added: {}", update.getMessage().getFrom().getId());
             }
             LOGGER.info("User exists statistic add: {}", update.getMessage().getFrom().getId());
