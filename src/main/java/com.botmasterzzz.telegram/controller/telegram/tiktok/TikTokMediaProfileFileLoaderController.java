@@ -86,6 +86,10 @@ public class TikTokMediaProfileFileLoaderController {
             long discussCount = databaseService.getCountOfDiscuss(fileId);
             int offset = 0;
 
+            String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+            databaseService.telegramMediaLogAdd(logNote, fileId, requestedUserId);
+            logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
+
             InlineKeyboardButton heartInlineButton = new InlineKeyboardButton();
             heartInlineButton.setText("❤️ " + hearCount);
             CallBackData heartCallBackData = new CallBackData("heart", telegramUserId, fileId);
@@ -219,6 +223,10 @@ public class TikTokMediaProfileFileLoaderController {
             Long telegramUserId = requestedTelegramUser.getTelegramId();
             Long mediaForTelegramUserId = mediaForTelegramUser.getTelegramId();
             Long fileId = telegramUserMediaEntity.getId();
+            String logNote = "Chat ID: " + chatId + " User: " + requestedTelegramUser.getUsername();
+            databaseService.telegramMediaLogAdd(logNote, fileId, requestedUserId);
+            logger.info("Log added: {} User ID: {} Media file ID: {}", logNote, fileId, telegramUserId);
+
             long hearCount = telegramMediaService.countUserTouch(fileId, "HEART");
             long likeCount = telegramMediaService.countUserTouch(fileId, "LIKE");
             long dislikeCount = telegramMediaService.countUserTouch(fileId, "DISLIKE");

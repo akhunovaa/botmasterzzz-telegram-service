@@ -26,6 +26,8 @@ public class UserContext {
     private boolean remain;
     private boolean commentRemain;
     private String attributeName;
+    private String fromPageData;
+    private int offs;
     private boolean anon;
     private long partId;
     private long forUserId;
@@ -156,5 +158,21 @@ public class UserContext {
 
     public void setForUserId(long forUserId) {
         this.forUserId = forUserId;
+    }
+
+    public String getFromPageData() {
+        return fromPageData;
+    }
+
+    public void setFromPageData(String fromPageData) {
+        this.fromPageData = fromPageData;
+    }
+
+    public int getOffs() {
+        return offs;
+    }
+
+    public void setOffs(int offs) {
+        this.offs = offs;
     }
 }
