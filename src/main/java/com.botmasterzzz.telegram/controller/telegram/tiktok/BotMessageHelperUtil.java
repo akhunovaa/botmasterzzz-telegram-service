@@ -31,7 +31,7 @@ public class BotMessageHelperUtil {
                 pathToCallback = "art";
                 break;
             case "newForYesterday":
-                pathToCallback = "art";
+                pathToCallback = "ary";
                 break;
             case "photo":
                 pathToCallback = "arf";
