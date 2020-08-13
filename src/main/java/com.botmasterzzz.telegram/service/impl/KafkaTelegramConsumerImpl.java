@@ -156,8 +156,7 @@ public class KafkaTelegramConsumerImpl {
                     controller = container.getControllerMap().get("tiktok-comment-upload");
                 }
         }
-
-        return controller;
+        return null != controller ? controller : container.getControllerMap().get("command-unknown-error");
     }
 
     private void dataWrite(Long instanceId, Update update) {
