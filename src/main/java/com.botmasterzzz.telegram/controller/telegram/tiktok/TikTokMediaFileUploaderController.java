@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
-
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
@@ -119,7 +118,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
-
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
@@ -160,7 +159,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
-
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
@@ -219,7 +218,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
-
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +
@@ -313,6 +312,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         UserContextHolder.currentContext().setRemain(false);
         UserContextHolder.currentContext().setAnon(false);
         return new SendMessage()
@@ -362,6 +362,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         boolean isAnon = UserContextHolder.currentContext().isAnon();
         Message message = update.getMessage();
         Long telegramUserId = Long.valueOf(update.getMessage().getFrom().getId());
@@ -414,6 +415,7 @@ public class TikTokMediaFileUploaderController {
         keyboardRows.add(keyboardRowLineTwo);
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         keyboard.setKeyboard(keyboardRows);
         boolean isAnon = UserContextHolder.currentContext().isAnon();
         Long telegramUserId = Long.valueOf(update.getMessage().getFrom().getId());

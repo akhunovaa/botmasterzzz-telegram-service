@@ -48,7 +48,7 @@ public class MainTikTokMenuController {
         keyboardRows.add(keyboardRowLineThree);
         keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
-
+        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Здесь вы можете выложить любое свое \uD83D\uDCF9 фото или видео, а также оценить и других пользователей. С нами всегда интересно</b>\uD83E\uDD29, " + name + ".\n" +

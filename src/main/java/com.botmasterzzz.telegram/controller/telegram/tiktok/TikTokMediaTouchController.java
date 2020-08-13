@@ -17,7 +17,6 @@ import com.botmasterzzz.telegram.service.TelegramUserService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +115,9 @@ public class TikTokMediaTouchController {
         inlineKeyboardButtonsFirstRow.add(likeInlineButton);
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        String pageFrom = UserContextHolder.currentContext().getFromPageData();
+        int offs = UserContextHolder.currentContext().getOffs();
+        inlineKeyboardButtons.add(BotMessageHelperUtil.arrowButtonsBuild(pageFrom, offs, telegramUserId, fileId));
 
         if (isFromProfile){
             Long mediaForUser = UserContextHolder.currentContext().getForUserId();
@@ -241,6 +243,9 @@ public class TikTokMediaTouchController {
         inlineKeyboardButtonsFirstRow.add(likeInlineButton);
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        String pageFrom = UserContextHolder.currentContext().getFromPageData();
+        int offs = UserContextHolder.currentContext().getOffs();
+        inlineKeyboardButtons.add(BotMessageHelperUtil.arrowButtonsBuild(pageFrom, offs, telegramUserId, fileId));
         if (isFromProfile){
             Long mediaForUser = UserContextHolder.currentContext().getForUserId();
             InlineKeyboardButton leftArrowButton = new InlineKeyboardButton();
@@ -364,6 +369,9 @@ public class TikTokMediaTouchController {
         inlineKeyboardButtonsFirstRow.add(likeInlineButton);
         inlineKeyboardButtonsFirstRow.add(dislikeInlineButton);
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        String pageFrom = UserContextHolder.currentContext().getFromPageData();
+        int offs = UserContextHolder.currentContext().getOffs();
+        inlineKeyboardButtons.add(BotMessageHelperUtil.arrowButtonsBuild(pageFrom, offset, telegramUserId, fileId));
 
         if (isFromProfile){
             Long mediaForUser = UserContextHolder.currentContext().getForUserId();
