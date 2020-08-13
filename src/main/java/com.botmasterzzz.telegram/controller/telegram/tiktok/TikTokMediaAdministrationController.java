@@ -156,21 +156,11 @@ public class TikTokMediaAdministrationController {
             Long countOfLoggedToUsersMedia = databaseService.getUsersCountOfMediaLog(telegramUserId);
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("<b>Друзья, у нас отличные новости!</b>\uD83D\uDD25 \n");
-            stringBuilder.append("Мы долго трудились для вас и выпустили массовое обновление.\n");
+            stringBuilder.append("\uD83D\uDD25<b>Друзья, у нас отличные новости!</b>\n");
+            stringBuilder.append("Для вас мы выпустили обновление.\n");
             stringBuilder.append("\n");
             stringBuilder.append("Оно включает в себя следующие обновления:\n");
             stringBuilder.append("-При просмотре постов, появилась новая кнопка ➡️ <b>Далее</b>, при нажатии на которую можно перейти на следующий пост и при этом клавиатура снизу теперь будет прятаться\n");
-
-            stringBuilder.append("-В меню бота была добавлена кнопка  <b>\uD83C\uDF88Новое за вчера</b>");
-            stringBuilder.append(" благодаря которой можно пролистать и увидеть новинки предыдущего дня\n");
-            stringBuilder.append("-На каждом посте теперь будет отображаться количество просмотров\n");
-            stringBuilder.append("-Добавили возможность оставлять под своим постом текст c описанием. Для этого при отправке фото/видео добавьте нужный текст\n");
-            stringBuilder.append("-Расширили блок \uD83D\uDC8E<b>ТОП</b>. Теперь вы можете смотреть статистику по своей активности и своим постам и количеству просмотров\n");
-            stringBuilder.append("-Самое вкусное - теперь у каждого есть возможность оставлять комментарии под понравившимся ему постом\n");
-            stringBuilder.append("-Добавили новую кнопку <b>\uD83C\uDF81Мои медиа</b> с помощью которой сможете просмотреть все загруженные Вами медиа файлы, где помимо этого Вам будет предоставлена и вся статистика\n");
-            stringBuilder.append("\n");
-            stringBuilder.append("❗️Для того, чтобы начать пользоваться всеми дополнительными прелестями просто отправьте боту команду <b>/start</b>\n");
             stringBuilder.append("\n");
             stringBuilder.append("<b>Ваша статистика по лайкам/дизлайкам</b>\uD83E\uDDFE \n");
             stringBuilder.append("Ваша общая активность:\n");
@@ -179,13 +169,13 @@ public class TikTokMediaAdministrationController {
                 stringBuilder.append("<b>Статистика по вам отсутствует</b>\n");
             }
             for (OwnerStatisticDTO ownerStatisticDTO : ownerStatisticDTOList) {
-                stringBuilder.append("<b>")
+                stringBuilder.append("<b>:")
                         .append(ownerStatisticDTO.getTouchType()).append("</b>: ")
                         .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
             }
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             ownerStatisticDTOList = telegramMediaService.getSelfActivityStatistic(telegramUserId);
-            stringBuilder.append("За время вашего отсутствия Вам поставили:\n");
+            stringBuilder.append("За все время Вам поставили:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             if (ownerStatisticDTOList.isEmpty()) {
                 stringBuilder.append("<b>Статистика по вам отсутствует</b>\n");
