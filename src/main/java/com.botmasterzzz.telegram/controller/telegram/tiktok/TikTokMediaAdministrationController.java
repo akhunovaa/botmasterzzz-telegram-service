@@ -169,7 +169,7 @@ public class TikTokMediaAdministrationController {
                 stringBuilder.append("<b>Статистика по вам отсутствует</b>\n");
             }
             for (OwnerStatisticDTO ownerStatisticDTO : ownerStatisticDTOList) {
-                stringBuilder.append("<b>:")
+                stringBuilder.append("<b>")
                         .append(ownerStatisticDTO.getTouchType()).append("</b>: ")
                         .append(ownerStatisticDTO.getCountOfTouch()).append("\n");
             }
