@@ -151,6 +151,22 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
 
     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
+    public List<TelegramUserMediaEntity> portfolioMediaList(int mediaType) {
+        List<TelegramUserMediaEntity> telegramUserMediaEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("isDeleted", false));
+        criteria.add(Restrictions.eq("isPortfolio", true));
+        criteria.add(Restrictions.eq("fileType", mediaType));
+        criteria.add(Restrictions.isNotNull("fileId"));
+        criteria.addOrder(Order.asc("audWhenCreate"));
+        telegramUserMediaEntityList = criteria.list();
+        session.close();
+        return telegramUserMediaEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
     public List<TelegramUserMediaEntity> telegramUserMediaListForToday() {
         Date minDate = Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS));
         Date maxDate = new Date();
@@ -196,6 +212,23 @@ public class TelegramUserMediaDAOImpl implements TelegramUserMediaDAO {
         criteria.add(Restrictions.eq("isDeleted", false));
         criteria.add(Restrictions.eq("telegramBotUserEntity", requestedTelegramUser));
         criteria.add(Restrictions.eq("isAnon", false));
+        criteria.add(Restrictions.isNotNull("fileId"));
+        criteria.addOrder(Order.asc("audWhenCreate"));
+        telegramUserMediaEntityList = criteria.list();
+        session.close();
+        return telegramUserMediaEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<TelegramUserMediaEntity> portfolioPersonalMediaList(TelegramBotUserEntity requestedTelegramUser) {
+        List<TelegramUserMediaEntity> telegramUserMediaEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TelegramUserMediaEntity.class);
+        criteria.add(Restrictions.eq("isDeleted", false));
+        criteria.add(Restrictions.eq("telegramBotUserEntity", requestedTelegramUser));
+        criteria.add(Restrictions.eq("isAnon", false));
+        criteria.add(Restrictions.eq("isPortfolio", true));
         criteria.add(Restrictions.isNotNull("fileId"));
         criteria.addOrder(Order.asc("audWhenCreate"));
         telegramUserMediaEntityList = criteria.list();

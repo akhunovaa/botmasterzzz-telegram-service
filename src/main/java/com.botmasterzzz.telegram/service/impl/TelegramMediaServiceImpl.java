@@ -47,6 +47,25 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
 
     @Async
     @Override
+    public void portfolioMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon, String message) {
+        TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
+        int lasIndex = pictures.size() - 1;
+        PhotoSize picture = pictures.get(lasIndex);
+        TelegramUserMediaEntity telegramUserMediaEntity = new TelegramUserMediaEntity();
+        telegramUserMediaEntity.setFileId(picture.getFileId());
+        telegramUserMediaEntity.setWidth(picture.getWidth());
+        telegramUserMediaEntity.setHeight(picture.getHeight());
+        telegramUserMediaEntity.setFileSize(picture.getFileSize());
+        telegramUserMediaEntity.setFileType(1);
+        telegramUserMediaEntity.setAnon(isAnon);
+        telegramUserMediaEntity.setMessage(message);
+        telegramUserMediaEntity.setPortfolio(true);
+        telegramUserMediaEntity.setTelegramBotUserEntity(telegramBotUserEntity);
+        telegramUserMediaDAO.telegramUserMediaAdd(telegramUserMediaEntity);
+    }
+
+    @Async
+    @Override
     public void telegramUserMediaAdd(Video video, Long telegramUserId, boolean isAnon, String message) {
         TelegramBotUserEntity telegramBotUserEntity = telegramUserDAO.telegramUserGetTelegramId(telegramUserId);
         TelegramUserMediaEntity telegramUserMediaEntity = new TelegramUserMediaEntity();
@@ -126,8 +145,18 @@ public class TelegramMediaServiceImpl implements TelegramMediaService {
     }
 
     @Override
+    public List<TelegramUserMediaEntity> portfolioPersonalMediaList(TelegramBotUserEntity requestedTelegramUser) {
+        return telegramUserMediaDAO.portfolioPersonalMediaList(requestedTelegramUser);
+    }
+
+    @Override
     public List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType) {
         return telegramUserMediaDAO.telegramUserMediaList(mediaType);
+    }
+
+    @Override
+    public List<TelegramUserMediaEntity> portfolioMediaList(int mediaType) {
+        return telegramUserMediaDAO.portfolioMediaList(mediaType);
     }
 
     @Override

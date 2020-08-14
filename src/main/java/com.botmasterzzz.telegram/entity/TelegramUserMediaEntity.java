@@ -38,6 +38,9 @@ public class TelegramUserMediaEntity {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    @Column(name = "is_portfolio")
+    private boolean isPortfolio;
+
     @Column(name = "message")
     private String message;
 
@@ -187,6 +190,14 @@ public class TelegramUserMediaEntity {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public boolean isPortfolio() {
+        return isPortfolio;
+    }
+
+    public void setPortfolio(boolean portfolio) {
+        isPortfolio = portfolio;
     }
 
     @Override
