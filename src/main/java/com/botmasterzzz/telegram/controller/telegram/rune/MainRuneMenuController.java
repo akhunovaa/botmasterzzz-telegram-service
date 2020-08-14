@@ -36,20 +36,17 @@ public class MainRuneMenuController {
         keyboard.setOneTimeKeyboard(false);
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
-        KeyboardRow keyboardRowLineFourth = new KeyboardRow();
         keyboardRowLineOne.add("Руна Дня");
-        keyboardRowLineFourth.add("ℹ️Информация");
+        keyboardRowLineOne.add("Совет Рун");
         keyboardRows.add(keyboardRowLineOne);
-        keyboardRows.add(keyboardRowLineFourth);
         keyboard.setKeyboard(keyboardRows);
-        keyboard.setOneTimeKeyboard(Boolean.TRUE);
         return new SendMessage()
                 .setChatId(chatId).enableHtml(true)
                 .setText("<b>Добро пожаловать</b>\uD83E\uDD29, " + name + ".\n" +
                         "\n" +
-                        "\uD83D\uDD25 <b>Новости</b> \uD83D\uDD25 \n" + BotMessageHelperUtil.getNewsMessage() +
-                        "\n" +
-                        "❗️/start для перехода на главное меню\n" +
+                        "/start Главное меню\n" +
+                        "️/rune Руна Дня\n" +
+                        "️/advice Совет Рун\n" +
                         "\n")
                 .setReplyMarkup(keyboard);
     }
