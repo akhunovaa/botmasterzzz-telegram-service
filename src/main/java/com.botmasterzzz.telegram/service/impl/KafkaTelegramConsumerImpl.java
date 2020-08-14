@@ -145,6 +145,19 @@ public class KafkaTelegramConsumerImpl {
             case 35:
                 controller = container.getControllerMap().get("parkon-" + message);
                 break;
+            case 37:
+                controller = !remain ? container.getControllerMap().get("portfolio-" + message) : container.getControllerMap().get("portfolio-media-upload");
+                if (remain && null != message && message.equals("❌Отмена")) {
+                    controller = container.getControllerMap().get("portfolio-" + message);
+                } else if (remain && null != message && (message.contains("/watch?v=") || message.contains("https://youtu.be/"))) {
+                    controller = container.getControllerMap().get("portfolio-media-upload-link");
+                    break;
+                } else if (remain && !(update.getMessage().hasPhoto() || update.getMessage().hasVideo() || update.getMessage().hasDocument())) {
+                    controller = container.getControllerMap().get("portfolio-media-upload-error");
+                } else if (commentAwait) {
+                    controller = container.getControllerMap().get("portfolio-comment-upload");
+                }
+                break;
             default:
                 controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
                 if (remain && null != message && message.equals("❌Отмена")) {

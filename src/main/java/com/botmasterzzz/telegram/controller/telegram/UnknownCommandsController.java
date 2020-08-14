@@ -21,15 +21,16 @@ public class UnknownCommandsController {
     }
 
     @BotRequestMapping(value = "command-unknown-error")
-    public SendMessage contacts(Update update) {
-        Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
+    public SendMessage error(Update update) {
+        Long requestedUserId = Long.valueOf(null == update.getCallbackQuery() ? update.getMessage().getFrom().getId() : update.getCallbackQuery().getFrom().getId());
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("❗️Неизвестная команда \n\nДля того чтобы вернуться на <b>главное меню</b>, воспользуйтесь командой /start\n");
         stringBuilder.append("\n");
         LOGGER.info("User {} sent an unknown command", requestedTelegramUser);
         return new SendMessage()
-                .setChatId(update.getMessage().getChatId()).enableHtml(true)
+                .setChatId(chatId).enableHtml(true)
                 .setText(stringBuilder.toString());
     }
 }

@@ -21,11 +21,15 @@ public interface TelegramUserMediaDAO {
 
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
 
+    List<TelegramUserMediaEntity> portfolioMediaList(int mediaType);
+
     List<TelegramUserMediaEntity> telegramUserMediaListForToday();
 
     List<TelegramUserMediaEntity> telegramUserMediaListForYesterday();
 
     List<TelegramUserMediaEntity> telegramUserPersonalMediaList(TelegramBotUserEntity requestedTelegramUser);
+
+    List<TelegramUserMediaEntity> portfolioPersonalMediaList(TelegramBotUserEntity requestedTelegramUser);
 
     Optional<TelegramMediaStatisticEntity> findTouchTypeMedia(long telegramUserId, Long mediaFileId, String touchType);
 

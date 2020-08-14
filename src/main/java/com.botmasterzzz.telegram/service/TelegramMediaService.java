@@ -16,6 +16,8 @@ public interface TelegramMediaService {
 
     void telegramUserMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon, String message);
 
+    void portfolioMediaAdd(List<PhotoSize> pictures, Long telegramUserId, boolean isAnon, String message);
+
     void telegramUserMediaAdd(Video video, Long telegramUserId, boolean isAnon, String message);
 
     void telegramUserMediaAdd(Document document, Long telegramUserId, boolean isAnon, String message);
@@ -34,7 +36,11 @@ public interface TelegramMediaService {
 
     List<TelegramUserMediaEntity> telegramUserPersonalMediaList(TelegramBotUserEntity requestedTelegramUser);
 
+    List<TelegramUserMediaEntity> portfolioPersonalMediaList(TelegramBotUserEntity requestedTelegramUser);
+
     List<TelegramUserMediaEntity> telegramUserMediaList(int mediaType);
+
+    List<TelegramUserMediaEntity> portfolioMediaList(int mediaType);
 
     void telegramUserMediaTouchAdd(Long telegramUserId, Long fileId, String touchType);
 
