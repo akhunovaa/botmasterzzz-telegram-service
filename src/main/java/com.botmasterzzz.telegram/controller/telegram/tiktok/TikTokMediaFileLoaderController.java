@@ -46,7 +46,7 @@ public class TikTokMediaFileLoaderController {
         this.gson = gson;
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83C\uDD95Новое за сегодня")
+    @BotRequestMapping(value = {"tiktok-\uD83C\uDD95Новое за сегодня", "tiktok-\uD83C\uDD95New For Today", "tiktok-\uD83C\uDD95今天的新功能"})
     public PartialBotApiMethod sendRandomlyMediaForToday(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
@@ -335,7 +335,7 @@ public class TikTokMediaFileLoaderController {
         }
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83C\uDF88Новое за вчера")
+    @BotRequestMapping(value = {"tiktok-\uD83C\uDF88Новое за вчера", "tiktok-\uD83C\uDF88New For Yesterday", "tiktok-\uD83C\uDF88昨天新"})
     public PartialBotApiMethod sendRandomlyMediaForYesterday(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
@@ -620,7 +620,7 @@ public class TikTokMediaFileLoaderController {
         }
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83D\uDCF2Фото")
+    @BotRequestMapping(value = {"tiktok-\uD83D\uDCF2Фото", "tiktok-\uD83D\uDCF2Photo", "tiktok-\uD83D\uDCF2照片"})
     public SendPhoto sendRandomlyMedia(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
@@ -945,7 +945,7 @@ public class TikTokMediaFileLoaderController {
         return sendPhoto;
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83D\uDCF2Видео")
+    @BotRequestMapping(value = {"tiktok-\uD83D\uDCF2Видео", "tiktok-\uD83D\uDCF2Video", "tiktok-\uD83D\uDCF2视频"})
     public PartialBotApiMethod sendRandomlyVideo(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());

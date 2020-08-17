@@ -34,7 +34,7 @@ public class TikTokMediaFileUploaderController {
     @Value("${video.file.upload.path}")
     private String path;
 
-    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить")
+    @BotRequestMapping(value = {"tiktok-\uD83C\uDFACЗагрузить", "tiktok-\uD83C\uDFACUpload", "tiktok-\uD83C\uDFAC下載"})
     public SendMessage uploadPhoto(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
@@ -177,7 +177,7 @@ public class TikTokMediaFileUploaderController {
                 .setReplyMarkup(keyboard);
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83C\uDFACЗагрузить (анонимно)")
+    @BotRequestMapping(value = {"tiktok-\uD83C\uDFACЗагрузить (анонимно)", "tiktok-\uD83C\uDFACUpload(anonymously)", "tiktok-\uD83C\uDFAC下載(匿名地)", })
     public SendMessage uploadPhotoAnonymous(Update update) {
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
         ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();

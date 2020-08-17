@@ -43,7 +43,7 @@ public class TikTokUserRatingController {
         this.databaseService = databaseService;
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83D\uDC8EТОП")
+    @BotRequestMapping(value = {"tiktok-\uD83D\uDC8EТОП", "tiktok-\uD83D\uDC8ETOP", "tiktok-\uD83D\uDC8E最佳"})
     public SendMessage sendTOPActiveUsers(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         String name = null != update.getMessage().getFrom().getUserName() ? update.getMessage().getFrom().getUserName() : update.getMessage().getFrom().getFirstName();
