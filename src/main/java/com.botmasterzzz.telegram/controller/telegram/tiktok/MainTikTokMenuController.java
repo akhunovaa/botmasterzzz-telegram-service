@@ -25,7 +25,7 @@ public class MainTikTokMenuController {
     private YoutubeMediaGrabberService youtubeMediaGrabberService;
 
     @Autowired
-    private TelegramUserService telegramUserService;;
+    private TelegramUserService telegramUserService;
 
     @BotRequestMapping(value = "tiktok-/start")
     public SendMessage start(Update update) {
@@ -69,7 +69,7 @@ public class MainTikTokMenuController {
                 .setReplyMarkup(keyboard);
     }
 
-    @BotRequestMapping(value = "tiktok-❓Помощь")
+    @BotRequestMapping(value = {"tiktok-❓Помощь", "tiktok-❓Help", "tiktok-❓救命"})
     public SendMessage help(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\uD83D\uDCF2<b>Новое видео/фото</b>\n");
@@ -89,7 +89,7 @@ public class MainTikTokMenuController {
                 .setText(stringBuilder.toString());
     }
 
-    @BotRequestMapping(value = "tiktok-ℹ️Информация")
+    @BotRequestMapping(value = {"tiktok-ℹ️Информация", "tiktok-ℹ️Info", "tiktok-ℹ️信息"})
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Адрес:</b>\n");
@@ -107,7 +107,7 @@ public class MainTikTokMenuController {
                 .setText(stringBuilder.toString());
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83E\uDD1DМои друзья")
+    @BotRequestMapping(value = {"tiktok-\uD83E\uDD1DМои друзья", "tiktok-\uD83E\uDD1DMy friends", "tiktok-\uD83E\uDD1D我的朋友"})
     public SendMessage friends(Update update) {
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
         TelegramBotUserEntity requestedTelegramUser = telegramUserService.getTelegramUser(requestedUserId);

@@ -12,7 +12,6 @@ import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
-import com.botmasterzzz.telegram.entity.MediaCommentsDataEntity;
 import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
 import com.botmasterzzz.telegram.entity.TelegramUserMediaEntity;
 import com.botmasterzzz.telegram.service.DatabaseService;
@@ -47,7 +46,7 @@ public class TikTokMediaPersonalFileLoaderController {
         this.gson = gson;
     }
 
-    @BotRequestMapping(value = "tiktok-\uD83C\uDF81Мои медиа")
+    @BotRequestMapping(value = {"tiktok-\uD83C\uDF81Мои медиа", "tiktok-\uD83C\uDF81My media", "tiktok-\uD83C\uDF81我的媒體"})
     public PartialBotApiMethod getPersonalMedia(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
         Long requestedUserId = Long.valueOf(update.getMessage().getFrom().getId());
