@@ -21,10 +21,7 @@ public class AccountReklamMenuController {
 
 
     @Autowired
-    ReklamMessageService reklamMessageService;
-
-//Users/admin/IdeaProjects/botmasterzzz-telegram/src/main/java/com.botmasterzzz.telegram/controller/telegram
-//Users/admin/IdeaProjects/botmasterzzz-telegram/src/main/java/com/botmasterzzz/telegram/controller/telegram/reklam
+    private ReklamMessageService reklamMessageService;
 
 
     @BotRequestMapping(value = "reklam-\uD83D\uDD10Личный кабинет")
