@@ -32,12 +32,12 @@ public class TicketSalesMessageController {
     }
 
     @BotRequestMapping(value = "gkh-get_sales")
-    public EditMessageText getEnergy(Update update) {
+    public EditMessageText getTickets(Update update) {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForSalesTickets();
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
-        stringBuilder.append("Список объявлений:");
+//        stringBuilder.append("<b>Передача показаний счетчика электроэнергии.</b>\n");
+        stringBuilder.append("<b>Список объявлений:</b>\n");
         stringBuilder.append("Алексей - сдам гараж, +1-213-213");
         stringBuilder.append("Сергей - продам холодильник, , +1-321-321");
         stringBuilder.append("Оксана - сниму квартиру, +1-123-123");
@@ -48,7 +48,7 @@ public class TicketSalesMessageController {
     }
 
     @BotRequestMapping(value = "gkh-send_sales")
-    public EditMessageText sendGas(Update update) {
+    public EditMessageText sendTickets(Update update) {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getInlineKeyboardForSalesTickets();
         StringBuilder stringBuilder = new StringBuilder();
