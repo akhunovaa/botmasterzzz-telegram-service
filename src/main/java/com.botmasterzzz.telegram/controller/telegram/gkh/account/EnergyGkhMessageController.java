@@ -47,7 +47,7 @@ public class EnergyGkhMessageController {
     }
 
     @BotRequestMapping(value = "gkh-send_energy")
-    public EditMessageText sendGas(Update update) {
+    public EditMessageText sendEnergy(Update update) {
 
         //todo doAction() - отправка сообщения в кафку для отправки показаний счетчика электроэнергии
         InlineKeyboardMarkup inlineKeyboardMarkup = gkhMessageService.getGetEnergyInlineKeyboardForAccount();
