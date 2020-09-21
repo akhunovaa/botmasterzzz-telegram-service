@@ -124,7 +124,7 @@ public class AccountReklamMenuController {
         Long telegramUserId = callBackData.getUserId();
         Long fileId = callBackData.getFileId();
         int offset = 0;
-        List<LotsEntity> mediaCommentsDataEntityList = reklamMessageService.getLotsForCustomer(offset, 3);
+        List<LotsEntity> lotsEntityList = reklamMessageService.getLotsForCustomer(offset, 1);
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
 
@@ -140,7 +140,7 @@ public class AccountReklamMenuController {
         InlineKeyboardButton rightArrowButton = new InlineKeyboardButton();
         rightArrowButton.setText("▶️️");
         CallBackData rightButtonData = new CallBackData("arrow", telegramUserId, fileId);
-        int lim = mediaCommentsDataEntityList.size() < 3 ? offset : offset + 3;
+        int lim = lotsEntityList.size() < 1 ? offset : offset + 1;
         rightButtonData.setOffset(lim);
         rightArrowButton.setCallbackData(gson.toJson(rightButtonData));
 
@@ -149,7 +149,7 @@ public class AccountReklamMenuController {
         commentAddButton.setCallbackData(gson.toJson(new CallBackData("comment-write", telegramUserId, fileId)));
 
 
-        if (!mediaCommentsDataEntityList.isEmpty()) {
+        if (!lotsEntityList.isEmpty()) {
             inlineKeyboardButtonsFirstRow.add(leftArrowButton);
             inlineKeyboardButtonsFirstRow.add(rightArrowButton);
             inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
@@ -159,21 +159,28 @@ public class AccountReklamMenuController {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Обсуждения:</b>\n");
+        stringBuilder.append("<b>За:</b>\n");
         stringBuilder.append("\n");
-        for (MediaCommentsDataEntity mediaCommentsDataEntity : mediaCommentsDataEntityList) {
-            TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
-            String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
-            String commentData = mediaCommentsDataEntity.getData();
-            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
-            stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
-            stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
+        for (LotsEntity lot : lotsEntityList) {
+//            TelegramBotUserEntity telegramBotUserEntity = lot.getTelegramBotUserEntity();
+//            String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
+//            String commentData = //mediaCommentsDataEntity.getData();
+//            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
+//            stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
+//            stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
-            stringBuilder.append("<code>").append(commentData).append("</code>\n");
+            stringBuilder.append("<code> Заявка #")
+                    .append(lot.getId())
+                    .append(" на привлечение ")
+                    .append(lot.getQuantity())
+                    .append(" пользователей за ")
+                    .append(lot.getCost())
+                    .append(" рублей")
+                    .append("</code>\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
-            logger.info("User {} comment {}", telegramBotUserEntity, commentData);
+//            logger.info("User {} comment {}", telegramBotUserEntity, commentData);
         }
-        if (mediaCommentsDataEntityList.isEmpty()) {
+        if (lotsEntityList.isEmpty()) {
             stringBuilder.append("<code>").append("Комментарии и обсуждения отсутствуют.  Вы будете первыми! Не стесняйтесь в выражениях \uD83D\uDE09").append("</code>\n\n<u>(ограничение в 250 символов)</u>");
         }
         logger.info("User id {} comment message requested", telegramUserId);
@@ -193,10 +200,10 @@ public class AccountReklamMenuController {
         Long telegramUserId = callBackData.getUserId();
         Long fileId = callBackData.getFileId();
         int offset = callBackData.getOffset();
-        List<MediaCommentsDataEntity> mediaCommentsDataEntityList = reklamMessageService.getCommentsForMedia(fileId, offset, 3);
-        if(mediaCommentsDataEntityList.isEmpty()){
-            offset -= 3;
-            mediaCommentsDataEntityList = reklamMessageService.getCommentsForMedia(fileId, offset, 3);
+        List<LotsEntity> lots = reklamMessageService.getLotsForCustomer(offset, 1);
+        if(lots.isEmpty()){
+            offset -= 1;
+            lots = reklamMessageService.getLotsForCustomer(offset, 1);
         }
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
@@ -207,13 +214,13 @@ public class AccountReklamMenuController {
         InlineKeyboardButton leftArrowButton = new InlineKeyboardButton();
         leftArrowButton.setText("◀️");
         CallBackData leftButtonData = new CallBackData("arrow", telegramUserId, fileId);
-        leftButtonData.setOffset(offset - 3);
+        leftButtonData.setOffset(offset - 1);
         leftArrowButton.setCallbackData(gson.toJson(leftButtonData));
 
         InlineKeyboardButton rightArrowButton = new InlineKeyboardButton();
         rightArrowButton.setText("▶️️");
         CallBackData rightButtonData = new CallBackData("arrow", telegramUserId, fileId);
-        int lim = mediaCommentsDataEntityList.size() < 3 ? offset : offset + 3;
+        int lim = lots.size() < 1 ? offset : offset + 1;
         rightButtonData.setOffset(lim);
         rightArrowButton.setCallbackData(gson.toJson(rightButtonData));
 
@@ -222,7 +229,7 @@ public class AccountReklamMenuController {
         commentAddButton.setCallbackData(gson.toJson(new CallBackData("comment-write", telegramUserId, fileId)));
 
 
-        if (!mediaCommentsDataEntityList.isEmpty()) {
+        if (!lots.isEmpty()) {
             inlineKeyboardButtonsFirstRow.add(leftArrowButton);
             inlineKeyboardButtonsFirstRow.add(rightArrowButton);
             inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
@@ -235,21 +242,28 @@ public class AccountReklamMenuController {
         stringBuilder.append("<b>Обсуждения:</b>\n");
         stringBuilder.append("\n");
 
-        for (MediaCommentsDataEntity mediaCommentsDataEntity : mediaCommentsDataEntityList) {
-            TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
-            String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
-            String commentData = mediaCommentsDataEntity.getData();
-            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
-            stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
-            stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
+        for (LotsEntity lot : lots) {
+//            TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
+//            String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
+//            String commentData = mediaCommentsDataEntity.getData();
+//            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
+//            stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
+//            stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
-            stringBuilder.append("<code>").append(commentData).append("</code>\n");
+            stringBuilder.append("<code> Заявка #")
+                    .append(lot.getId())
+                    .append(" на привлечение ")
+                    .append(lot.getQuantity())
+                    .append(" пользователей за ")
+                    .append(lot.getCost())
+                    .append(" рублей")
+                    .append("</code>\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
-            logger.info("User {} comment {}", telegramBotUserEntity, commentData);
+//            logger.info("User {} comment {}", commentData);
         }
 
-        if (mediaCommentsDataEntityList.isEmpty()) {
-            stringBuilder.append("<code>").append("Комментарии и обсуждения отсутствуют.  Вы будете первыми! Не стесняйтесь в выражениях \uD83D\uDE09").append("</code>\n\n<u>(ограничение в 250 символов)</u>");
+        if (lots.isEmpty()) {
+            stringBuilder.append("<code>").append("На данный момент доступные заявки отсутствуют. Вернитесь чуть позже или создайте свою заявку");
         }
         logger.info("User id {} comment message requested", telegramUserId);
 
