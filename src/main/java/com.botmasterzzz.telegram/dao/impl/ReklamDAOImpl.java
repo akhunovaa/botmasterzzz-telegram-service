@@ -1,13 +1,14 @@
 package com.botmasterzzz.telegram.dao.impl;
 
-import com.botmasterzzz.telegram.dao.LotsDAO;
+import com.botmasterzzz.telegram.dao.ReklamDAO;
+import com.botmasterzzz.telegram.entity.AccountEntity;
 import com.botmasterzzz.telegram.entity.GetPartsEntity;
 import com.botmasterzzz.telegram.entity.LotsEntity;
 import org.hibernate.Criteria;
 import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +18,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class LotsDAOImpl implements LotsDAO {
+public class ReklamDAOImpl implements ReklamDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    private static final Logger logger = LoggerFactory.getLogger(LotsDAOImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReklamDAOImpl.class);
 
     @Override
     @SuppressWarnings({"deprecation", "unchecked"})
@@ -42,6 +43,25 @@ public class LotsDAOImpl implements LotsDAO {
             session.close();
         }
         return lotsCustomerEntityList;
+    }
+
+    @SuppressWarnings({"deprecation", "unchecked"})
+    @Override
+    public List<LotsEntity> getLotsForCustomer(int offset, int limit) {
+        List<LotsEntity> mediaCommentsDataEntityList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(LotsEntity.class);
+        criteria.add(Restrictions.disjunction()
+//                .add(Restrictions.eq("creator", creator))
+                .add(Restrictions.eq("archive", false))
+                .add(Restrictions.eq("iscreate", true))
+                .add(Restrictions.eq("isdel", false)));
+        criteria.addOrder(Order.desc("id"));
+        criteria.setFirstResult(offset);
+        criteria.setMaxResults(1);
+        mediaCommentsDataEntityList = criteria.list();
+        session.close();
+        return mediaCommentsDataEntityList;
     }
 
     @Override
@@ -100,71 +120,146 @@ public class LotsDAOImpl implements LotsDAO {
 
     @Override
     public LotsEntity getLot(long id) {
-        return null;
+        LotsEntity lot = null;
+        Session session = sessionFactory.openSession();
+        logger.debug("Lot with id {} GET from a repository", id);
+        lot = session.get(LotsEntity.class, id);
+        session.close();
+        return lot;
     }
 
     @Override
     public boolean validateLot(long id) {
-        return false;
+        return getLot(id).isValidate();
     }
 
     @Override
-    public void setValidateLot(long id) {
-
+    public void setValidateLot(long id, boolean status) {
+        getLot(id).setValidate(status);
     }
 
     @Override
     public boolean checkPay(long id) {
-        return false;
+        return getLot(id).isPayed();
     }
 
     @Override
-    public void setPayLot(long id) {
-
+    public void setPayLot(long id, boolean status) {
+        getLot(id).setPayed(status);
     }
 
     @Override
     public boolean isCreateLot(long id) {
-        return false;
+        return getLot(id).isIscreate();
     }
 
     @Override
-    public void setCreateLot(long id) {
-
+    public void setCreateLot(long id, boolean status) {
+        getLot(id).setIscreate(status);
     }
 
     @Override
-    public void setCustomerLot(long id) {
-
+    public void setCustomerLot(long id, String userid) {
+        getLot(id).setCustomer(userid);
     }
 
     @Override
     public boolean isArchiveLot(long id) {
-        return false;
+        return getLot(id).isArchive();
     }
 
     @Override
-    public void setArchiveLot(long id) {
-
+    public void setArchiveLot(long id, boolean status) {
+        getLot(id).setArchive(status);
     }
 
     @Override
     public boolean isDelLot(long id) {
-        return false;
+        return getLot(id).isIsdel();
     }
 
     @Override
-    public void setDelLot(long id) {
-
+    public void setDelLot(long id, boolean status) {
+        getLot(id).setIsdel(status);
     }
 
     @Override
     public boolean isLockLot(long id) {
+        return getLot(id).isIslock();
+    }
+
+    @Override
+    public void setLockLot(long id, boolean status) {
+        LotsEntity lot = getLot(id);
+        lot.setIslock(status);
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(lot);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public List<AccountEntity> accountsList() {
+        return null;
+    }
+
+    @Override
+    public AccountEntity getAccount(long id) {
+        AccountEntity account;
+
+
+        return null;
+    }
+
+    @Override
+    public AccountEntity getAccountid(int userid) {
+        return null;
+    }
+
+    @Override
+    public double getAccountTotal(long id) {
+        return getAccount(id).getTotal();
+    }
+
+    @Override
+    public double getAccountIncome(long id) {
+        return 0;
+    }
+
+    @Override
+    public void setAccountIncome(long id, double count) {
+
+    }
+
+    @Override
+    public double getAccountOutcome(long id) {
+        return 0;
+    }
+
+    @Override
+    public void setAccountOutcome(long id, double count) {
+
+    }
+
+    @Override
+    public boolean getAccountIslock(long id) {
         return false;
     }
 
     @Override
-    public void setLockLot(long id) {
+    public void setAccountIslock(long id, boolean status) {
+
+    }
+
+    @Override
+    public boolean getAccountIsactive(long id) {
+        return false;
+    }
+
+    @Override
+    public void setAccountIsactive(long id, boolean status) {
 
     }
 }
