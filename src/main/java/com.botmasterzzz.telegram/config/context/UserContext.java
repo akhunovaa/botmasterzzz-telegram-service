@@ -32,6 +32,15 @@ public class UserContext {
     private long partId;
     private long forUserId;
     private Long referralId;
+    private boolean isNameAwait;
+
+    public boolean isNameAwait() {
+        return isNameAwait;
+    }
+
+    public void setNameAwait(boolean nameAwait) {
+        isNameAwait = nameAwait;
+    }
 
     public void setUser(User user) {
         this.user = user;

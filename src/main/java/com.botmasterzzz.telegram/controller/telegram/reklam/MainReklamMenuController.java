@@ -28,16 +28,12 @@ public class MainReklamMenuController {
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
-//        KeyboardRow keyboardRowLineThree = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
         keyboardRowLineOne.add("\uD83D\uDD10Личный кабинет");
         keyboardRowLineTwo.add("\uD83D\uDCF0Новости");
         keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
-//        keyboardRowLineThree.add("❓Помощь");
-//        keyboardRowLineThree.add("\uD83D\uDCF0Новости");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
-//        keyboardRows.add(keyboardRowLineThree);
         keyboard.setKeyboard(keyboardRows);
 
         return new SendMessage()
@@ -57,23 +53,18 @@ public class MainReklamMenuController {
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         KeyboardRow keyboardRowLineOne = new KeyboardRow();
         KeyboardRow keyboardRowLineTwo = new KeyboardRow();
-//        KeyboardRow keyboardRowLineThree = new KeyboardRow();
         keyboardRowLineOne.add("\uD83D\uDDA5Главное меню");
         keyboardRowLineOne.add("\uD83D\uDD10Личный кабинет");
         keyboardRowLineTwo.add("\uD83D\uDCF0Новости");
         keyboardRowLineTwo.add("\uD83D\uDCD2Контакты");
-//        keyboardRowLineThree.add("❓Помощь");
-//        keyboardRowLineThree.add("\uD83D\uDCF0Новости");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
-//        keyboardRows.add(keyboardRowLineThree);
         keyboard.setKeyboard(keyboardRows);
 
 
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText("<b>Главное меню</b>\n" +
-//                        "Позвольте узнать, что Вас беспокоит, " + name + "? \n" +
                         "Выберите раздел: \uD83D\uDD3D")
                 .setReplyMarkup(keyboard);
     }
@@ -83,18 +74,12 @@ public class MainReklamMenuController {
     @BotRequestMapping(value = "reklam-\uD83D\uDCD2Контакты")
     public SendMessage contacts(Update update) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Бот разработан командой  BMZzz</b>\n");
+        stringBuilder.append("<b>Бот разработан командой BMZzz</b>\n");
         stringBuilder.append("https://botmasterzzz.com/\n");
         stringBuilder.append("\n");
         stringBuilder.append("<b>По вопросам обращаться к</b>\n");
         stringBuilder.append("@balsakas\n");
         stringBuilder.append("\n");
-//        stringBuilder.append("<b>Телеграмм:</b>\n");
-//        stringBuilder.append("@zhkhrobot\n");
-//        stringBuilder.append("\n");
-//        stringBuilder.append("<b>Разработан при помощи:</b>\n");
-//        stringBuilder.append("https://botmasterzzz.com\n");
-//        stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString());

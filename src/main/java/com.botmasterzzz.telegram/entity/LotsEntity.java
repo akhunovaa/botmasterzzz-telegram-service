@@ -15,6 +15,7 @@ public class LotsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") //todo проверить - надо ли здесь @Column?
     private Long id;
 
     @Column(name = "creator", nullable = false)
