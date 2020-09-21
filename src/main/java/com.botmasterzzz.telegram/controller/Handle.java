@@ -52,14 +52,17 @@ public class Handle {
 
             telegramBotStatisticService.telegramStatisticAdd(update.getMessage(), (long) instanceId, update.getMessage().getFrom().getId());
         }
+
+        boolean remain;
         switch (instanceId) {
+
             case 31:
                 if (update.hasCallbackQuery()) {
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     UserContextHolder.currentContext().setCallBackData(callBackData);
                     message = callBackData.getPath();
                 }
-                boolean remain = UserContextHolder.currentContext().isRemain();
+                remain = UserContextHolder.currentContext().isRemain();
                 controller = !remain ? container.getControllerMap().get("tiktok-" + message) : container.getControllerMap().get("tiktok-media-upload");
                 if (remain && null != message && message.equals("❌Отмена")) {
                     controller = container.getControllerMap().get("tiktok-" + message);
@@ -75,14 +78,18 @@ public class Handle {
                 }
                 controller = container.getControllerMap().get("gkh-" + message);
                 return controller;
-//            case 40:
-//                if (update.hasCallbackQuery()) {
-//                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
-//                    UserContextHolder.currentContext().setCallBackData(callBackData);
-//                    message = callBackData.getPath();
-//                }
-//                controller = container.getControllerMap().get("reklam-" + message);
-//                return controller;
+            case 40:
+                if (update.hasCallbackQuery()) {
+                    callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
+                    UserContextHolder.currentContext().setCallBackData(callBackData);
+                    message = callBackData.getPath();
+                }
+                remain = UserContextHolder.currentContext().isNameAwait();
+                controller = !remain ? container.getControllerMap().get("reklam-" + message) : container.getControllerMap().get("reklam-create-lot");
+                if (remain && null != message && message.equals("❌Отмена")) {
+                    controller = container.getControllerMap().get("reklam-" + message);
+                    return controller;
+                }
         }
         int commandMessageType = 1;
         UserContextHolder.currentContext().setProjectCommandDTO(null);
@@ -139,5 +146,4 @@ public class Handle {
         }
         return controller;
     }
-
 }
