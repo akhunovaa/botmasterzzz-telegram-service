@@ -54,6 +54,7 @@ public class AccountReklamMenuController {
         keyboardRowLineThree.add("Хочу подписчиков");
         keyboardRows.add(keyboardRowLineOne);
         keyboardRows.add(keyboardRowLineTwo);
+        keyboardRows.add(keyboardRowLineThree);
         keyboard.setKeyboard(keyboardRows);
 
 
@@ -76,7 +77,7 @@ public class AccountReklamMenuController {
         stringBuilder.append("<b>Здесь отображается ваш баланс</b>\n");
 
         stringBuilder.append("\n");
-//        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
         stringBuilder.append("р.");
 
         stringBuilder.append("\n");

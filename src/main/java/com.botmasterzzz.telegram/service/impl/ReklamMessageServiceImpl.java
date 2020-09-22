@@ -96,4 +96,9 @@ public class ReklamMessageServiceImpl implements ReklamMessageService {
     public List<LotsEntity> getLotsForCustomer(int offset, int limit) {
         return rdao.getLotsForCustomer(offset, limit);
     }
+
+    @Override
+    public double getAccountTotal(long id) {
+        return rdao.getAccountTotal(id);
+    }
 }

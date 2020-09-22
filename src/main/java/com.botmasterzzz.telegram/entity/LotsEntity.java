@@ -197,22 +197,22 @@ public class LotsEntity {
 
     @Override
     public String toString() {
-        return "LotsEntity{" +
-                "id=" + id +
-                ", creator='" + creator + '\'' +
-                ", cost=" + cost +
-                ", quantity=" + quantity +
-                ", invited=" + invited +
-                ", ready=" + ready +
-                ", customer='" + customer + '\'' +
-                ", archive=" + archive +
-                ", channel='" + channel + '\'' +
-                ", validate=" + validate +
-                ", payed=" + payed +
-                ", isdel=" + isdel +
-                ", iscreate=" + iscreate +
-                ", islock=" + islock +
-                '}';
+        return "Заявка #{"+id+"}\n"+
+                " по привлечению [" + quantity + "] подписчиков\n" +
+                "на ["+channel+"] канал \n"+
+                "за [" + cost + "] рублей \n"
+//                ", quantity=" + quantity +
+//                ", invited=" + invited +
+//                ", ready=" + ready +
+//                ", customer='" + customer + '\'' +
+//                ", archive=" + archive +
+//                ", channel='" + channel + '\'' +
+//                ", validate=" + validate +
+//                ", payed=" + payed +
+//                ", isdel=" + isdel +
+//                ", iscreate=" + iscreate +
+//                ", islock=" + islock +
+                ;
     }
 
     public String active() {
