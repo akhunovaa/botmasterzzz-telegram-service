@@ -15,4 +15,6 @@ public interface ReklamMessageService {
 
     List<LotsEntity> getLotsForCustomer(int offset, int limit);
 
+    double getAccountTotal(long id);
+
     }
