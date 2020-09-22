@@ -90,6 +90,7 @@ public class Handle {
                     controller = container.getControllerMap().get("reklam-" + message);
                     return controller;
                 }
+                return controller;
         }
         int commandMessageType = 1;
         UserContextHolder.currentContext().setProjectCommandDTO(null);
