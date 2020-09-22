@@ -53,13 +53,13 @@ public class ReklamMessageServiceImpl implements ReklamMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
         InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
-        registerInlineButton.setText("Пополнить");
-        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("balacc_income")));
+        registerInlineButton.setText("Список заявок");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("lots_list")));
         inlineKeyboardButtonsFirstRow.add(registerInlineButton);
 
         InlineKeyboardButton netMerchButton = new InlineKeyboardButton();
-        netMerchButton.setText("Вывести");
-        netMerchButton.setCallbackData(gson.toJson(new CallBackData("balacc_outcome")));
+        netMerchButton.setText("Принятые заявки");
+        netMerchButton.setCallbackData(gson.toJson(new CallBackData("lots_inwork")));
         inlineKeyboardButtonsFirstRow.add(netMerchButton);
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
@@ -77,13 +77,13 @@ public class ReklamMessageServiceImpl implements ReklamMessageService {
         List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
 
         InlineKeyboardButton registerInlineButton = new InlineKeyboardButton();
-        registerInlineButton.setText("Пополнить");
-        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("balacc_income")));
+        registerInlineButton.setText("Активные заявки");
+        registerInlineButton.setCallbackData(gson.toJson(new CallBackData("lots_active")));
         inlineKeyboardButtonsFirstRow.add(registerInlineButton);
 
         InlineKeyboardButton netMerchButton = new InlineKeyboardButton();
-        netMerchButton.setText("Вывести");
-        netMerchButton.setCallbackData(gson.toJson(new CallBackData("balacc_outcome")));
+        netMerchButton.setText("Добавить заявку");
+        netMerchButton.setCallbackData(gson.toJson(new CallBackData("lots_adding")));
         inlineKeyboardButtonsFirstRow.add(netMerchButton);
 
         inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);

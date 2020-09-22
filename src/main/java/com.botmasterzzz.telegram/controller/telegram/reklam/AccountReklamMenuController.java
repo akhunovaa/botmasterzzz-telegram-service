@@ -65,19 +65,19 @@ public class AccountReklamMenuController {
                 .setReplyMarkup(keyboard);
     }
 
-
-
-
     @BotRequestMapping(value = "reklam-Баланс")
     public SendMessage balacc(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForBalAcc();
         int currentId = update.getMessage().getFrom().getId();
+        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
+        Long telegramUserId = callBackData.getUserId();
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь отображается ваш баланс</b>\n");
-
         stringBuilder.append("\n");
-        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+
+//        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+        stringBuilder.append(reklamMessageService.getAccountTotal(telegramUserId));
         stringBuilder.append("р.");
 
         stringBuilder.append("\n");
@@ -88,23 +88,26 @@ public class AccountReklamMenuController {
 
     @BotRequestMapping(value = "reklam-Хочу заработать")
     public SendMessage wantMoney(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForWantMoney();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь вы можете выбрать заявку на привлечение подписчиков</b>\n");
         stringBuilder.append("\n");
-        int a = 0;
+//        int a = 0;
 //        UserContextHolder.currentContext().
-        stringBuilder.append(reklamMessageService.getLotsForCustomer(a,1));
+//        stringBuilder.append(reklamMessageService.getLotsForCustomer(a,1));
         // постраничный вывод лотов
 
         stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(stringBuilder.toString());
+                .setText(stringBuilder.toString())
+                .setReplyMarkup(inlineKeyboardMarkup);
     }
-
 
     @BotRequestMapping(value = "reklam-Хочу подписчиков")
     public SendMessage wantSubs(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForWantSubs();
+
         UserContextHolder.currentContext().setNameAwait(true);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь вы можете оставить заявку на привлечение подписчиков</b>\n");
@@ -114,10 +117,11 @@ public class AccountReklamMenuController {
         stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(stringBuilder.toString());
+                .setText(stringBuilder.toString())
+                .setReplyMarkup(inlineKeyboardMarkup);
     }
 
-    @BotRequestMapping(value = "reklam-comment")
+    @BotRequestMapping(value = "reklam-Хочу заработать!")
     public SendMessage comment(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
 
@@ -273,5 +277,14 @@ public class AccountReklamMenuController {
                 .setReplyMarkup(inlineKeyboardMarkup)
                 .setMessageId(messageId)
                 .setText(stringBuilder.toString());
+    }
+
+    private EditMessageText getEditMessage(String text, Update update) {
+        EditMessageText editMessageText = new EditMessageText();
+        editMessageText.setChatId(update.getCallbackQuery().getMessage().getChatId());
+        editMessageText.setText(text);
+        editMessageText.enableHtml(Boolean.TRUE);
+        editMessageText.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+        return editMessageText;
     }
 }
