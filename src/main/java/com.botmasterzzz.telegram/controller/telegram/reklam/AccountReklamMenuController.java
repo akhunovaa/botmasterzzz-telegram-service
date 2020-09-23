@@ -63,8 +63,8 @@ public class AccountReklamMenuController {
     public SendMessage balacc(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForBalAcc();
         int currentId = update.getMessage().getFrom().getId();
-        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
-        Long telegramUserId = callBackData.getUserId();
+//        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
+//        Long telegramUserId = callBackData.getUserId();
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь отображается ваш баланс</b>\n");
@@ -73,8 +73,8 @@ public class AccountReklamMenuController {
         try {
             stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
             stringBuilder.append("currentId="+currentId+ "\ns_");
-            stringBuilder.append("telegramuserid="+telegramUserId);
-            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
+//            stringBuilder.append("telegramuserid="+telegramUserId);
+//            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
             stringBuilder.append("_отработка_");
         } catch (Exception e)
         {
