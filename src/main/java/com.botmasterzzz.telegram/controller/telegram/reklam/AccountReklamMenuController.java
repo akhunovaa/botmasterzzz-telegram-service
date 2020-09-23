@@ -62,7 +62,7 @@ public class AccountReklamMenuController {
     @BotRequestMapping(value = "reklam-Баланс")
     public SendMessage balacc(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForBalAcc();
-//        int currentId = update.getMessage().getFrom().getId();
+        int currentId = update.getMessage().getFrom().getId();
         CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
         Long telegramUserId = callBackData.getUserId();
 
@@ -71,10 +71,10 @@ public class AccountReklamMenuController {
         stringBuilder.append("\n");
 
         try {
-//            stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
-//            stringBuilder.append("currentId="+currentId+ "\ns_");
+            stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+            stringBuilder.append("currentId="+currentId+ "\ns_");
             stringBuilder.append("telegramuserid="+telegramUserId);
-//            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
+            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
             stringBuilder.append("_отработка_");
         } catch (Exception e)
         {
