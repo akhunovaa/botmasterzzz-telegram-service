@@ -10,22 +10,16 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.KeyboardRow;
 import com.botmasterzzz.telegram.config.annotations.BotController;
 import com.botmasterzzz.telegram.config.annotations.BotRequestMapping;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
-import com.botmasterzzz.telegram.dao.ReklamDAO;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.entity.LotsEntity;
-import com.botmasterzzz.telegram.entity.MediaCommentsDataEntity;
-import com.botmasterzzz.telegram.entity.TelegramBotUserEntity;
-import com.botmasterzzz.telegram.service.DatabaseService;
 import com.botmasterzzz.telegram.service.ReklamMessageService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @BotController
 public class AccountReklamMenuController {
@@ -121,7 +115,7 @@ public class AccountReklamMenuController {
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
 
-    @BotRequestMapping(value = "reklam-Хочу заработать!")
+    @BotRequestMapping(value = "reklam-Список заявок")
     public SendMessage comment(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
 
@@ -151,7 +145,7 @@ public class AccountReklamMenuController {
 
         InlineKeyboardButton commentAddButton = new InlineKeyboardButton();
         commentAddButton.setText("\uD83D\uDCE8 Написать");
-        commentAddButton.setCallbackData(gson.toJson(new CallBackData("comment-write", telegramUserId, fileId)));
+        commentAddButton.setCallbackData(gson.toJson(new CallBackData("lots-reserve", telegramUserId, fileId)));
 
 
         if (!lotsEntityList.isEmpty()) {
@@ -176,9 +170,9 @@ public class AccountReklamMenuController {
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             stringBuilder.append("<code> Заявка #")
                     .append(lot.getId())
-                    .append(" на привлечение ")
+                    .append(" \nна привлечение ")
                     .append(lot.getQuantity())
-                    .append(" пользователей за ")
+                    .append(" пользователей \nза ")
                     .append(lot.getCost())
                     .append(" рублей")
                     .append("</code>\n");
@@ -186,7 +180,7 @@ public class AccountReklamMenuController {
 //            logger.info("User {} comment {}", telegramBotUserEntity, commentData);
         }
         if (lotsEntityList.isEmpty()) {
-            stringBuilder.append("<code>").append("Комментарии и обсуждения отсутствуют.  Вы будете первыми! Не стесняйтесь в выражениях \uD83D\uDE09").append("</code>\n\n<u>(ограничение в 250 символов)</u>");
+            stringBuilder.append("Заявки отсутствуют. Подождите немного или создайте собственную заявку!");
         }
         logger.info("User id {} comment message requested", telegramUserId);
 
@@ -230,8 +224,8 @@ public class AccountReklamMenuController {
         rightArrowButton.setCallbackData(gson.toJson(rightButtonData));
 
         InlineKeyboardButton commentAddButton = new InlineKeyboardButton();
-        commentAddButton.setText("\uD83D\uDCE8 Написать");
-        commentAddButton.setCallbackData(gson.toJson(new CallBackData("comment-write", telegramUserId, fileId)));
+        commentAddButton.setText("\uD83D\uDCE8 Выбрать заявку");
+        commentAddButton.setCallbackData(gson.toJson(new CallBackData("lots-reserve", telegramUserId, fileId)));
 
 
         if (!lots.isEmpty()) {
