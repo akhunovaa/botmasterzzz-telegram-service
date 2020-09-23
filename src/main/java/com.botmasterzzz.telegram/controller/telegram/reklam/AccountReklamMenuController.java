@@ -70,9 +70,10 @@ public class AccountReklamMenuController {
         stringBuilder.append("<b>Здесь отображается ваш баланс</b>\n");
         stringBuilder.append("\n");
 
-//        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
         try {
-            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
+        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+//            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
+            stringBuilder.append("_отработка_");
         } catch (Exception e)
         {
             logger.debug("fail при попытке чтения из pim_account");
@@ -80,7 +81,7 @@ public class AccountReklamMenuController {
         finally {
             stringBuilder.append("лалала ёпта (манимейкер десижн)");
         }
-        stringBuilder.append("р.");
+        stringBuilder.append(" р.");
 
         stringBuilder.append("\n");
         return new SendMessage()
