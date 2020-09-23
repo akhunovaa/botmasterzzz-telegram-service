@@ -216,6 +216,7 @@ public class ReklamDAOImpl implements ReklamDAO {
         return account;
     }
 
+    @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public AccountEntity getAccountByUserId(long id) {
         AccountEntity account = null;
@@ -223,8 +224,7 @@ public class ReklamDAOImpl implements ReklamDAO {
         List<AccountEntity>  accList = null;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(AccountEntity.class);
-        criteria.add(Restrictions.disjunction()
-                .add(Restrictions.eq("userid", id)));
+        criteria.add(Restrictions.eq("userid", id));
         try{
             accList = criteria.list();
         }catch (QueryException e){
