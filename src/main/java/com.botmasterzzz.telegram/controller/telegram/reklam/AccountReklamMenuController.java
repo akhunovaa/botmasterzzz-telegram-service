@@ -71,7 +71,9 @@ public class AccountReklamMenuController {
         stringBuilder.append("\n");
 
         try {
-        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+//            stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
+            stringBuilder.append("currentId="+currentId+ "\ns_");
+            stringBuilder.append("telegramuserid="+telegramUserId);
 //            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
             stringBuilder.append("_отработка_");
         } catch (Exception e)
