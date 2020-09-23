@@ -70,7 +70,8 @@ public class AccountReklamMenuController {
 
         try {
 //            stringBuilder.append("currentId="+currentId+ "\ns_");
-            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(currentId));
+//            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(currentId));
+            stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
 //            stringBuilder.append("_отработка_");
 //            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
         } catch (Exception e)
@@ -78,14 +79,15 @@ public class AccountReklamMenuController {
             logger.debug("fail при попытке чтения из pim_account");
         }
         finally {
-            stringBuilder.append("лалала ёпта (манимейкер десижн)");
+//            stringBuilder.append("лалала ёпта (манимейкер десижн)");
         }
         stringBuilder.append(" р.");
 
         stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
-                .setText(stringBuilder.toString());
+                .setText(stringBuilder.toString())
+                .setReplyMarkup(inlineKeyboardMarkup);
     }
 
     @BotRequestMapping(value = "reklam-Хочу заработать")
@@ -148,7 +150,7 @@ public class AccountReklamMenuController {
         rightArrowButton.setCallbackData(gson.toJson(rightButtonData));
 
         InlineKeyboardButton commentAddButton = new InlineKeyboardButton();
-        commentAddButton.setText("\uD83D\uDCE8 Написать");
+        commentAddButton.setText("\uD83D\uDCE8 Выбрать заявку");
         commentAddButton.setCallbackData(gson.toJson(new CallBackData("lots-reserve", telegramUserId, fileId)));
 
 
@@ -162,15 +164,9 @@ public class AccountReklamMenuController {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>За:</b>\n");
+        stringBuilder.append("<b>Доступные заявки:</b>\n");
         stringBuilder.append("\n");
         for (LotsEntity lot : lotsEntityList) {
-//            TelegramBotUserEntity telegramBotUserEntity = lot.getTelegramBotUserEntity();
-//            String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
-//            String commentData = //mediaCommentsDataEntity.getData();
-//            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
-//            stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
-//            stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             stringBuilder.append("<code> Заявка #")
                     .append(lot.getId())
