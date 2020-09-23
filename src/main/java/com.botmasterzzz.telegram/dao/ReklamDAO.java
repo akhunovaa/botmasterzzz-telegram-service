@@ -79,6 +79,9 @@ public interface ReklamDAO {
     // получить остаток счета
     double getAccountTotal(long id);
 
+    //аккаунт по id пользователя
+    AccountEntity getAccountByUserId(long id);
+
     // получить последнее(активное) пополнение счета
     double getAccountIncome(long id);
 

@@ -209,8 +209,31 @@ public class ReklamDAOImpl implements ReklamDAO {
     public AccountEntity getAccount(long id) {
         AccountEntity account;
 
+        Session session = sessionFactory.openSession();
+        logger.debug("Lot with id {} GET from a repository", id);
+        account = session.get(AccountEntity.class, id);
+        session.close();
+        return account;
+    }
 
-        return null;
+    @Override
+    public AccountEntity getAccountByUserId(long id) {
+        AccountEntity account = null;
+
+        List<AccountEntity>  accList = null;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(AccountEntity.class);
+        criteria.add(Restrictions.disjunction()
+                .add(Restrictions.eq("userid", id)));
+        try{
+            accList = criteria.list();
+        }catch (QueryException e){
+            session.close();
+        }finally {
+            session.close();
+        }
+        account = accList.get(0);
+        return account;
     }
 
     @Override

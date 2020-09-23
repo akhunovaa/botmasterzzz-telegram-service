@@ -71,7 +71,7 @@ public class AccountReklamMenuController {
         stringBuilder.append("\n");
 
 //        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
-        stringBuilder.append(reklamMessageService.getAccountTotal(telegramUserId));
+        stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
         stringBuilder.append("р.");
 
         stringBuilder.append("\n");
@@ -86,10 +86,6 @@ public class AccountReklamMenuController {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь вы можете выбрать заявку на привлечение подписчиков</b>\n");
         stringBuilder.append("\n");
-//        int a = 0;
-//        UserContextHolder.currentContext().
-//        stringBuilder.append(reklamMessageService.getLotsForCustomer(a,1));
-        // постраничный вывод лотов
 
         stringBuilder.append("\n");
         return new SendMessage()
