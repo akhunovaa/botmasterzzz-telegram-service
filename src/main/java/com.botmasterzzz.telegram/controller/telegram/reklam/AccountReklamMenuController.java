@@ -108,7 +108,7 @@ public class AccountReklamMenuController {
     public SendMessage wantSubs(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForWantSubs();
 
-        UserContextHolder.currentContext().setNameAwait(true);
+//        UserContextHolder.currentContext().setNameAwait(true);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь вы можете оставить заявку на привлечение подписчиков</b>\n");
 
