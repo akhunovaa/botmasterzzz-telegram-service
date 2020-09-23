@@ -115,7 +115,7 @@ public class AccountReklamMenuController {
                 .setReplyMarkup(inlineKeyboardMarkup);
     }
 
-    @BotRequestMapping(value = "reklam-Список заявок")
+    @BotRequestMapping(value = "reklam-lots_list")
     public SendMessage comment(Update update) {
         Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
 
@@ -238,7 +238,7 @@ public class AccountReklamMenuController {
         inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<b>Обсуждения:</b>\n");
+        stringBuilder.append("<b>Список заявок:</b>\n");
         stringBuilder.append("\n");
 
         for (LotsEntity lot : lots) {
