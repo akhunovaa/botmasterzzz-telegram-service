@@ -71,7 +71,15 @@ public class AccountReklamMenuController {
         stringBuilder.append("\n");
 
 //        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
-        stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
+        try {
+            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
+        } catch (Exception e)
+        {
+            logger.debug("fail при попытке чтения из pim_account");
+        }
+        finally {
+            stringBuilder.append("лалала ёпта (манимейкер десижн)");
+        }
         stringBuilder.append("р.");
 
         stringBuilder.append("\n");
