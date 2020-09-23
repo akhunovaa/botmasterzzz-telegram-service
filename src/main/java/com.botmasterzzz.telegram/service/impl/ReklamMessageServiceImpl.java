@@ -101,4 +101,9 @@ public class ReklamMessageServiceImpl implements ReklamMessageService {
     public double getAccountTotal(long id) {
         return rdao.getAccountTotal(id);
     }
+
+    @Override
+    public double getAccountTotalByUserId(long id) {
+        return rdao.getAccountByUserId(id).getTotal();
+    }
 }

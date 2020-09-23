@@ -17,4 +17,7 @@ public interface ReklamMessageService {
 
     double getAccountTotal(long id);
 
+    double getAccountTotalByUserId(long id);
+
+
     }
