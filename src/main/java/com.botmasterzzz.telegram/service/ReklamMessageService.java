@@ -19,5 +19,7 @@ public interface ReklamMessageService {
 
     double getAccountTotalByUserId(long id);
 
+    boolean accountExists(Long telegramUserId);
 
+    void accountSave(Long telegramUserId);
     }

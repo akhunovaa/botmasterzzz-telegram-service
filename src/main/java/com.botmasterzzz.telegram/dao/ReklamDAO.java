@@ -82,6 +82,10 @@ public interface ReklamDAO {
     //аккаунт по id пользователя
     AccountEntity getAccountByUserId(long id);
 
+    boolean exists(Class<?> clazz, Long idValue);
+
+    void accountAdd(AccountEntity accountEntity);
+
     // получить последнее(активное) пополнение счета
     double getAccountIncome(long id);
 
