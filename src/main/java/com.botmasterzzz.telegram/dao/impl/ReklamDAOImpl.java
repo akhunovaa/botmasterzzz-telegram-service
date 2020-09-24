@@ -4,11 +4,9 @@ import com.botmasterzzz.telegram.dao.ReklamDAO;
 import com.botmasterzzz.telegram.entity.AccountEntity;
 import com.botmasterzzz.telegram.entity.GetPartsEntity;
 import com.botmasterzzz.telegram.entity.LotsEntity;
-import org.hibernate.Criteria;
-import org.hibernate.QueryException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -284,5 +282,41 @@ public class ReklamDAOImpl implements ReklamDAO {
     @Override
     public void setAccountIsactive(long id, boolean status) {
 
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean exists(Class<?> clazz, Long idValue) {
+        Session session = sessionFactory.openSession();
+        boolean exists = false;
+        try {
+            exists =  session.createCriteria(clazz)
+                    .add(Restrictions.eq("accountid", idValue))
+                    .setProjection(Projections.id())
+                    .uniqueResult() != null;
+            session.close();
+        } catch (Exception he) {
+            session.close();
+        } finally {
+            session.close();
+        }
+        return exists;
+    }
+
+    @Override
+    public void accountAdd(AccountEntity accountEntity) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(accountEntity);
+            tx.commit();
+        } catch (Exception he) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        } finally {
+            session.close();
+        }
     }
 }

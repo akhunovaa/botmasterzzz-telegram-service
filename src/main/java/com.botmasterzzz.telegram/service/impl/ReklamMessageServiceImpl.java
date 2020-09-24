@@ -4,10 +4,12 @@ import com.botmasterzzz.bot.api.impl.objects.replykeyboard.InlineKeyboardMarkup;
 import com.botmasterzzz.bot.api.impl.objects.replykeyboard.buttons.InlineKeyboardButton;
 import com.botmasterzzz.telegram.dao.ReklamDAO;
 import com.botmasterzzz.telegram.dto.CallBackData;
+import com.botmasterzzz.telegram.entity.AccountEntity;
 import com.botmasterzzz.telegram.entity.LotsEntity;
 import com.botmasterzzz.telegram.service.ReklamMessageService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -106,5 +108,23 @@ public class ReklamMessageServiceImpl implements ReklamMessageService {
     public double getAccountTotalByUserId(long id) {
         return rdao.getAccountByUserId(id).getTotal();
 //        return rdao
+    }
+
+    @Override
+    public boolean accountExists(Long telegramUserId) {
+        return rdao.exists(AccountEntity.class, telegramUserId);
+    }
+
+    @Async
+    @Override
+    public void accountSave(Long telegramUserId) {
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setAccountid(telegramUserId);
+        accountEntity.setUserid(Math.toIntExact(telegramUserId));
+        accountEntity.setIncome(0);
+        accountEntity.setOutcome(0);
+        accountEntity.setTotal(0);
+        accountEntity.setIsactive(true);
+        rdao.accountAdd(accountEntity);
     }
 }
