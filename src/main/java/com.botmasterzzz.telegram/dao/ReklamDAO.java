@@ -11,7 +11,7 @@ public interface ReklamDAO {
     List<LotsEntity> lotsCustomerEntityList(String customer);
 
     // активные заявки пользователя (creator)
-    List<LotsEntity> activeLotsForCreatorEntityList(String creator, boolean isArchive);
+    List<LotsEntity> activeLotsForCreatorEntityList(long creator, boolean isArchive);
 
     // доступные заявки к принятию в работу
     List<LotsEntity> availableLotsEntityList();
@@ -27,6 +27,8 @@ public interface ReklamDAO {
 
     // список с постраничным выводом для кастомера
     public List<LotsEntity> getLotsForCustomer(int offset, int limit);
+
+    List<LotsEntity> getLotsListAccept(int offset, int limit, long customer);
 
     // получить валидность/доступность лота (isvalide)
     boolean validateLot(long id);
@@ -47,7 +49,7 @@ public interface ReklamDAO {
     void setCreateLot(long id, boolean status);
 
     // установить исполнителя лота
-    void setCustomerLot(long id, String status);
+    void setCustomerLot(long id, long status);
 
     // лот архивен?
     boolean isArchiveLot(long id);

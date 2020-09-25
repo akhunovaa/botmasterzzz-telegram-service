@@ -107,4 +107,10 @@ public class ReklamMessageServiceImpl implements ReklamMessageService {
         return rdao.getAccountByUserId(id).getTotal();
 //        return rdao
     }
+
+    @Override
+    public List<LotsEntity> getLotsListAccept(int offset, int limit, long telegramUserId) {
+        return rdao.getLotsListAccept(offset, limit, telegramUserId);
+    }
+
 }

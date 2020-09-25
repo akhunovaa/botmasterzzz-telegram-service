@@ -48,10 +48,10 @@ public class ReklamDAOImpl implements ReklamDAO {
     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public List<LotsEntity> getLotsForCustomer(int offset, int limit) {
-        List<LotsEntity> mediaCommentsDataEntityList;
+        List<LotsEntity> lotsList;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(LotsEntity.class);
-        criteria.add(Restrictions.disjunction()
+        criteria.add(Restrictions.conjunction()
 //                .add(Restrictions.eq("creator", creator))
                 .add(Restrictions.eq("archive", false))
                 .add(Restrictions.eq("iscreate", true))
@@ -59,13 +59,31 @@ public class ReklamDAOImpl implements ReklamDAO {
         criteria.addOrder(Order.desc("id"));
         criteria.setFirstResult(offset);
         criteria.setMaxResults(1);
-        mediaCommentsDataEntityList = criteria.list();
+        lotsList = criteria.list();
         session.close();
-        return mediaCommentsDataEntityList;
+        return lotsList;
     }
 
     @Override
-    public List<LotsEntity> activeLotsForCreatorEntityList(String creator, boolean isArchive) {
+    public List<LotsEntity> getLotsListAccept(int offset, int limit, long customer) {
+        List<LotsEntity> lotsList;
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(LotsEntity.class);
+        criteria.add(Restrictions.conjunction()
+                .add(Restrictions.eq("customer", customer))
+                .add(Restrictions.eq("archive", false))
+                .add(Restrictions.eq("iscreate", true))
+                .add(Restrictions.eq("isdel", false)));
+        criteria.addOrder(Order.desc("id"));
+        criteria.setFirstResult(offset);
+        criteria.setMaxResults(1);
+        lotsList = criteria.list();
+        session.close();
+        return lotsList;
+    }
+
+    @Override
+    public List<LotsEntity> activeLotsForCreatorEntityList(long creator, boolean isArchive) {
         List<LotsEntity>  lotsCustomerEntityList = null;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GetPartsEntity.class);
@@ -159,7 +177,7 @@ public class ReklamDAOImpl implements ReklamDAO {
     }
 
     @Override
-    public void setCustomerLot(long id, String userid) {
+    public void setCustomerLot(long id, long userid) {
         getLot(id).setCustomer(userid);
     }
 

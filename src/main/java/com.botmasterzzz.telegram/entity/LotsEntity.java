@@ -19,7 +19,7 @@ public class LotsEntity {
     private Long id;
 
     @Column(name = "creator", nullable = false)
-    private String creator;
+    private long creator;
 
     @Column(name = "cost", nullable = false)
     private int cost;
@@ -34,7 +34,7 @@ public class LotsEntity {
     private double ready;
 
     @Column(name = "customer")
-    private String customer;
+    private long customer;
 
     @Column(name = "archive")
     private boolean archive;
@@ -91,11 +91,11 @@ public class LotsEntity {
         this.id = id;
     }
 
-    public String getCreator() {
+    public long getCreator() {
         return creator;
     }
 
-    public void setCreator(String creator) {
+    public void setCreator(long creator) {
         this.creator = creator;
     }
 
@@ -131,11 +131,11 @@ public class LotsEntity {
         this.ready = ready;
     }
 
-    public String getCustomer() {
+    public long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
+    public void setCustomer(long customer) {
         this.customer = customer;
     }
 

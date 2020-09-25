@@ -19,5 +19,6 @@ public interface ReklamMessageService {
 
     double getAccountTotalByUserId(long id);
 
+    List<LotsEntity> getLotsListAccept(int offset, int limit, long telegramUserId);
 
     }

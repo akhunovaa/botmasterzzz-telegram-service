@@ -67,23 +67,10 @@ public class AccountReklamMenuController {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь отображается ваш баланс</b>\n");
         stringBuilder.append("\n");
-
-        try {
-//            stringBuilder.append("currentId="+currentId+ "\ns_");
-//            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(currentId));
-            stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
-//            stringBuilder.append("_отработка_");
-//            stringBuilder.append(reklamMessageService.getAccountTotalByUserId(telegramUserId));
-        } catch (Exception e)
-        {
-            logger.debug("fail при попытке чтения из pim_account");
-        }
-        finally {
-//            stringBuilder.append("лалала ёпта (манимейкер десижн)");
-        }
+        stringBuilder.append(reklamMessageService.getAccountTotal(currentId));
         stringBuilder.append(" р.");
-
         stringBuilder.append("\n");
+
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
                 .setText(stringBuilder.toString())
@@ -96,7 +83,6 @@ public class AccountReklamMenuController {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь вы можете выбрать заявку на привлечение подписчиков</b>\n");
         stringBuilder.append("\n");
-
         stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
@@ -107,13 +93,9 @@ public class AccountReklamMenuController {
     @BotRequestMapping(value = "reklam-Хочу подписчиков")
     public SendMessage wantSubs(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = reklamMessageService.getInlineKeyboardForWantSubs();
-
-//        UserContextHolder.currentContext().setNameAwait(true);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<b>Здесь вы можете оставить заявку на привлечение подписчиков</b>\n");
-
         stringBuilder.append("\n");
-
         stringBuilder.append("\n");
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId()).enableHtml(true)
@@ -169,20 +151,22 @@ public class AccountReklamMenuController {
         for (LotsEntity lot : lotsEntityList) {
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             stringBuilder.append("<code> Заявка #")
-                    .append(lot.getId())
-                    .append(" \nна привлечение ")
+                    .append(lot.getId());
+            stringBuilder.append("\n");
+            stringBuilder.append("на привлечение ")
                     .append(lot.getQuantity())
-                    .append(" пользователей \nза ")
+                    .append(" пользователей ");
+            stringBuilder.append("\n");
+            stringBuilder.append("за ")
                     .append(lot.getCost())
                     .append(" рублей")
                     .append("</code>\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
-//            logger.info("User {} comment {}", telegramBotUserEntity, commentData);
         }
         if (lotsEntityList.isEmpty()) {
             stringBuilder.append("Заявки отсутствуют. Подождите немного или создайте собственную заявку!");
         }
-        logger.info("User id {} comment message requested", telegramUserId);
+        logger.info("User id {} get lots list message requested", telegramUserId);
 
         return new SendMessage()
                 .setChatId(chatId).enableHtml(true)
@@ -242,12 +226,6 @@ public class AccountReklamMenuController {
         stringBuilder.append("\n");
 
         for (LotsEntity lot : lots) {
-//            TelegramBotUserEntity telegramBotUserEntity = mediaCommentsDataEntity.getTelegramBotUserEntity();
-//            String telegramUser = null != telegramBotUserEntity.getUsername() ? telegramBotUserEntity.getUsername() : telegramBotUserEntity.getFirstName();
-//            String commentData = mediaCommentsDataEntity.getData();
-//            String commentTimestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(mediaCommentsDataEntity.getAudWhenCreate().getTime() + TimeUnit.HOURS.toMillis(3));
-//            stringBuilder.append("⌚<i>").append(commentTimestamp).append("</i>  ");
-//            stringBuilder.append("от пользователя <a href=\"tg://user?id=").append(telegramBotUserEntity.getTelegramId()).append("\">").append(telegramUser).append("</a>:\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
             stringBuilder.append("<code> Заявка #")
                     .append(lot.getId())
@@ -258,7 +236,6 @@ public class AccountReklamMenuController {
                     .append(" рублей")
                     .append("</code>\n");
             stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
-//            logger.info("User {} comment {}", commentData);
         }
 
         if (lots.isEmpty()) {
@@ -280,5 +257,79 @@ public class AccountReklamMenuController {
         editMessageText.enableHtml(Boolean.TRUE);
         editMessageText.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
         return editMessageText;
+    }
+
+    @BotRequestMapping(value = "reklam-lots_list_accept")
+    public SendMessage acceptLots(Update update) {
+        Long chatId = update.hasMessage() ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId();
+
+        CallBackData callBackData = UserContextHolder.currentContext().getCallBackData();
+
+        // todo maybe переделать на         int currentId = update.getMessage().getFrom().getId();
+        Long telegramUserId = callBackData.getUserId();
+
+        Long fileId = callBackData.getFileId();
+        int offset = 0;
+        List<LotsEntity> lotsEntityList = reklamMessageService.getLotsListAccept(offset, 1, telegramUserId);
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineKeyboardButtons = new ArrayList<>();
+
+        List<InlineKeyboardButton> inlineKeyboardButtonsFirstRow = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonSecondRow = new ArrayList<>();
+
+        InlineKeyboardButton leftArrowButton = new InlineKeyboardButton();
+        leftArrowButton.setText("◀️");
+        CallBackData leftButtonData = new CallBackData("arrow", telegramUserId, fileId);
+        leftButtonData.setOffset(offset);
+        leftArrowButton.setCallbackData(gson.toJson(leftButtonData));
+
+        InlineKeyboardButton rightArrowButton = new InlineKeyboardButton();
+        rightArrowButton.setText("▶️️");
+        CallBackData rightButtonData = new CallBackData("arrow", telegramUserId, fileId);
+        int lim = lotsEntityList.size() < 1 ? offset : offset + 1;
+        rightButtonData.setOffset(lim);
+        rightArrowButton.setCallbackData(gson.toJson(rightButtonData));
+
+        InlineKeyboardButton commentAddButton = new InlineKeyboardButton();
+        commentAddButton.setText("\uD83D\uDCE8 Выбрать заявку");
+        commentAddButton.setCallbackData(gson.toJson(new CallBackData("lots-reserve", telegramUserId, fileId)));
+
+
+        if (!lotsEntityList.isEmpty()) {
+            inlineKeyboardButtonsFirstRow.add(leftArrowButton);
+            inlineKeyboardButtonsFirstRow.add(rightArrowButton);
+            inlineKeyboardButtons.add(inlineKeyboardButtonsFirstRow);
+        }
+        inlineKeyboardButtonSecondRow.add(commentAddButton);
+        inlineKeyboardButtons.add(inlineKeyboardButtonSecondRow);
+        inlineKeyboardMarkup.setKeyboard(inlineKeyboardButtons);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<b>Доступные заявки:</b>\n");
+        stringBuilder.append("\n");
+        for (LotsEntity lot : lotsEntityList) {
+            stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n");
+            stringBuilder.append("<code> Заявка #")
+                    .append(lot.getId());
+            stringBuilder.append("\n");
+            stringBuilder.append("на привлечение ")
+                    .append(lot.getQuantity())
+                    .append(" пользователей ");
+            stringBuilder.append("\n");
+            stringBuilder.append("за ")
+                    .append(lot.getCost())
+                    .append(" рублей")
+                    .append("</code>\n");
+            stringBuilder.append("➖➖➖➖➖➖➖➖➖➖➖➖\n\n");
+        }
+        if (lotsEntityList.isEmpty()) {
+            stringBuilder.append("Заявки отсутствуют. Подождите немного или создайте собственную заявку!");
+        }
+        logger.info("User id {} get lots list message requested", telegramUserId);
+
+        return new SendMessage()
+                .setChatId(chatId).enableHtml(true)
+                .setReplyMarkup(inlineKeyboardMarkup)
+                .setText(stringBuilder.toString());
     }
 }
