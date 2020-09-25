@@ -49,14 +49,14 @@ public class ReklamDAOImpl implements ReklamDAO {
         List<LotsEntity> lotsList;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(LotsEntity.class);
-        criteria.add(Restrictions.conjunction()
+//        criteria.add(Restrictions.conjunction()
 //                .add(Restrictions.eq("creator", creator))
-                .add(Restrictions.eq("archive", false))
-                .add(Restrictions.eq("iscreate", true))
-                .add(Restrictions.eq("payed", true))
-                .add(Restrictions.eq("isdel", false))
-                .add(Restrictions.eq("validate", true))
-                .add(Restrictions.eq("islock", false)));
+        criteria.add(Restrictions.eq("archive", false));
+        criteria.add(Restrictions.eq("iscreate", true));
+        criteria.add(Restrictions.eq("payed", true));
+        criteria.add(Restrictions.eq("isdel", false));
+        criteria.add(Restrictions.eq("validate", true));
+        criteria.add(Restrictions.eq("islock", false));
 
         criteria.addOrder(Order.desc("id"));
         criteria.setFirstResult(offset);
