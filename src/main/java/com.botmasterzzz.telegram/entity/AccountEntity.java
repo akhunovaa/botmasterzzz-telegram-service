@@ -9,8 +9,8 @@ import java.util.Objects;
         @UniqueConstraint(columnNames = "accountid")
 })
 public class AccountEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountid")
     private Long accountid;
 

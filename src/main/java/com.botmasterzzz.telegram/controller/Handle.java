@@ -6,6 +6,7 @@ import com.botmasterzzz.telegram.config.container.BotApiMethodContainer;
 import com.botmasterzzz.telegram.config.context.UserContextHolder;
 import com.botmasterzzz.telegram.dto.CallBackData;
 import com.botmasterzzz.telegram.dto.ProjectCommandDTO;
+import com.botmasterzzz.telegram.service.ReklamMessageService;
 import com.botmasterzzz.telegram.service.TelegramBotStatisticService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ public class Handle {
 
     @Autowired
     private TelegramBotStatisticService telegramBotStatisticService;
+
+    @Autowired
+    private ReklamMessageService reklamMessageService;
 
     public List<PartialBotApiMethod> handleMessage(Update update) {
         BotApiMethodController methodController = getHandle(update);
@@ -83,6 +87,15 @@ public class Handle {
                     callBackData = gson.fromJson(update.getCallbackQuery().getData(), CallBackData.class);
                     UserContextHolder.currentContext().setCallBackData(callBackData);
                     message = callBackData.getPath();
+                    boolean accountExists = reklamMessageService.accountExists(Long.valueOf(update.getCallbackQuery().getFrom().getId()));
+                    if (!accountExists) {
+                        reklamMessageService.accountSave(Long.valueOf(update.getCallbackQuery().getFrom().getId()));
+                    }
+                }else{
+                    boolean accountExists = reklamMessageService.accountExists(Long.valueOf(update.getMessage().getFrom().getId()));
+                    if (!accountExists) {
+                        reklamMessageService.accountSave(Long.valueOf(update.getMessage().getFrom().getId()));
+                    }
                 }
                 remain = UserContextHolder.currentContext().isNameAwait();
                 controller = !remain ? container.getControllerMap().get("reklam-" + message) : container.getControllerMap().get("reklam-create-lot");

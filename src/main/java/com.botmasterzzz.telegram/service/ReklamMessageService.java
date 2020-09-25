@@ -21,4 +21,7 @@ public interface ReklamMessageService {
 
     List<LotsEntity> getLotsListAccept(int offset, int limit, long telegramUserId);
 
+    boolean accountExists(Long telegramUserId);
+
+    void accountSave(Long telegramUserId);
     }
