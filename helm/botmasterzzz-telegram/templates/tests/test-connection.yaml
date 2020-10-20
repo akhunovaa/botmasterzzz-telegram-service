@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: rusberbank.ru/botmasterzzz-telegram
+      image: registry.yourapi.ru/botmasterzzz-telegram
       command: ['wget']
       args:  ['{{ include "fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
