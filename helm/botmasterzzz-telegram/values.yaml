@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: registry.yourapi.ru/botmasterzzz-telegram
   pullPolicy: IfNotPresent
-  appVersion: 238
+  appVersion: 241
 
 imagePullSecrets:
   - name: ourhubpwd
