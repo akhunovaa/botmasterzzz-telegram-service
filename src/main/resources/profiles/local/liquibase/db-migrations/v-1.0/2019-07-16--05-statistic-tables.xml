@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1_telegram_bot_users" failOnError="false" author="azat.akhunov@protonmail.com" runOnChange="true">
+        <createTable tableName="telegram_bot_users" schemaName="public">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)"/>
+            <column name="telegram_id" type="BIGINT"/>
+            <column name="is_bot" type="boolean"/>
+            <column name="language_code" type="VARCHAR(50)"/>
+            <column name="note" type="VARCHAR(1000)"/>
+            <column name="is_blocked" type="boolean"/>
+            <column name="aud_when_create" type="TIMESTAMP"/>
+            <column name="aud_when_update" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3_bot_usage_statistics" failOnError="false" author="azat.akhunov@protonmail.com" runOnChange="true">
+        <createTable tableName="bot_usage_statistics" schemaName="public">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="message" type="VARCHAR"/>
+            <column name="callback_data" type="VARCHAR"/>
+            <column name="message_id" type="INTEGER"/>
+            <column name="chat_id" type="BIGINT"/>
+            <column name="messenger_id" type="BIGINT" defaultValueNumeric="1"/>
+            <column name="bot_instance_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_bot_instance_stat" referencedTableName="bot_instance" referencedColumnNames="id"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_telegram_user" referencedTableName="telegram_bot_users" referencedColumnNames="id"/>
+            </column>
+            <column name="note" type="VARCHAR(1000)"/>
+            <column name="aud_when_create" type="TIMESTAMP"/>
+            <column name="aud_when_update" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
